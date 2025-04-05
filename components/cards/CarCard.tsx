@@ -29,7 +29,9 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
             src={vehicle.imageUrl}
             alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`}
             fill
+            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
             className="object-cover"
+            priority
           />
           <div className="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">
             {vehicle.condition}
@@ -99,6 +101,8 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
           alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`}
           fill
           className="object-cover"
+          priority
+          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
         />
         <div className="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">
           {vehicle.condition}

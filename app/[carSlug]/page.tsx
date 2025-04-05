@@ -1,20 +1,14 @@
-"use client"
-
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Vehicle } from '@/data'
 import { vehicles } from '@/data'
 
-interface CarDetailProps {
-  params: {
-    'car-slug': string
-  }
-}
+const CarDetail = async ({ params }: { params:  Promise<{ 'carSlug': string }> }) => {
 
-const CarDetail = ({ params }: CarDetailProps) => {
+  const { carSlug } = await params
+
   // Find the vehicle by ID from the URL slug
-  const vehicle = vehicles.find(v => v.id === params['car-slug'])
+  const vehicle = vehicles.find(v => v.id === carSlug)
   
   if (!vehicle) {
     return (
@@ -60,6 +54,7 @@ const CarDetail = ({ params }: CarDetailProps) => {
             src={vehicle.imageUrl}
             alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`}
             fill
+            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
             className="object-cover"
             priority
           />

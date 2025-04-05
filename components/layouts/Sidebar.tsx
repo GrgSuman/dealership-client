@@ -4,10 +4,12 @@ import type React from "react"
 
 import { useState } from "react"
 import Link from "next/link"
-import { Car, Search, Calendar, CreditCard, Heart, HelpCircle, Settings, Menu, X, LogIn, UserPlus, TrendingUp, Bot, Home } from "lucide-react"
+import { Car, Search, Calendar, CreditCard, Heart, HelpCircle, Settings, Menu, X, LogIn, UserPlus, TrendingUp, Bot, Home, GitCompare } from "lucide-react"
+import { usePathname } from "next/navigation"
 
 export default function Sidebar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const path = usePathname()
 
   return (
     <>
@@ -54,27 +56,43 @@ export default function Sidebar() {
           <div className="p-4">
 
             <nav className="space-y-1">
-                <SidebarItem icon={<Home size={16}/>} label="Home" active/>
-                <SidebarItem icon={<Heart size={16} />} label="Saved Cars" />
+                <SidebarItem path="/" icon={<Home size={16}/>} label="Home" active/>
+                <SidebarItem path="/saved-cars" icon={<Heart size={16} />} label="Saved Cars" />
             </nav>
 
             <h2 className="my-3 text-sm font-medium text-gray-500 tracking-wider">Explore</h2>
             <nav className="space-y-1">
-              <SidebarItem icon={<TrendingUp size={16}/>} label="Trending" />
-              <SidebarItem icon={<Bot  size={16} />} label="Explore with AI" />
-              <SidebarItem icon={<Search size={16} />} label="Search Inventory" />
-              <SidebarItem icon={<Calendar size={16} />} label="Book Test Drive" />
-              <SidebarItem icon={<CreditCard size={16} />} label="Financing Options" />
+              <SidebarItem path="/popular-cars" icon={<TrendingUp size={16}/>} label="Popular" />
+              <SidebarItem path="/explore-with-ai" icon={<Bot  size={16} />} label="Explore with AI" />
+              <SidebarItem path="/search-cars" icon={<Search size={16} />} label="Search Cars" />
+              <SidebarItem path="/compare-cars" icon={<GitCompare  size={16} />} label="Compare Cars" />
+              <SidebarItem path="/finance" icon={<CreditCard size={16} />} label="Financing Options" />
             </nav>
           </div>
 
           <div className="p-4">
             <h2 className="mb-3 text-sm font-medium text-gray-500 tracking-wider">Other</h2>
             <nav className="space-y-1">
-              <SidebarItem icon={<HelpCircle size={16} />} label="Help & Support" />
-              <SidebarItem icon={<Settings size={16} />} label="Preferences" />
+              <SidebarItem path="/help" icon={<HelpCircle size={16} />} label="Help & Support" />
+              <SidebarItem path="/preferences" icon={<Settings size={16} />} label="Preferences" />
             </nav>
           </div>
+
+
+          <div
+              
+              className="mt-6 bg-green-50 rounded-lg p-3 border border-green-100"
+            >
+              <h3 className="text-sm font-medium text-green-800">Need assistance?</h3>
+              <p className="text-xs text-green-700 mt-1">Our AI assistant can help you find the perfect car.</p>
+              <button
+               
+                className="mt-2 text-xs bg-green-600 text-white py-1.5 px-3 rounded-full w-full"
+                onClick={() => (window.location.href = "/ai-search")}
+              >
+                Chat with AI
+              </button>
+            </div>
         </div>
       </aside>
     </>
@@ -85,21 +103,26 @@ interface SidebarItemProps {
   icon: React.ReactNode
   label: string
   active?: boolean
+  path: string
 }
 
-function SidebarItem({ icon, label, active = false }: SidebarItemProps) {
+function SidebarItem({ icon, label, path }: SidebarItemProps) {
+  const pathName = usePathname()
+  const isActive = pathName === path || 
+               (path !== '/' && pathName?.startsWith(`${path}/`))
+
   return (
-    <a
-      href="#"
+    <Link
+      href={path}
       className={`flex items-center rounded-md px-3 py-2 text-sm font-medium ${
-        active
+        isActive
           ? "bg-green-50 text-green-700"
-          : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+          : "text-gray-700 hover:bg-green-50 hover:text-green-700"
       }`}
     >
-      <span className={`mr-3 ${active ? "text-green-600" : "text-gray-500"}`}>{icon}</span>
+      <span className={`mr-3 ${isActive ? "text-green-600" : "text-gray-500"}`}>{icon}</span>
       {label}
-    </a>
+    </Link>
   )
 }
 
