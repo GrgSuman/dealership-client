@@ -82,7 +82,7 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
             </div>
             <Link 
               href={`/${vehicle.id}`}
-              className="bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-3 py-1.5 rounded transition-colors"
+              className="bg-green-600 hover:bg-green-700 text-white font-medium px-3 py-2 rounded-lg transition-colors"
             >
               View Details
             </Link>
@@ -151,7 +151,7 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
           </div>
           <Link 
             href={`/${vehicle.id}`}
-            className="bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-3 py-1.5 rounded transition-colors"
+            className="bg-green-600 hover:bg-green-700 text-white font-medium px-3 py-2 rounded-lg transition-colors"
           >
             View Details
           </Link>

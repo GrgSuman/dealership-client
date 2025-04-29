@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+// 🧑 User model
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  password      String
+  role          Role      @default(USER) // USER or ADMIN
+  savedVehicles String[]  @default([])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// 🚗 Vehicle model
+model Vehicle {
+  id               String    @id @default(cuid())
+  make             String    // Audi
+  model            String    // A1
+  year             Int       // 2021
+  price            Int       // $32,880 -> store in cents (optional best practice)
+  bodyType         String    // Hatchback
+  transmission     String    // Sports Automatic Dual Clutch
+  fuelType         String    // Petrol
+  fuelConsumptionUrban       Float?
+  fuelConsumptionExtraUrban  Float?
+  fuelConsumptionCombined    Float?
+  engineCapacity   Float?    // 1.5L
+  cylinders        Int?
+  odometer         Int       // in kms
+  driveType        String?   // FWD
+  doors            Int?
+  seats            Int?
+  color            String?   // Grey
+  rego             String?   // Registration Number
+  vin              String?   // Vehicle Identification Number
+  stockNumber      String?
+  images           String[]  // Array of image URLs
+  description      String?
+  
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+// 📜 Enum for user roles
+enum Role {
+  USER
+  ADMIN
+}

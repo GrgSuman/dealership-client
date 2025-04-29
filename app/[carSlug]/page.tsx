@@ -85,7 +85,7 @@ const CarDetail = async ({ params }: { params:  Promise<{ 'carSlug': string }> }
               </div>
             </div>
             <div className="mt-4 md:mt-0">
-              <div className="text-3xl font-bold text-green-600 mb-2">
+              <div className="font-bold text-green-600 mb-2">
                 {formatPrice(vehicle.price)}
               </div>
               <button className="bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-2 rounded-lg transition-colors w-full md:w-auto">
