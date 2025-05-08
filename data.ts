@@ -1,283 +1,338 @@
-export interface Vehicle {
-  id: string;
-  make: string;
-  model: string;
-  year: number;
-  price: number;
-  msrp?: number;
-  mileage: number;
-  imageUrl: string;
-  images?: string[];
-  features: string[];
-  description: string;
-  location: string;
-  condition: 'New' | 'Used' | 'Certified Pre-Owned';
-  transmission: 'Automatic' | 'Manual';
-  fuelType: 'Gasoline' | 'Electric' | 'Hybrid' | 'Diesel';
-  color: string;
-  bodyType: string;
-  trim?: string;
-  bestMatch?: boolean;
-  engineType?: string;
-  horsepower?: number;
-  drivetrain?: string;
-  dimensions?: {
-    length?: string;
-    width?: string;
-    height?: string;
-    cargoSpace?: string;
-  };
-  history?: {
-    clean: boolean;
-    previousOwners: number;
-  };
-}
-
-export const vehicles: Vehicle[] = [
+export const vehicles = [
   {
-    id: "1",
+    id: "clk1a2b3c000008l0d9zq3e4f",
+    make: "Toyota",
+    model: "Camry",
+    year: 2022,
+    price: 2899000, // $28,990
+    bodyType: "SEDAN",
+    transmission: "AUTOMATIC",
+    fuelType: "HYBRID",
+    fuelConsumptionUrban: 5.2,
+    fuelConsumptionExtraUrban: 4.8,
+    fuelConsumptionCombined: 5.0,
+    engineCapacity: 2.5,
+    cylinders: 4,
+    odometer: 12500,
+    driveType: "FWD",
+    doors: 4,
+    seats: 5,
+    color: "Pearl White",
+    rego: "ABC123",
+    vin: "4T1B11HK5NU123456",
+    stockNumber: "TOY2022C001",
+    images: [
+      "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1605559424845-9e4c228bf1c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+    ],
+    description: "2022 Toyota Camry Hybrid in excellent condition with low mileage. Includes premium audio system, navigation, and leather seats.",
+    status: "AVAILABLE",
+    condition: "USED",
+    features: ["Bluetooth", "Backup Camera", "Heated Seats", "Sunroof"],
+    viewsCount: 42,
+    createdAt: new Date("2023-05-15"),
+    updatedAt: new Date("2023-06-20")
+  },
+  {
+    id: "clk1a2b3c000108l0d9zq3e4f",
+    make: "Ford",
+    model: "F-150",
+    year: 2021,
+    price: 4595000, // $45,950
+    bodyType: "PICKUP",
+    transmission: "AUTOMATIC",
+    fuelType: "PETROL",
+    fuelConsumptionUrban: 14.5,
+    fuelConsumptionExtraUrban: 10.2,
+    fuelConsumptionCombined: 12.1,
+    engineCapacity: 3.5,
+    cylinders: 6,
+    odometer: 32000,
+    driveType: "4WD",
+    doors: 4,
+    seats: 5,
+    color: "Magnetic Gray",
+    rego: "DEF456",
+    vin: "1FTFW1E53MFA12345",
+    stockNumber: "FRD2021F001",
+    images: [
+      "https://images.unsplash.com/photo-1622000911381-4914560e6e7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1622000911382-4914560e6e7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+    ],
+    description: "2021 Ford F-150 XLT with EcoBoost engine. Includes towing package, bed liner, and premium sound system. One owner, no accidents.",
+    status: "AVAILABLE",
+    condition: "USED",
+    features: ["Apple CarPlay", "Android Auto", "Towing Package", "Bed Liner"],
+    viewsCount: 78,
+    createdAt: new Date("2023-04-10"),
+    updatedAt: new Date("2023-06-15")
+  },
+  {
+    id: "clk1a2b3c000208l0d9zq3e4f",
     make: "Tesla",
     model: "Model 3",
     year: 2023,
-    price: 41990,
-    msrp: 45990,
-    mileage: 0,
-    imageUrl: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&q=80&w=1000",
+    price: 4299000, // $42,990
+    bodyType: "SEDAN",
+    transmission: "AUTOMATIC",
+    fuelType: "ELECTRIC",
+    fuelConsumptionCombined: 15.0, // kWh/100km
+    odometer: 5000,
+    driveType: "AWD",
+    doors: 4,
+    seats: 5,
+    color: "Midnight Silver",
+    rego: "GHI789",
+    vin: "5YJ3E1EA0PF123456",
+    stockNumber: "TES2023M001",
     images: [
-      "https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80&w=1000"
+      "https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1555215695-3004980ad54f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
     ],
-    features: [
-      "Autopilot",
-      "Premium Interior",
-      "Glass Roof",
-      "18\" Aero Wheels",
-      "Premium Audio",
-      "Wireless Phone Charging",
-      "Heated Seats",
-      "Power Trunk",
-      "LED Headlights",
-      "Blind Spot Monitoring"
-    ],
-    description: "The Tesla Model 3 is an electric four-door sedan developed by Tesla. The Model 3 Standard Range Plus version delivers an EPA-rated all-electric range of 263 miles (423 km) and the Long Range version delivers 353 miles (568 km). With its sleek design, advanced technology, and impressive performance, the Model 3 represents the future of automotive excellence.",
-    location: "San Francisco, CA",
-    condition: "New",
-    transmission: "Automatic",
-    fuelType: "Electric",
-    color: "Midnight Silver Metallic",
-    bodyType: "Sedan",
-    trim: "Long Range",
-    bestMatch: true,
-    engineType: "Electric Motor",
-    horsepower: 450,
-    drivetrain: "All-Wheel Drive",
-    dimensions: {
-      length: "184.8 in",
-      width: "72.8 in",
-      height: "56.8 in",
-      cargoSpace: "15.0 cu ft"
-    },
-    history: {
-      clean: true,
-      previousOwners: 0
-    }
+    description: "Brand new 2023 Tesla Model 3 Long Range with full self-driving capability. Includes premium interior and 18\" Aero Wheels.",
+    status: "AVAILABLE",
+    condition: "NEW",
+    features: ["Autopilot", "Premium Sound", "Glass Roof", "Wireless Charging"],
+    viewsCount: 156,
+    createdAt: new Date("2023-06-01"),
+    updatedAt: new Date("2023-06-18")
   },
   {
-    id: "2",
-    make: "Toyota",
-    model: "RAV4",
-    year: 2023,
-    price: 32975,
-    msrp: 34975,
-    mileage: 15000,
-    imageUrl: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&q=80&w=1000",
-    images: [
-      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&q=80&w=1000"
-    ],
-    features: [
-      "All-Wheel Drive",
-      "Toyota Safety Sense",
-      "Apple CarPlay",
-      "Android Auto",
-      "Power Liftgate",
-      "Bluetooth",
-      "Backup Camera",
-      "Cruise Control",
-      "Lane Departure Warning",
-      "Automatic Emergency Braking"
-    ],
-    description: "The Toyota RAV4 is a compact crossover SUV that offers a perfect blend of style, comfort, and capability. With its available hybrid powertrain and advanced safety features, it's an excellent choice for both city driving and outdoor adventures. The spacious interior and versatile cargo area make it ideal for families and active lifestyles.",
-    location: "Los Angeles, CA",
-    condition: "Certified Pre-Owned",
-    transmission: "Automatic",
-    fuelType: "Hybrid",
-    color: "Cavalry Blue",
+    id: "clk1a2b3c000308l0d9zq3e4f",
+    make: "Honda",
+    model: "CR-V",
+    year: 2020,
+    price: 2795000, // $27,950
     bodyType: "SUV",
-    trim: "XLE Premium",
-    engineType: "Hybrid",
-    horsepower: 219,
-    drivetrain: "All-Wheel Drive",
-    dimensions: {
-      length: "180.9 in",
-      width: "73.0 in",
-      height: "67.2 in",
-      cargoSpace: "37.6 cu ft"
-    },
-    history: {
-      clean: true,
-      previousOwners: 1
-    }
-  },
-  {
-    id: "3",
-    make: "Ford",
-    model: "Mustang",
-    year: 2023,
-    price: 45995,
-    msrp: 47995,
-    mileage: 5000,
-    imageUrl: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=1000",
+    transmission: "AUTOMATIC",
+    fuelType: "PETROL",
+    fuelConsumptionUrban: 9.2,
+    fuelConsumptionExtraUrban: 7.1,
+    fuelConsumptionCombined: 8.0,
+    engineCapacity: 1.5,
+    cylinders: 4,
+    odometer: 45000,
+    driveType: "AWD",
+    doors: 4,
+    seats: 5,
+    color: "Obsidian Blue",
+    rego: "JKL012",
+    vin: "5J6RE4H40L0123456",
+    stockNumber: "HON2020C001",
     images: [
-      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=1000"
+      "https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1606016159992-dfe4f2746ad5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
     ],
-    features: [
-      "5.0L V8 Engine",
-      "Performance Package",
-      "Leather Interior",
-      "Navigation System",
-      "Premium Sound System",
-      "Recaro Sport Seats",
-      "Track Apps",
-      "FordPass Connect",
-      "Blind Spot Information System",
-      "Lane-Keeping System"
-    ],
-    description: "The Ford Mustang is an American muscle car that delivers exceptional performance and iconic style. With its powerful V8 engine and aggressive design, it's the perfect choice for those seeking an exhilarating driving experience. The Mustang combines heritage with modern technology to create a driving experience unlike any other.",
-    location: "Miami, FL",
-    condition: "Used",
-    transmission: "Manual",
-    fuelType: "Gasoline",
-    color: "Race Red",
-    bodyType: "Coupe",
-    trim: "GT",
-    engineType: "V8",
-    horsepower: 450,
-    drivetrain: "Rear-Wheel Drive",
-    dimensions: {
-      length: "188.5 in",
-      width: "75.4 in",
-      height: "54.3 in",
-      cargoSpace: "13.5 cu ft"
-    },
-    history: {
-      clean: true,
-      previousOwners: 1
-    }
+    description: "2020 Honda CR-V EX-L with leather seats and navigation. Well-maintained with full service history. Great family SUV with plenty of space.",
+    status: "AVAILABLE",
+    condition: "USED",
+    features: ["Leather Seats", "Navigation", "Sunroof", "Blind Spot Monitoring"],
+    viewsCount: 63,
+    createdAt: new Date("2023-03-22"),
+    updatedAt: new Date("2023-06-10")
   },
   {
-    id: "4",
+    id: "clk1a2b3c000408l0d9zq3e4f",
     make: "BMW",
     model: "X5",
-    year: 2023,
-    price: 65995,
-    msrp: 69995,
-    mileage: 0,
-    imageUrl: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=1000",
-    images: [
-      "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=1000"
-    ],
-    features: [
-      "xDrive All-Wheel Drive",
-      "Panoramic Sunroof",
-      "BMW Live Cockpit Professional",
-      "Premium Package",
-      "M Sport Package",
-      "Harman Kardon Sound System",
-      "Wireless Apple CarPlay",
-      "Gesture Control",
-      "Head-Up Display",
-      "Parking Assistant"
-    ],
-    description: "The BMW X5 is a luxury SUV that combines sophisticated design with powerful performance. Its spacious interior, advanced technology, and superior driving dynamics make it a standout in the luxury SUV segment. The X5 offers a perfect blend of comfort, capability, and cutting-edge features for the discerning driver.",
-    location: "New York, NY",
-    condition: "New",
-    transmission: "Automatic",
-    fuelType: "Gasoline",
-    color: "Carbon Black Metallic",
+    year: 2021,
+    price: 6299000, // $62,990
     bodyType: "SUV",
-    trim: "xDrive40i",
-    engineType: "Inline 6-Cylinder",
-    horsepower: 335,
-    drivetrain: "All-Wheel Drive",
-    dimensions: {
-      length: "194.3 in",
-      width: "78.9 in",
-      height: "69.0 in",
-      cargoSpace: "33.9 cu ft"
-    },
-    history: {
-      clean: true,
-      previousOwners: 0
-    }
+    transmission: "AUTOMATIC",
+    fuelType: "DIESEL",
+    fuelConsumptionUrban: 8.5,
+    fuelConsumptionExtraUrban: 6.2,
+    fuelConsumptionCombined: 7.1,
+    engineCapacity: 3.0,
+    cylinders: 6,
+    odometer: 18000,
+    driveType: "AWD",
+    doors: 4,
+    seats: 5,
+    color: "Phytonic Blue",
+    rego: "MNO345",
+    vin: "5UXCR6C05M9A12345",
+    stockNumber: "BMW2021X001",
+    images: [
+      "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1618843479314-40f8afb4b4d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+    ],
+    description: "2021 BMW X5 xDrive30d M Sport with premium package. Low mileage, executive demo vehicle with all options including heads-up display and Harman Kardon sound system.",
+    status: "AVAILABLE",
+    condition: "USED",
+    features: ["Heads-up Display", "Premium Sound", "Panoramic Sunroof", "Adaptive Cruise"],
+    viewsCount: 89,
+    createdAt: new Date("2023-02-18"),
+    updatedAt: new Date("2023-06-05")
   },
   {
-    id: "5",
-    make: "Honda",
-    model: "Civic",
-    year: 2023,
-    price: 24995,
-    msrp: 26995,
-    mileage: 25000,
-    imageUrl: "https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&q=80&w=1000",
+    id: "clk1a2b3c000508l0d9zq3e4f",
+    make: "Chevrolet",
+    model: "Corvette",
+    year: 2022,
+    price: 7999000, // $79,990
+    bodyType: "COUPE",
+    transmission: "AUTOMATIC",
+    fuelType: "PETROL",
+    fuelConsumptionUrban: 13.5,
+    fuelConsumptionExtraUrban: 9.8,
+    fuelConsumptionCombined: 11.2,
+    engineCapacity: 6.2,
+    cylinders: 8,
+    odometer: 8000,
+    driveType: "RWD",
+    doors: 2,
+    seats: 2,
+    color: "Torch Red",
+    rego: "PQR678",
+    vin: "1G1YB3D47N5112345",
+    stockNumber: "CHV2022C001",
     images: [
-      "https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&q=80&w=1000"
+      "https://images.unsplash.com/photo-1621252179027-94459d8f3f0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1621252179028-94459d8f3f0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
     ],
-    features: [
-      "Honda Sensing",
-      "Apple CarPlay",
-      "Android Auto",
-      "Bluetooth",
-      "Lane Departure Warning",
-      "Adaptive Cruise Control",
-      "Collision Mitigation Braking",
-      "Road Departure Mitigation",
-      "Lane Keeping Assist",
-      "Traffic Sign Recognition"
+    description: "2022 Chevrolet Corvette Stingray 2LT with Z51 Performance Package. Like new condition with only 8,000 miles. Includes performance exhaust and magnetic ride control.",
+    status: "AVAILABLE",
+    condition: "USED",
+    features: ["Performance Exhaust", "Heads-up Display", "Leather Seats", "Bose Sound"],
+    viewsCount: 112,
+    createdAt: new Date("2023-01-30"),
+    updatedAt: new Date("2023-06-12")
+  },
+  {
+    id: "clk1a2b3c000608l0d9zq3e4f",
+    make: "Subaru",
+    model: "Outback",
+    year: 2021,
+    price: 3199000, // $31,990
+    bodyType: "WAGON",
+    transmission: "AUTOMATIC",
+    fuelType: "PETROL",
+    fuelConsumptionUrban: 9.8,
+    fuelConsumptionExtraUrban: 7.6,
+    fuelConsumptionCombined: 8.5,
+    engineCapacity: 2.5,
+    cylinders: 4,
+    odometer: 35000,
+    driveType: "AWD",
+    doors: 4,
+    seats: 5,
+    color: "Green",
+    rego: "STU901",
+    vin: "4S4BTALC5M3123456",
+    stockNumber: "SUB2021O001",
+    images: [
+      "https://images.unsplash.com/photo-1616788494707-ec28f08d05a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1616788494708-ec28f08d05a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
     ],
-    description: "The Honda Civic is a reliable and efficient compact car that offers excellent value. With its fuel-efficient engine, modern features, and comfortable interior, it's perfect for daily commuting and weekend adventures. The Civic has been a bestseller for decades, thanks to its combination of reliability, style, and advanced technology.",
-    location: "Chicago, IL",
-    condition: "Certified Pre-Owned",
-    transmission: "Automatic",
-    fuelType: "Gasoline",
-    color: "Sonic Gray Pearl",
-    bodyType: "Sedan",
-    trim: "EX",
-    engineType: "Inline 4-Cylinder",
-    horsepower: 158,
-    drivetrain: "Front-Wheel Drive",
-    dimensions: {
-      length: "184.0 in",
-      width: "70.9 in",
-      height: "55.7 in",
-      cargoSpace: "14.8 cu ft"
-    },
-    history: {
-      clean: true,
-      previousOwners: 1
-    }
+    description: "2021 Subaru Outback Touring with EyeSight Driver Assist Technology. Includes leather seats, navigation, and panoramic sunroof. Great adventure vehicle.",
+    status: "AVAILABLE",
+    condition: "USED",
+    features: ["Leather Seats", "Sunroof", "Navigation", "EyeSight Safety"],
+    viewsCount: 54,
+    createdAt: new Date("2023-04-05"),
+    updatedAt: new Date("2023-06-08")
+  },
+  {
+    id: "clk1a2b3c000708l0d9zq3e4f",
+    make: "Jeep",
+    model: "Wrangler",
+    year: 2020,
+    price: 3899000, // $38,990
+    bodyType: "SUV",
+    transmission: "MANUAL",
+    fuelType: "PETROL",
+    fuelConsumptionUrban: 13.5,
+    fuelConsumptionExtraUrban: 10.2,
+    fuelConsumptionCombined: 11.8,
+    engineCapacity: 3.6,
+    cylinders: 6,
+    odometer: 28000,
+    driveType: "4WD",
+    doors: 2,
+    seats: 4,
+    color: "Firecracker Red",
+    rego: "VWX234",
+    vin: "1C4HJXEN0LW123456",
+    stockNumber: "JEE2020W001",
+    images: [
+      "https://images.unsplash.com/photo-1615551043360-33de8b5f4109?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1615551043361-33de8b5f4109?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+    ],
+    description: "2020 Jeep Wrangler Sport with 6-speed manual transmission. Includes hard top, tow package, and upgraded wheels. Ready for off-road adventures.",
+    status: "AVAILABLE",
+    condition: "USED",
+    features: ["Hard Top", "Tow Package", "Upgraded Wheels", "Off-road Package"],
+    viewsCount: 67,
+    createdAt: new Date("2023-03-10"),
+    updatedAt: new Date("2023-06-14")
+  },
+  {
+    id: "clk1a2b3c000808l0d9zq3e4f",
+    make: "Mercedes-Benz",
+    model: "E-Class",
+    year: 2022,
+    price: 5899000, // $58,990
+    bodyType: "SEDAN",
+    transmission: "AUTOMATIC",
+    fuelType: "PETROL",
+    fuelConsumptionUrban: 10.5,
+    fuelConsumptionExtraUrban: 7.2,
+    fuelConsumptionCombined: 8.5,
+    engineCapacity: 2.0,
+    cylinders: 4,
+    odometer: 12000,
+    driveType: "RWD",
+    doors: 4,
+    seats: 5,
+    color: "Black",
+    rego: "YZA567",
+    vin: "W1K5G5GB9NA123456",
+    stockNumber: "MBZ2022E001",
+    images: [
+      "https://images.unsplash.com/photo-1616788494707-ec28f08d05a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1616788494708-ec28f08d05a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+    ],
+    description: "2022 Mercedes-Benz E 350 with AMG Line package. Low mileage executive vehicle with premium package, including Burmester sound system and ambient lighting.",
+    status: "AVAILABLE",
+    condition: "USED",
+    features: ["Leather Seats", "Premium Sound", "Navigation", "Panoramic Sunroof"],
+    viewsCount: 92,
+    createdAt: new Date("2023-05-20"),
+    updatedAt: new Date("2023-06-16")
+  },
+  {
+    id: "clk1a2b3c000908l0d9zq3e4f",
+    make: "Porsche",
+    model: "911 Carrera",
+    year: 2023,
+    price: 11999000, // $119,990
+    bodyType: "COUPE",
+    transmission: "AUTOMATIC",
+    fuelType: "PETROL",
+    fuelConsumptionUrban: 12.5,
+    fuelConsumptionExtraUrban: 8.2,
+    fuelConsumptionCombined: 9.8,
+    engineCapacity: 3.0,
+    cylinders: 6,
+    odometer: 2500,
+    driveType: "RWD",
+    doors: 2,
+    seats: 4,
+    color: "GT Silver",
+    rego: "BCD890",
+    vin: "WP0AB2A99PS123456",
+    stockNumber: "POR2023C001",
+    images: [
+      "https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1555215695-3004980ad54f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+    ],
+    description: "2023 Porsche 911 Carrera S with only 2,500 miles. Includes Sport Chrono package, premium package, and 20-inch wheels. Essentially new condition.",
+    status: "AVAILABLE",
+    condition: "USED",
+    features: ["Sport Chrono", "Premium Package", "20-inch Wheels", "Bose Sound"],
+    viewsCount: 145,
+    createdAt: new Date("2023-06-05"),
+    updatedAt: new Date("2023-06-19")
   }
-]; 
+];

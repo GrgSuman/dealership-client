@@ -19,6 +19,16 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model Activity
+ * 
+ */
+export type Activity = $Result.DefaultSelection<Prisma.$ActivityPayload>
+/**
+ * Model Preference
+ * 
+ */
+export type Preference = $Result.DefaultSelection<Prisma.$PreferencePayload>
+/**
  * Model Vehicle
  * 
  */
@@ -28,18 +38,91 @@ export type Vehicle = $Result.DefaultSelection<Prisma.$VehiclePayload>
  * Enums
  */
 export namespace $Enums {
-  export const Role: {
-  USER: 'USER',
-  ADMIN: 'ADMIN'
+  export const VehicleStatus: {
+  AVAILABLE: 'AVAILABLE',
+  SOLD: 'SOLD',
+  COMING_SOON: 'COMING_SOON'
 };
 
-export type Role = (typeof Role)[keyof typeof Role]
+export type VehicleStatus = (typeof VehicleStatus)[keyof typeof VehicleStatus]
+
+
+export const BodyType: {
+  SEDAN: 'SEDAN',
+  SUV: 'SUV',
+  HATCHBACK: 'HATCHBACK',
+  WAGON: 'WAGON',
+  UTE: 'UTE',
+  VAN: 'VAN',
+  COUPE: 'COUPE',
+  CONVERTIBLE: 'CONVERTIBLE'
+};
+
+export type BodyType = (typeof BodyType)[keyof typeof BodyType]
+
+
+export const Transmission: {
+  MANUAL: 'MANUAL',
+  AUTOMATIC: 'AUTOMATIC',
+  CVT: 'CVT',
+  DCT: 'DCT'
+};
+
+export type Transmission = (typeof Transmission)[keyof typeof Transmission]
+
+
+export const FuelType: {
+  PETROL: 'PETROL',
+  DIESEL: 'DIESEL',
+  ELECTRIC: 'ELECTRIC',
+  HYBRID: 'HYBRID',
+  PLUGIN_HYBRID: 'PLUGIN_HYBRID'
+};
+
+export type FuelType = (typeof FuelType)[keyof typeof FuelType]
+
+
+export const VehicleCondition: {
+  NEW: 'NEW',
+  USED: 'USED',
+  CERTIFIED: 'CERTIFIED'
+};
+
+export type VehicleCondition = (typeof VehicleCondition)[keyof typeof VehicleCondition]
+
+
+export const UserRole: {
+  ADMIN: 'ADMIN',
+  USER: 'USER'
+};
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 }
 
-export type Role = $Enums.Role
+export type VehicleStatus = $Enums.VehicleStatus
 
-export const Role: typeof $Enums.Role
+export const VehicleStatus: typeof $Enums.VehicleStatus
+
+export type BodyType = $Enums.BodyType
+
+export const BodyType: typeof $Enums.BodyType
+
+export type Transmission = $Enums.Transmission
+
+export const Transmission: typeof $Enums.Transmission
+
+export type FuelType = $Enums.FuelType
+
+export const FuelType: typeof $Enums.FuelType
+
+export type VehicleCondition = $Enums.VehicleCondition
+
+export const VehicleCondition: typeof $Enums.VehicleCondition
+
+export type UserRole = $Enums.UserRole
+
+export const UserRole: typeof $Enums.UserRole
 
 /**
  * ##  Prisma Client ʲˢ
@@ -175,6 +258,26 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.activity`: Exposes CRUD operations for the **Activity** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Activities
+    * const activities = await prisma.activity.findMany()
+    * ```
+    */
+  get activity(): Prisma.ActivityDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.preference`: Exposes CRUD operations for the **Preference** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Preferences
+    * const preferences = await prisma.preference.findMany()
+    * ```
+    */
+  get preference(): Prisma.PreferenceDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.vehicle`: Exposes CRUD operations for the **Vehicle** model.
@@ -626,6 +729,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    Activity: 'Activity',
+    Preference: 'Preference',
     Vehicle: 'Vehicle'
   };
 
@@ -645,7 +750,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "vehicle"
+      modelProps: "user" | "activity" | "preference" | "vehicle"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -720,6 +825,154 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Activity: {
+        payload: Prisma.$ActivityPayload<ExtArgs>
+        fields: Prisma.ActivityFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ActivityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ActivityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>
+          }
+          findFirst: {
+            args: Prisma.ActivityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ActivityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>
+          }
+          findMany: {
+            args: Prisma.ActivityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>[]
+          }
+          create: {
+            args: Prisma.ActivityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>
+          }
+          createMany: {
+            args: Prisma.ActivityCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ActivityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>[]
+          }
+          delete: {
+            args: Prisma.ActivityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>
+          }
+          update: {
+            args: Prisma.ActivityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>
+          }
+          deleteMany: {
+            args: Prisma.ActivityDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ActivityUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ActivityUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>[]
+          }
+          upsert: {
+            args: Prisma.ActivityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>
+          }
+          aggregate: {
+            args: Prisma.ActivityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateActivity>
+          }
+          groupBy: {
+            args: Prisma.ActivityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ActivityGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ActivityCountArgs<ExtArgs>
+            result: $Utils.Optional<ActivityCountAggregateOutputType> | number
+          }
+        }
+      }
+      Preference: {
+        payload: Prisma.$PreferencePayload<ExtArgs>
+        fields: Prisma.PreferenceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PreferenceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreferencePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PreferenceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreferencePayload>
+          }
+          findFirst: {
+            args: Prisma.PreferenceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreferencePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PreferenceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreferencePayload>
+          }
+          findMany: {
+            args: Prisma.PreferenceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreferencePayload>[]
+          }
+          create: {
+            args: Prisma.PreferenceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreferencePayload>
+          }
+          createMany: {
+            args: Prisma.PreferenceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PreferenceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreferencePayload>[]
+          }
+          delete: {
+            args: Prisma.PreferenceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreferencePayload>
+          }
+          update: {
+            args: Prisma.PreferenceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreferencePayload>
+          }
+          deleteMany: {
+            args: Prisma.PreferenceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PreferenceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PreferenceUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreferencePayload>[]
+          }
+          upsert: {
+            args: Prisma.PreferenceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreferencePayload>
+          }
+          aggregate: {
+            args: Prisma.PreferenceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePreference>
+          }
+          groupBy: {
+            args: Prisma.PreferenceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PreferenceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PreferenceCountArgs<ExtArgs>
+            result: $Utils.Optional<PreferenceCountAggregateOutputType> | number
           }
         }
       }
@@ -882,6 +1135,8 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    activity?: ActivityOmit
+    preference?: PreferenceOmit
     vehicle?: VehicleOmit
   }
 
@@ -972,6 +1227,36 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    activities: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    activities?: boolean | UserCountOutputTypeCountActivitiesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountActivitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActivityWhereInput
+  }
+
 
   /**
    * Models
@@ -989,31 +1274,30 @@ export namespace Prisma {
 
   export type UserMinAggregateOutputType = {
     id: string | null
-    name: string | null
     email: string | null
+    name: string | null
     password: string | null
-    role: $Enums.Role | null
+    role: $Enums.UserRole | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
-    name: string | null
     email: string | null
+    name: string | null
     password: string | null
-    role: $Enums.Role | null
+    role: $Enums.UserRole | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
-    name: number
     email: number
+    name: number
     password: number
     role: number
-    savedVehicles: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1022,8 +1306,8 @@ export namespace Prisma {
 
   export type UserMinAggregateInputType = {
     id?: true
-    name?: true
     email?: true
+    name?: true
     password?: true
     role?: true
     createdAt?: true
@@ -1032,8 +1316,8 @@ export namespace Prisma {
 
   export type UserMaxAggregateInputType = {
     id?: true
-    name?: true
     email?: true
+    name?: true
     password?: true
     role?: true
     createdAt?: true
@@ -1042,11 +1326,10 @@ export namespace Prisma {
 
   export type UserCountAggregateInputType = {
     id?: true
-    name?: true
     email?: true
+    name?: true
     password?: true
     role?: true
-    savedVehicles?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1126,11 +1409,10 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: string
-    name: string
     email: string
+    name: string | null
     password: string
-    role: $Enums.Role
-    savedVehicles: string[]
+    role: $Enums.UserRole
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1154,60 +1436,68 @@ export namespace Prisma {
 
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
     email?: boolean
+    name?: boolean
     password?: boolean
     role?: boolean
-    savedVehicles?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    preferences?: boolean | User$preferencesArgs<ExtArgs>
+    activities?: boolean | User$activitiesArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
     email?: boolean
+    name?: boolean
     password?: boolean
     role?: boolean
-    savedVehicles?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
     email?: boolean
+    name?: boolean
     password?: boolean
     role?: boolean
-    savedVehicles?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
-    name?: boolean
     email?: boolean
+    name?: boolean
     password?: boolean
     role?: boolean
-    savedVehicles?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "savedVehicles" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "password" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    preferences?: boolean | User$preferencesArgs<ExtArgs>
+    activities?: boolean | User$activitiesArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
-    objects: {}
+    objects: {
+      preferences: Prisma.$PreferencePayload<ExtArgs> | null
+      activities: Prisma.$ActivityPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      name: string
       email: string
+      name: string | null
       password: string
-      role: $Enums.Role
-      savedVehicles: string[]
+      role: $Enums.UserRole
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -1604,6 +1894,8 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    preferences<T extends User$preferencesArgs<ExtArgs> = {}>(args?: Subset<T, User$preferencesArgs<ExtArgs>>): Prisma__PreferenceClient<$Result.GetResult<Prisma.$PreferencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    activities<T extends User$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, User$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1634,11 +1926,10 @@ export namespace Prisma {
    */
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
-    readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
+    readonly name: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
-    readonly role: FieldRef<"User", 'Role'>
-    readonly savedVehicles: FieldRef<"User", 'String[]'>
+    readonly role: FieldRef<"User", 'UserRole'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -1658,6 +1949,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -1676,6 +1971,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -1693,6 +1992,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -1742,6 +2045,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where?: UserWhereInput
@@ -1790,6 +2097,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which Users to fetch.
      */
     where?: UserWhereInput
@@ -1832,6 +2143,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to create a User.
      */
@@ -1880,6 +2195,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to update a User.
      */
@@ -1947,6 +2266,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * The filter to search for the User to update in case it exists.
      */
     where: UserWhereUniqueInput
@@ -1973,6 +2296,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter which User to delete.
      */
     where: UserWhereUniqueInput
@@ -1993,6 +2320,49 @@ export namespace Prisma {
   }
 
   /**
+   * User.preferences
+   */
+  export type User$preferencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preference
+     */
+    select?: PreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Preference
+     */
+    omit?: PreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PreferenceInclude<ExtArgs> | null
+    where?: PreferenceWhereInput
+  }
+
+  /**
+   * User.activities
+   */
+  export type User$activitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: ActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: ActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityInclude<ExtArgs> | null
+    where?: ActivityWhereInput
+    orderBy?: ActivityOrderByWithRelationInput | ActivityOrderByWithRelationInput[]
+    cursor?: ActivityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ActivityScalarFieldEnum | ActivityScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2004,6 +2374,2227 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Activity
+   */
+
+  export type AggregateActivity = {
+    _count: ActivityCountAggregateOutputType | null
+    _min: ActivityMinAggregateOutputType | null
+    _max: ActivityMaxAggregateOutputType | null
+  }
+
+  export type ActivityMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    action: string | null
+    query: string | null
+    timestamp: Date | null
+  }
+
+  export type ActivityMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    action: string | null
+    query: string | null
+    timestamp: Date | null
+  }
+
+  export type ActivityCountAggregateOutputType = {
+    id: number
+    userId: number
+    action: number
+    carIds: number
+    query: number
+    timestamp: number
+    _all: number
+  }
+
+
+  export type ActivityMinAggregateInputType = {
+    id?: true
+    userId?: true
+    action?: true
+    query?: true
+    timestamp?: true
+  }
+
+  export type ActivityMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    action?: true
+    query?: true
+    timestamp?: true
+  }
+
+  export type ActivityCountAggregateInputType = {
+    id?: true
+    userId?: true
+    action?: true
+    carIds?: true
+    query?: true
+    timestamp?: true
+    _all?: true
+  }
+
+  export type ActivityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Activity to aggregate.
+     */
+    where?: ActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Activities to fetch.
+     */
+    orderBy?: ActivityOrderByWithRelationInput | ActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Activities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Activities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Activities
+    **/
+    _count?: true | ActivityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ActivityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ActivityMaxAggregateInputType
+  }
+
+  export type GetActivityAggregateType<T extends ActivityAggregateArgs> = {
+        [P in keyof T & keyof AggregateActivity]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateActivity[P]>
+      : GetScalarType<T[P], AggregateActivity[P]>
+  }
+
+
+
+
+  export type ActivityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActivityWhereInput
+    orderBy?: ActivityOrderByWithAggregationInput | ActivityOrderByWithAggregationInput[]
+    by: ActivityScalarFieldEnum[] | ActivityScalarFieldEnum
+    having?: ActivityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ActivityCountAggregateInputType | true
+    _min?: ActivityMinAggregateInputType
+    _max?: ActivityMaxAggregateInputType
+  }
+
+  export type ActivityGroupByOutputType = {
+    id: string
+    userId: string
+    action: string
+    carIds: string[]
+    query: string | null
+    timestamp: Date
+    _count: ActivityCountAggregateOutputType | null
+    _min: ActivityMinAggregateOutputType | null
+    _max: ActivityMaxAggregateOutputType | null
+  }
+
+  type GetActivityGroupByPayload<T extends ActivityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ActivityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ActivityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ActivityGroupByOutputType[P]>
+            : GetScalarType<T[P], ActivityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ActivitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    action?: boolean
+    carIds?: boolean
+    query?: boolean
+    timestamp?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["activity"]>
+
+  export type ActivitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    action?: boolean
+    carIds?: boolean
+    query?: boolean
+    timestamp?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["activity"]>
+
+  export type ActivitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    action?: boolean
+    carIds?: boolean
+    query?: boolean
+    timestamp?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["activity"]>
+
+  export type ActivitySelectScalar = {
+    id?: boolean
+    userId?: boolean
+    action?: boolean
+    carIds?: boolean
+    query?: boolean
+    timestamp?: boolean
+  }
+
+  export type ActivityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "action" | "carIds" | "query" | "timestamp", ExtArgs["result"]["activity"]>
+  export type ActivityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ActivityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ActivityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ActivityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Activity"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      action: string
+      carIds: string[]
+      query: string | null
+      timestamp: Date
+    }, ExtArgs["result"]["activity"]>
+    composites: {}
+  }
+
+  type ActivityGetPayload<S extends boolean | null | undefined | ActivityDefaultArgs> = $Result.GetResult<Prisma.$ActivityPayload, S>
+
+  type ActivityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ActivityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ActivityCountAggregateInputType | true
+    }
+
+  export interface ActivityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Activity'], meta: { name: 'Activity' } }
+    /**
+     * Find zero or one Activity that matches the filter.
+     * @param {ActivityFindUniqueArgs} args - Arguments to find a Activity
+     * @example
+     * // Get one Activity
+     * const activity = await prisma.activity.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ActivityFindUniqueArgs>(args: SelectSubset<T, ActivityFindUniqueArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Activity that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ActivityFindUniqueOrThrowArgs} args - Arguments to find a Activity
+     * @example
+     * // Get one Activity
+     * const activity = await prisma.activity.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ActivityFindUniqueOrThrowArgs>(args: SelectSubset<T, ActivityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Activity that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityFindFirstArgs} args - Arguments to find a Activity
+     * @example
+     * // Get one Activity
+     * const activity = await prisma.activity.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ActivityFindFirstArgs>(args?: SelectSubset<T, ActivityFindFirstArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Activity that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityFindFirstOrThrowArgs} args - Arguments to find a Activity
+     * @example
+     * // Get one Activity
+     * const activity = await prisma.activity.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ActivityFindFirstOrThrowArgs>(args?: SelectSubset<T, ActivityFindFirstOrThrowArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Activities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Activities
+     * const activities = await prisma.activity.findMany()
+     * 
+     * // Get first 10 Activities
+     * const activities = await prisma.activity.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const activityWithIdOnly = await prisma.activity.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ActivityFindManyArgs>(args?: SelectSubset<T, ActivityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Activity.
+     * @param {ActivityCreateArgs} args - Arguments to create a Activity.
+     * @example
+     * // Create one Activity
+     * const Activity = await prisma.activity.create({
+     *   data: {
+     *     // ... data to create a Activity
+     *   }
+     * })
+     * 
+     */
+    create<T extends ActivityCreateArgs>(args: SelectSubset<T, ActivityCreateArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Activities.
+     * @param {ActivityCreateManyArgs} args - Arguments to create many Activities.
+     * @example
+     * // Create many Activities
+     * const activity = await prisma.activity.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ActivityCreateManyArgs>(args?: SelectSubset<T, ActivityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Activities and returns the data saved in the database.
+     * @param {ActivityCreateManyAndReturnArgs} args - Arguments to create many Activities.
+     * @example
+     * // Create many Activities
+     * const activity = await prisma.activity.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Activities and only return the `id`
+     * const activityWithIdOnly = await prisma.activity.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ActivityCreateManyAndReturnArgs>(args?: SelectSubset<T, ActivityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Activity.
+     * @param {ActivityDeleteArgs} args - Arguments to delete one Activity.
+     * @example
+     * // Delete one Activity
+     * const Activity = await prisma.activity.delete({
+     *   where: {
+     *     // ... filter to delete one Activity
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ActivityDeleteArgs>(args: SelectSubset<T, ActivityDeleteArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Activity.
+     * @param {ActivityUpdateArgs} args - Arguments to update one Activity.
+     * @example
+     * // Update one Activity
+     * const activity = await prisma.activity.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ActivityUpdateArgs>(args: SelectSubset<T, ActivityUpdateArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Activities.
+     * @param {ActivityDeleteManyArgs} args - Arguments to filter Activities to delete.
+     * @example
+     * // Delete a few Activities
+     * const { count } = await prisma.activity.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ActivityDeleteManyArgs>(args?: SelectSubset<T, ActivityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Activities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Activities
+     * const activity = await prisma.activity.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ActivityUpdateManyArgs>(args: SelectSubset<T, ActivityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Activities and returns the data updated in the database.
+     * @param {ActivityUpdateManyAndReturnArgs} args - Arguments to update many Activities.
+     * @example
+     * // Update many Activities
+     * const activity = await prisma.activity.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Activities and only return the `id`
+     * const activityWithIdOnly = await prisma.activity.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ActivityUpdateManyAndReturnArgs>(args: SelectSubset<T, ActivityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Activity.
+     * @param {ActivityUpsertArgs} args - Arguments to update or create a Activity.
+     * @example
+     * // Update or create a Activity
+     * const activity = await prisma.activity.upsert({
+     *   create: {
+     *     // ... data to create a Activity
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Activity we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ActivityUpsertArgs>(args: SelectSubset<T, ActivityUpsertArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Activities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityCountArgs} args - Arguments to filter Activities to count.
+     * @example
+     * // Count the number of Activities
+     * const count = await prisma.activity.count({
+     *   where: {
+     *     // ... the filter for the Activities we want to count
+     *   }
+     * })
+    **/
+    count<T extends ActivityCountArgs>(
+      args?: Subset<T, ActivityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ActivityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Activity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ActivityAggregateArgs>(args: Subset<T, ActivityAggregateArgs>): Prisma.PrismaPromise<GetActivityAggregateType<T>>
+
+    /**
+     * Group by Activity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ActivityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ActivityGroupByArgs['orderBy'] }
+        : { orderBy?: ActivityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ActivityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetActivityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Activity model
+   */
+  readonly fields: ActivityFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Activity.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ActivityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Activity model
+   */
+  interface ActivityFieldRefs {
+    readonly id: FieldRef<"Activity", 'String'>
+    readonly userId: FieldRef<"Activity", 'String'>
+    readonly action: FieldRef<"Activity", 'String'>
+    readonly carIds: FieldRef<"Activity", 'String[]'>
+    readonly query: FieldRef<"Activity", 'String'>
+    readonly timestamp: FieldRef<"Activity", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Activity findUnique
+   */
+  export type ActivityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: ActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: ActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which Activity to fetch.
+     */
+    where: ActivityWhereUniqueInput
+  }
+
+  /**
+   * Activity findUniqueOrThrow
+   */
+  export type ActivityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: ActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: ActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which Activity to fetch.
+     */
+    where: ActivityWhereUniqueInput
+  }
+
+  /**
+   * Activity findFirst
+   */
+  export type ActivityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: ActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: ActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which Activity to fetch.
+     */
+    where?: ActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Activities to fetch.
+     */
+    orderBy?: ActivityOrderByWithRelationInput | ActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Activities.
+     */
+    cursor?: ActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Activities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Activities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Activities.
+     */
+    distinct?: ActivityScalarFieldEnum | ActivityScalarFieldEnum[]
+  }
+
+  /**
+   * Activity findFirstOrThrow
+   */
+  export type ActivityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: ActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: ActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which Activity to fetch.
+     */
+    where?: ActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Activities to fetch.
+     */
+    orderBy?: ActivityOrderByWithRelationInput | ActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Activities.
+     */
+    cursor?: ActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Activities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Activities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Activities.
+     */
+    distinct?: ActivityScalarFieldEnum | ActivityScalarFieldEnum[]
+  }
+
+  /**
+   * Activity findMany
+   */
+  export type ActivityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: ActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: ActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which Activities to fetch.
+     */
+    where?: ActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Activities to fetch.
+     */
+    orderBy?: ActivityOrderByWithRelationInput | ActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Activities.
+     */
+    cursor?: ActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Activities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Activities.
+     */
+    skip?: number
+    distinct?: ActivityScalarFieldEnum | ActivityScalarFieldEnum[]
+  }
+
+  /**
+   * Activity create
+   */
+  export type ActivityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: ActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: ActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Activity.
+     */
+    data: XOR<ActivityCreateInput, ActivityUncheckedCreateInput>
+  }
+
+  /**
+   * Activity createMany
+   */
+  export type ActivityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Activities.
+     */
+    data: ActivityCreateManyInput | ActivityCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Activity createManyAndReturn
+   */
+  export type ActivityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: ActivitySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: ActivityOmit<ExtArgs> | null
+    /**
+     * The data used to create many Activities.
+     */
+    data: ActivityCreateManyInput | ActivityCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Activity update
+   */
+  export type ActivityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: ActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: ActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Activity.
+     */
+    data: XOR<ActivityUpdateInput, ActivityUncheckedUpdateInput>
+    /**
+     * Choose, which Activity to update.
+     */
+    where: ActivityWhereUniqueInput
+  }
+
+  /**
+   * Activity updateMany
+   */
+  export type ActivityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Activities.
+     */
+    data: XOR<ActivityUpdateManyMutationInput, ActivityUncheckedUpdateManyInput>
+    /**
+     * Filter which Activities to update
+     */
+    where?: ActivityWhereInput
+    /**
+     * Limit how many Activities to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Activity updateManyAndReturn
+   */
+  export type ActivityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: ActivitySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: ActivityOmit<ExtArgs> | null
+    /**
+     * The data used to update Activities.
+     */
+    data: XOR<ActivityUpdateManyMutationInput, ActivityUncheckedUpdateManyInput>
+    /**
+     * Filter which Activities to update
+     */
+    where?: ActivityWhereInput
+    /**
+     * Limit how many Activities to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Activity upsert
+   */
+  export type ActivityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: ActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: ActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Activity to update in case it exists.
+     */
+    where: ActivityWhereUniqueInput
+    /**
+     * In case the Activity found by the `where` argument doesn't exist, create a new Activity with this data.
+     */
+    create: XOR<ActivityCreateInput, ActivityUncheckedCreateInput>
+    /**
+     * In case the Activity was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ActivityUpdateInput, ActivityUncheckedUpdateInput>
+  }
+
+  /**
+   * Activity delete
+   */
+  export type ActivityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: ActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: ActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityInclude<ExtArgs> | null
+    /**
+     * Filter which Activity to delete.
+     */
+    where: ActivityWhereUniqueInput
+  }
+
+  /**
+   * Activity deleteMany
+   */
+  export type ActivityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Activities to delete
+     */
+    where?: ActivityWhereInput
+    /**
+     * Limit how many Activities to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Activity without action
+   */
+  export type ActivityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: ActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: ActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Preference
+   */
+
+  export type AggregatePreference = {
+    _count: PreferenceCountAggregateOutputType | null
+    _avg: PreferenceAvgAggregateOutputType | null
+    _sum: PreferenceSumAggregateOutputType | null
+    _min: PreferenceMinAggregateOutputType | null
+    _max: PreferenceMaxAggregateOutputType | null
+  }
+
+  export type PreferenceAvgAggregateOutputType = {
+    budgetMin: number | null
+    budgetMax: number | null
+  }
+
+  export type PreferenceSumAggregateOutputType = {
+    budgetMin: number | null
+    budgetMax: number | null
+  }
+
+  export type PreferenceMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    budgetMin: number | null
+    budgetMax: number | null
+    updatedAt: Date | null
+  }
+
+  export type PreferenceMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    budgetMin: number | null
+    budgetMax: number | null
+    updatedAt: Date | null
+  }
+
+  export type PreferenceCountAggregateOutputType = {
+    id: number
+    userId: number
+    budgetMin: number
+    budgetMax: number
+    carTypes: number
+    fuelTypes: number
+    brand: number
+    features: number
+    primarilyUse: number
+    topPriorities: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PreferenceAvgAggregateInputType = {
+    budgetMin?: true
+    budgetMax?: true
+  }
+
+  export type PreferenceSumAggregateInputType = {
+    budgetMin?: true
+    budgetMax?: true
+  }
+
+  export type PreferenceMinAggregateInputType = {
+    id?: true
+    userId?: true
+    budgetMin?: true
+    budgetMax?: true
+    updatedAt?: true
+  }
+
+  export type PreferenceMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    budgetMin?: true
+    budgetMax?: true
+    updatedAt?: true
+  }
+
+  export type PreferenceCountAggregateInputType = {
+    id?: true
+    userId?: true
+    budgetMin?: true
+    budgetMax?: true
+    carTypes?: true
+    fuelTypes?: true
+    brand?: true
+    features?: true
+    primarilyUse?: true
+    topPriorities?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PreferenceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Preference to aggregate.
+     */
+    where?: PreferenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Preferences to fetch.
+     */
+    orderBy?: PreferenceOrderByWithRelationInput | PreferenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PreferenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Preferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Preferences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Preferences
+    **/
+    _count?: true | PreferenceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PreferenceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PreferenceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PreferenceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PreferenceMaxAggregateInputType
+  }
+
+  export type GetPreferenceAggregateType<T extends PreferenceAggregateArgs> = {
+        [P in keyof T & keyof AggregatePreference]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePreference[P]>
+      : GetScalarType<T[P], AggregatePreference[P]>
+  }
+
+
+
+
+  export type PreferenceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PreferenceWhereInput
+    orderBy?: PreferenceOrderByWithAggregationInput | PreferenceOrderByWithAggregationInput[]
+    by: PreferenceScalarFieldEnum[] | PreferenceScalarFieldEnum
+    having?: PreferenceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PreferenceCountAggregateInputType | true
+    _avg?: PreferenceAvgAggregateInputType
+    _sum?: PreferenceSumAggregateInputType
+    _min?: PreferenceMinAggregateInputType
+    _max?: PreferenceMaxAggregateInputType
+  }
+
+  export type PreferenceGroupByOutputType = {
+    id: string
+    userId: string
+    budgetMin: number | null
+    budgetMax: number | null
+    carTypes: string[]
+    fuelTypes: string[]
+    brand: string[]
+    features: string[]
+    primarilyUse: string[]
+    topPriorities: string[]
+    updatedAt: Date
+    _count: PreferenceCountAggregateOutputType | null
+    _avg: PreferenceAvgAggregateOutputType | null
+    _sum: PreferenceSumAggregateOutputType | null
+    _min: PreferenceMinAggregateOutputType | null
+    _max: PreferenceMaxAggregateOutputType | null
+  }
+
+  type GetPreferenceGroupByPayload<T extends PreferenceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PreferenceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PreferenceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PreferenceGroupByOutputType[P]>
+            : GetScalarType<T[P], PreferenceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PreferenceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    budgetMin?: boolean
+    budgetMax?: boolean
+    carTypes?: boolean
+    fuelTypes?: boolean
+    brand?: boolean
+    features?: boolean
+    primarilyUse?: boolean
+    topPriorities?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["preference"]>
+
+  export type PreferenceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    budgetMin?: boolean
+    budgetMax?: boolean
+    carTypes?: boolean
+    fuelTypes?: boolean
+    brand?: boolean
+    features?: boolean
+    primarilyUse?: boolean
+    topPriorities?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["preference"]>
+
+  export type PreferenceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    budgetMin?: boolean
+    budgetMax?: boolean
+    carTypes?: boolean
+    fuelTypes?: boolean
+    brand?: boolean
+    features?: boolean
+    primarilyUse?: boolean
+    topPriorities?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["preference"]>
+
+  export type PreferenceSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    budgetMin?: boolean
+    budgetMax?: boolean
+    carTypes?: boolean
+    fuelTypes?: boolean
+    brand?: boolean
+    features?: boolean
+    primarilyUse?: boolean
+    topPriorities?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PreferenceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "budgetMin" | "budgetMax" | "carTypes" | "fuelTypes" | "brand" | "features" | "primarilyUse" | "topPriorities" | "updatedAt", ExtArgs["result"]["preference"]>
+  export type PreferenceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PreferenceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PreferenceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $PreferencePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Preference"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      budgetMin: number | null
+      budgetMax: number | null
+      carTypes: string[]
+      fuelTypes: string[]
+      brand: string[]
+      features: string[]
+      primarilyUse: string[]
+      topPriorities: string[]
+      updatedAt: Date
+    }, ExtArgs["result"]["preference"]>
+    composites: {}
+  }
+
+  type PreferenceGetPayload<S extends boolean | null | undefined | PreferenceDefaultArgs> = $Result.GetResult<Prisma.$PreferencePayload, S>
+
+  type PreferenceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PreferenceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PreferenceCountAggregateInputType | true
+    }
+
+  export interface PreferenceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Preference'], meta: { name: 'Preference' } }
+    /**
+     * Find zero or one Preference that matches the filter.
+     * @param {PreferenceFindUniqueArgs} args - Arguments to find a Preference
+     * @example
+     * // Get one Preference
+     * const preference = await prisma.preference.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PreferenceFindUniqueArgs>(args: SelectSubset<T, PreferenceFindUniqueArgs<ExtArgs>>): Prisma__PreferenceClient<$Result.GetResult<Prisma.$PreferencePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Preference that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PreferenceFindUniqueOrThrowArgs} args - Arguments to find a Preference
+     * @example
+     * // Get one Preference
+     * const preference = await prisma.preference.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PreferenceFindUniqueOrThrowArgs>(args: SelectSubset<T, PreferenceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PreferenceClient<$Result.GetResult<Prisma.$PreferencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Preference that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PreferenceFindFirstArgs} args - Arguments to find a Preference
+     * @example
+     * // Get one Preference
+     * const preference = await prisma.preference.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PreferenceFindFirstArgs>(args?: SelectSubset<T, PreferenceFindFirstArgs<ExtArgs>>): Prisma__PreferenceClient<$Result.GetResult<Prisma.$PreferencePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Preference that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PreferenceFindFirstOrThrowArgs} args - Arguments to find a Preference
+     * @example
+     * // Get one Preference
+     * const preference = await prisma.preference.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PreferenceFindFirstOrThrowArgs>(args?: SelectSubset<T, PreferenceFindFirstOrThrowArgs<ExtArgs>>): Prisma__PreferenceClient<$Result.GetResult<Prisma.$PreferencePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Preferences that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PreferenceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Preferences
+     * const preferences = await prisma.preference.findMany()
+     * 
+     * // Get first 10 Preferences
+     * const preferences = await prisma.preference.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const preferenceWithIdOnly = await prisma.preference.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PreferenceFindManyArgs>(args?: SelectSubset<T, PreferenceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PreferencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Preference.
+     * @param {PreferenceCreateArgs} args - Arguments to create a Preference.
+     * @example
+     * // Create one Preference
+     * const Preference = await prisma.preference.create({
+     *   data: {
+     *     // ... data to create a Preference
+     *   }
+     * })
+     * 
+     */
+    create<T extends PreferenceCreateArgs>(args: SelectSubset<T, PreferenceCreateArgs<ExtArgs>>): Prisma__PreferenceClient<$Result.GetResult<Prisma.$PreferencePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Preferences.
+     * @param {PreferenceCreateManyArgs} args - Arguments to create many Preferences.
+     * @example
+     * // Create many Preferences
+     * const preference = await prisma.preference.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PreferenceCreateManyArgs>(args?: SelectSubset<T, PreferenceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Preferences and returns the data saved in the database.
+     * @param {PreferenceCreateManyAndReturnArgs} args - Arguments to create many Preferences.
+     * @example
+     * // Create many Preferences
+     * const preference = await prisma.preference.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Preferences and only return the `id`
+     * const preferenceWithIdOnly = await prisma.preference.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PreferenceCreateManyAndReturnArgs>(args?: SelectSubset<T, PreferenceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PreferencePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Preference.
+     * @param {PreferenceDeleteArgs} args - Arguments to delete one Preference.
+     * @example
+     * // Delete one Preference
+     * const Preference = await prisma.preference.delete({
+     *   where: {
+     *     // ... filter to delete one Preference
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PreferenceDeleteArgs>(args: SelectSubset<T, PreferenceDeleteArgs<ExtArgs>>): Prisma__PreferenceClient<$Result.GetResult<Prisma.$PreferencePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Preference.
+     * @param {PreferenceUpdateArgs} args - Arguments to update one Preference.
+     * @example
+     * // Update one Preference
+     * const preference = await prisma.preference.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PreferenceUpdateArgs>(args: SelectSubset<T, PreferenceUpdateArgs<ExtArgs>>): Prisma__PreferenceClient<$Result.GetResult<Prisma.$PreferencePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Preferences.
+     * @param {PreferenceDeleteManyArgs} args - Arguments to filter Preferences to delete.
+     * @example
+     * // Delete a few Preferences
+     * const { count } = await prisma.preference.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PreferenceDeleteManyArgs>(args?: SelectSubset<T, PreferenceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Preferences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PreferenceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Preferences
+     * const preference = await prisma.preference.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PreferenceUpdateManyArgs>(args: SelectSubset<T, PreferenceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Preferences and returns the data updated in the database.
+     * @param {PreferenceUpdateManyAndReturnArgs} args - Arguments to update many Preferences.
+     * @example
+     * // Update many Preferences
+     * const preference = await prisma.preference.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Preferences and only return the `id`
+     * const preferenceWithIdOnly = await prisma.preference.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PreferenceUpdateManyAndReturnArgs>(args: SelectSubset<T, PreferenceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PreferencePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Preference.
+     * @param {PreferenceUpsertArgs} args - Arguments to update or create a Preference.
+     * @example
+     * // Update or create a Preference
+     * const preference = await prisma.preference.upsert({
+     *   create: {
+     *     // ... data to create a Preference
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Preference we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PreferenceUpsertArgs>(args: SelectSubset<T, PreferenceUpsertArgs<ExtArgs>>): Prisma__PreferenceClient<$Result.GetResult<Prisma.$PreferencePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Preferences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PreferenceCountArgs} args - Arguments to filter Preferences to count.
+     * @example
+     * // Count the number of Preferences
+     * const count = await prisma.preference.count({
+     *   where: {
+     *     // ... the filter for the Preferences we want to count
+     *   }
+     * })
+    **/
+    count<T extends PreferenceCountArgs>(
+      args?: Subset<T, PreferenceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PreferenceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Preference.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PreferenceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PreferenceAggregateArgs>(args: Subset<T, PreferenceAggregateArgs>): Prisma.PrismaPromise<GetPreferenceAggregateType<T>>
+
+    /**
+     * Group by Preference.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PreferenceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PreferenceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PreferenceGroupByArgs['orderBy'] }
+        : { orderBy?: PreferenceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PreferenceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPreferenceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Preference model
+   */
+  readonly fields: PreferenceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Preference.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PreferenceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Preference model
+   */
+  interface PreferenceFieldRefs {
+    readonly id: FieldRef<"Preference", 'String'>
+    readonly userId: FieldRef<"Preference", 'String'>
+    readonly budgetMin: FieldRef<"Preference", 'Float'>
+    readonly budgetMax: FieldRef<"Preference", 'Float'>
+    readonly carTypes: FieldRef<"Preference", 'String[]'>
+    readonly fuelTypes: FieldRef<"Preference", 'String[]'>
+    readonly brand: FieldRef<"Preference", 'String[]'>
+    readonly features: FieldRef<"Preference", 'String[]'>
+    readonly primarilyUse: FieldRef<"Preference", 'String[]'>
+    readonly topPriorities: FieldRef<"Preference", 'String[]'>
+    readonly updatedAt: FieldRef<"Preference", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Preference findUnique
+   */
+  export type PreferenceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preference
+     */
+    select?: PreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Preference
+     */
+    omit?: PreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PreferenceInclude<ExtArgs> | null
+    /**
+     * Filter, which Preference to fetch.
+     */
+    where: PreferenceWhereUniqueInput
+  }
+
+  /**
+   * Preference findUniqueOrThrow
+   */
+  export type PreferenceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preference
+     */
+    select?: PreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Preference
+     */
+    omit?: PreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PreferenceInclude<ExtArgs> | null
+    /**
+     * Filter, which Preference to fetch.
+     */
+    where: PreferenceWhereUniqueInput
+  }
+
+  /**
+   * Preference findFirst
+   */
+  export type PreferenceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preference
+     */
+    select?: PreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Preference
+     */
+    omit?: PreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PreferenceInclude<ExtArgs> | null
+    /**
+     * Filter, which Preference to fetch.
+     */
+    where?: PreferenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Preferences to fetch.
+     */
+    orderBy?: PreferenceOrderByWithRelationInput | PreferenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Preferences.
+     */
+    cursor?: PreferenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Preferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Preferences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Preferences.
+     */
+    distinct?: PreferenceScalarFieldEnum | PreferenceScalarFieldEnum[]
+  }
+
+  /**
+   * Preference findFirstOrThrow
+   */
+  export type PreferenceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preference
+     */
+    select?: PreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Preference
+     */
+    omit?: PreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PreferenceInclude<ExtArgs> | null
+    /**
+     * Filter, which Preference to fetch.
+     */
+    where?: PreferenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Preferences to fetch.
+     */
+    orderBy?: PreferenceOrderByWithRelationInput | PreferenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Preferences.
+     */
+    cursor?: PreferenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Preferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Preferences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Preferences.
+     */
+    distinct?: PreferenceScalarFieldEnum | PreferenceScalarFieldEnum[]
+  }
+
+  /**
+   * Preference findMany
+   */
+  export type PreferenceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preference
+     */
+    select?: PreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Preference
+     */
+    omit?: PreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PreferenceInclude<ExtArgs> | null
+    /**
+     * Filter, which Preferences to fetch.
+     */
+    where?: PreferenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Preferences to fetch.
+     */
+    orderBy?: PreferenceOrderByWithRelationInput | PreferenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Preferences.
+     */
+    cursor?: PreferenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Preferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Preferences.
+     */
+    skip?: number
+    distinct?: PreferenceScalarFieldEnum | PreferenceScalarFieldEnum[]
+  }
+
+  /**
+   * Preference create
+   */
+  export type PreferenceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preference
+     */
+    select?: PreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Preference
+     */
+    omit?: PreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PreferenceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Preference.
+     */
+    data: XOR<PreferenceCreateInput, PreferenceUncheckedCreateInput>
+  }
+
+  /**
+   * Preference createMany
+   */
+  export type PreferenceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Preferences.
+     */
+    data: PreferenceCreateManyInput | PreferenceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Preference createManyAndReturn
+   */
+  export type PreferenceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preference
+     */
+    select?: PreferenceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Preference
+     */
+    omit?: PreferenceOmit<ExtArgs> | null
+    /**
+     * The data used to create many Preferences.
+     */
+    data: PreferenceCreateManyInput | PreferenceCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PreferenceIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Preference update
+   */
+  export type PreferenceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preference
+     */
+    select?: PreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Preference
+     */
+    omit?: PreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PreferenceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Preference.
+     */
+    data: XOR<PreferenceUpdateInput, PreferenceUncheckedUpdateInput>
+    /**
+     * Choose, which Preference to update.
+     */
+    where: PreferenceWhereUniqueInput
+  }
+
+  /**
+   * Preference updateMany
+   */
+  export type PreferenceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Preferences.
+     */
+    data: XOR<PreferenceUpdateManyMutationInput, PreferenceUncheckedUpdateManyInput>
+    /**
+     * Filter which Preferences to update
+     */
+    where?: PreferenceWhereInput
+    /**
+     * Limit how many Preferences to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Preference updateManyAndReturn
+   */
+  export type PreferenceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preference
+     */
+    select?: PreferenceSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Preference
+     */
+    omit?: PreferenceOmit<ExtArgs> | null
+    /**
+     * The data used to update Preferences.
+     */
+    data: XOR<PreferenceUpdateManyMutationInput, PreferenceUncheckedUpdateManyInput>
+    /**
+     * Filter which Preferences to update
+     */
+    where?: PreferenceWhereInput
+    /**
+     * Limit how many Preferences to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PreferenceIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Preference upsert
+   */
+  export type PreferenceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preference
+     */
+    select?: PreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Preference
+     */
+    omit?: PreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PreferenceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Preference to update in case it exists.
+     */
+    where: PreferenceWhereUniqueInput
+    /**
+     * In case the Preference found by the `where` argument doesn't exist, create a new Preference with this data.
+     */
+    create: XOR<PreferenceCreateInput, PreferenceUncheckedCreateInput>
+    /**
+     * In case the Preference was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PreferenceUpdateInput, PreferenceUncheckedUpdateInput>
+  }
+
+  /**
+   * Preference delete
+   */
+  export type PreferenceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preference
+     */
+    select?: PreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Preference
+     */
+    omit?: PreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PreferenceInclude<ExtArgs> | null
+    /**
+     * Filter which Preference to delete.
+     */
+    where: PreferenceWhereUniqueInput
+  }
+
+  /**
+   * Preference deleteMany
+   */
+  export type PreferenceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Preferences to delete
+     */
+    where?: PreferenceWhereInput
+    /**
+     * Limit how many Preferences to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Preference without action
+   */
+  export type PreferenceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preference
+     */
+    select?: PreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Preference
+     */
+    omit?: PreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PreferenceInclude<ExtArgs> | null
   }
 
 
@@ -2030,6 +4621,7 @@ export namespace Prisma {
     odometer: number | null
     doors: number | null
     seats: number | null
+    viewsCount: number | null
   }
 
   export type VehicleSumAggregateOutputType = {
@@ -2043,6 +4635,7 @@ export namespace Prisma {
     odometer: number | null
     doors: number | null
     seats: number | null
+    viewsCount: number | null
   }
 
   export type VehicleMinAggregateOutputType = {
@@ -2051,9 +4644,9 @@ export namespace Prisma {
     model: string | null
     year: number | null
     price: number | null
-    bodyType: string | null
-    transmission: string | null
-    fuelType: string | null
+    bodyType: $Enums.BodyType | null
+    transmission: $Enums.Transmission | null
+    fuelType: $Enums.FuelType | null
     fuelConsumptionUrban: number | null
     fuelConsumptionExtraUrban: number | null
     fuelConsumptionCombined: number | null
@@ -2068,6 +4661,9 @@ export namespace Prisma {
     vin: string | null
     stockNumber: string | null
     description: string | null
+    status: $Enums.VehicleStatus | null
+    condition: $Enums.VehicleCondition | null
+    viewsCount: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2078,9 +4674,9 @@ export namespace Prisma {
     model: string | null
     year: number | null
     price: number | null
-    bodyType: string | null
-    transmission: string | null
-    fuelType: string | null
+    bodyType: $Enums.BodyType | null
+    transmission: $Enums.Transmission | null
+    fuelType: $Enums.FuelType | null
     fuelConsumptionUrban: number | null
     fuelConsumptionExtraUrban: number | null
     fuelConsumptionCombined: number | null
@@ -2095,6 +4691,9 @@ export namespace Prisma {
     vin: string | null
     stockNumber: string | null
     description: string | null
+    status: $Enums.VehicleStatus | null
+    condition: $Enums.VehicleCondition | null
+    viewsCount: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2123,6 +4722,10 @@ export namespace Prisma {
     stockNumber: number
     images: number
     description: number
+    status: number
+    condition: number
+    features: number
+    viewsCount: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2140,6 +4743,7 @@ export namespace Prisma {
     odometer?: true
     doors?: true
     seats?: true
+    viewsCount?: true
   }
 
   export type VehicleSumAggregateInputType = {
@@ -2153,6 +4757,7 @@ export namespace Prisma {
     odometer?: true
     doors?: true
     seats?: true
+    viewsCount?: true
   }
 
   export type VehicleMinAggregateInputType = {
@@ -2178,6 +4783,9 @@ export namespace Prisma {
     vin?: true
     stockNumber?: true
     description?: true
+    status?: true
+    condition?: true
+    viewsCount?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2205,6 +4813,9 @@ export namespace Prisma {
     vin?: true
     stockNumber?: true
     description?: true
+    status?: true
+    condition?: true
+    viewsCount?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2233,6 +4844,10 @@ export namespace Prisma {
     stockNumber?: true
     images?: true
     description?: true
+    status?: true
+    condition?: true
+    features?: true
+    viewsCount?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2330,9 +4945,9 @@ export namespace Prisma {
     model: string
     year: number
     price: number
-    bodyType: string
-    transmission: string
-    fuelType: string
+    bodyType: $Enums.BodyType
+    transmission: $Enums.Transmission
+    fuelType: $Enums.FuelType
     fuelConsumptionUrban: number | null
     fuelConsumptionExtraUrban: number | null
     fuelConsumptionCombined: number | null
@@ -2347,7 +4962,11 @@ export namespace Prisma {
     vin: string | null
     stockNumber: string | null
     images: string[]
-    description: string | null
+    description: string
+    status: $Enums.VehicleStatus
+    condition: $Enums.VehicleCondition
+    features: string[]
+    viewsCount: number
     createdAt: Date
     updatedAt: Date
     _count: VehicleCountAggregateOutputType | null
@@ -2395,6 +5014,10 @@ export namespace Prisma {
     stockNumber?: boolean
     images?: boolean
     description?: boolean
+    status?: boolean
+    condition?: boolean
+    features?: boolean
+    viewsCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["vehicle"]>
@@ -2423,6 +5046,10 @@ export namespace Prisma {
     stockNumber?: boolean
     images?: boolean
     description?: boolean
+    status?: boolean
+    condition?: boolean
+    features?: boolean
+    viewsCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["vehicle"]>
@@ -2451,6 +5078,10 @@ export namespace Prisma {
     stockNumber?: boolean
     images?: boolean
     description?: boolean
+    status?: boolean
+    condition?: boolean
+    features?: boolean
+    viewsCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["vehicle"]>
@@ -2479,11 +5110,15 @@ export namespace Prisma {
     stockNumber?: boolean
     images?: boolean
     description?: boolean
+    status?: boolean
+    condition?: boolean
+    features?: boolean
+    viewsCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type VehicleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "make" | "model" | "year" | "price" | "bodyType" | "transmission" | "fuelType" | "fuelConsumptionUrban" | "fuelConsumptionExtraUrban" | "fuelConsumptionCombined" | "engineCapacity" | "cylinders" | "odometer" | "driveType" | "doors" | "seats" | "color" | "rego" | "vin" | "stockNumber" | "images" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["vehicle"]>
+  export type VehicleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "make" | "model" | "year" | "price" | "bodyType" | "transmission" | "fuelType" | "fuelConsumptionUrban" | "fuelConsumptionExtraUrban" | "fuelConsumptionCombined" | "engineCapacity" | "cylinders" | "odometer" | "driveType" | "doors" | "seats" | "color" | "rego" | "vin" | "stockNumber" | "images" | "description" | "status" | "condition" | "features" | "viewsCount" | "createdAt" | "updatedAt", ExtArgs["result"]["vehicle"]>
 
   export type $VehiclePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Vehicle"
@@ -2494,9 +5129,9 @@ export namespace Prisma {
       model: string
       year: number
       price: number
-      bodyType: string
-      transmission: string
-      fuelType: string
+      bodyType: $Enums.BodyType
+      transmission: $Enums.Transmission
+      fuelType: $Enums.FuelType
       fuelConsumptionUrban: number | null
       fuelConsumptionExtraUrban: number | null
       fuelConsumptionCombined: number | null
@@ -2511,7 +5146,11 @@ export namespace Prisma {
       vin: string | null
       stockNumber: string | null
       images: string[]
-      description: string | null
+      description: string
+      status: $Enums.VehicleStatus
+      condition: $Enums.VehicleCondition
+      features: string[]
+      viewsCount: number
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["vehicle"]>
@@ -2942,9 +5581,9 @@ export namespace Prisma {
     readonly model: FieldRef<"Vehicle", 'String'>
     readonly year: FieldRef<"Vehicle", 'Int'>
     readonly price: FieldRef<"Vehicle", 'Int'>
-    readonly bodyType: FieldRef<"Vehicle", 'String'>
-    readonly transmission: FieldRef<"Vehicle", 'String'>
-    readonly fuelType: FieldRef<"Vehicle", 'String'>
+    readonly bodyType: FieldRef<"Vehicle", 'BodyType'>
+    readonly transmission: FieldRef<"Vehicle", 'Transmission'>
+    readonly fuelType: FieldRef<"Vehicle", 'FuelType'>
     readonly fuelConsumptionUrban: FieldRef<"Vehicle", 'Float'>
     readonly fuelConsumptionExtraUrban: FieldRef<"Vehicle", 'Float'>
     readonly fuelConsumptionCombined: FieldRef<"Vehicle", 'Float'>
@@ -2960,6 +5599,10 @@ export namespace Prisma {
     readonly stockNumber: FieldRef<"Vehicle", 'String'>
     readonly images: FieldRef<"Vehicle", 'String[]'>
     readonly description: FieldRef<"Vehicle", 'String'>
+    readonly status: FieldRef<"Vehicle", 'VehicleStatus'>
+    readonly condition: FieldRef<"Vehicle", 'VehicleCondition'>
+    readonly features: FieldRef<"Vehicle", 'String[]'>
+    readonly viewsCount: FieldRef<"Vehicle", 'Int'>
     readonly createdAt: FieldRef<"Vehicle", 'DateTime'>
     readonly updatedAt: FieldRef<"Vehicle", 'DateTime'>
   }
@@ -3344,16 +5987,44 @@ export namespace Prisma {
 
   export const UserScalarFieldEnum: {
     id: 'id',
-    name: 'name',
     email: 'email',
+    name: 'name',
     password: 'password',
     role: 'role',
-    savedVehicles: 'savedVehicles',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const ActivityScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    action: 'action',
+    carIds: 'carIds',
+    query: 'query',
+    timestamp: 'timestamp'
+  };
+
+  export type ActivityScalarFieldEnum = (typeof ActivityScalarFieldEnum)[keyof typeof ActivityScalarFieldEnum]
+
+
+  export const PreferenceScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    budgetMin: 'budgetMin',
+    budgetMax: 'budgetMax',
+    carTypes: 'carTypes',
+    fuelTypes: 'fuelTypes',
+    brand: 'brand',
+    features: 'features',
+    primarilyUse: 'primarilyUse',
+    topPriorities: 'topPriorities',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PreferenceScalarFieldEnum = (typeof PreferenceScalarFieldEnum)[keyof typeof PreferenceScalarFieldEnum]
 
 
   export const VehicleScalarFieldEnum: {
@@ -3380,6 +6051,10 @@ export namespace Prisma {
     stockNumber: 'stockNumber',
     images: 'images',
     description: 'description',
+    status: 'status',
+    condition: 'condition',
+    features: 'features',
+    viewsCount: 'viewsCount',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -3431,16 +6106,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Role'
+   * Reference to a field of type 'UserRole'
    */
-  export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
+  export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
     
 
 
   /**
-   * Reference to a field of type 'Role[]'
+   * Reference to a field of type 'UserRole[]'
    */
-  export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
+  export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
     
 
 
@@ -3459,6 +6134,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -3473,16 +6162,72 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Float'
+   * Reference to a field of type 'BodyType'
    */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+  export type EnumBodyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BodyType'>
     
 
 
   /**
-   * Reference to a field of type 'Float[]'
+   * Reference to a field of type 'BodyType[]'
    */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+  export type ListEnumBodyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BodyType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Transmission'
+   */
+  export type EnumTransmissionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Transmission'>
+    
+
+
+  /**
+   * Reference to a field of type 'Transmission[]'
+   */
+  export type ListEnumTransmissionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Transmission[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'FuelType'
+   */
+  export type EnumFuelTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FuelType'>
+    
+
+
+  /**
+   * Reference to a field of type 'FuelType[]'
+   */
+  export type ListEnumFuelTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FuelType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'VehicleStatus'
+   */
+  export type EnumVehicleStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VehicleStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'VehicleStatus[]'
+   */
+  export type ListEnumVehicleStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VehicleStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'VehicleCondition'
+   */
+  export type EnumVehicleConditionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VehicleCondition'>
+    
+
+
+  /**
+   * Reference to a field of type 'VehicleCondition[]'
+   */
+  export type ListEnumVehicleConditionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VehicleCondition[]'>
     
   /**
    * Deep Input Types
@@ -3494,24 +6239,26 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
-    name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
+    name?: StringNullableFilter<"User"> | string | null
     password?: StringFilter<"User"> | string
-    role?: EnumRoleFilter<"User"> | $Enums.Role
-    savedVehicles?: StringNullableListFilter<"User">
+    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    preferences?: XOR<PreferenceNullableScalarRelationFilter, PreferenceWhereInput> | null
+    activities?: ActivityListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrder
     email?: SortOrder
+    name?: SortOrderInput | SortOrder
     password?: SortOrder
     role?: SortOrder
-    savedVehicles?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    preferences?: PreferenceOrderByWithRelationInput
+    activities?: ActivityOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -3520,21 +6267,21 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    name?: StringFilter<"User"> | string
+    name?: StringNullableFilter<"User"> | string | null
     password?: StringFilter<"User"> | string
-    role?: EnumRoleFilter<"User"> | $Enums.Role
-    savedVehicles?: StringNullableListFilter<"User">
+    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    preferences?: XOR<PreferenceNullableScalarRelationFilter, PreferenceWhereInput> | null
+    activities?: ActivityListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrder
     email?: SortOrder
+    name?: SortOrderInput | SortOrder
     password?: SortOrder
     role?: SortOrder
-    savedVehicles?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -3547,13 +6294,159 @@ export namespace Prisma {
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
-    name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
+    name?: StringNullableWithAggregatesFilter<"User"> | string | null
     password?: StringWithAggregatesFilter<"User"> | string
-    role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
-    savedVehicles?: StringNullableListFilter<"User">
+    role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type ActivityWhereInput = {
+    AND?: ActivityWhereInput | ActivityWhereInput[]
+    OR?: ActivityWhereInput[]
+    NOT?: ActivityWhereInput | ActivityWhereInput[]
+    id?: StringFilter<"Activity"> | string
+    userId?: StringFilter<"Activity"> | string
+    action?: StringFilter<"Activity"> | string
+    carIds?: StringNullableListFilter<"Activity">
+    query?: StringNullableFilter<"Activity"> | string | null
+    timestamp?: DateTimeFilter<"Activity"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ActivityOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    carIds?: SortOrder
+    query?: SortOrderInput | SortOrder
+    timestamp?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ActivityWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ActivityWhereInput | ActivityWhereInput[]
+    OR?: ActivityWhereInput[]
+    NOT?: ActivityWhereInput | ActivityWhereInput[]
+    userId?: StringFilter<"Activity"> | string
+    action?: StringFilter<"Activity"> | string
+    carIds?: StringNullableListFilter<"Activity">
+    query?: StringNullableFilter<"Activity"> | string | null
+    timestamp?: DateTimeFilter<"Activity"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type ActivityOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    carIds?: SortOrder
+    query?: SortOrderInput | SortOrder
+    timestamp?: SortOrder
+    _count?: ActivityCountOrderByAggregateInput
+    _max?: ActivityMaxOrderByAggregateInput
+    _min?: ActivityMinOrderByAggregateInput
+  }
+
+  export type ActivityScalarWhereWithAggregatesInput = {
+    AND?: ActivityScalarWhereWithAggregatesInput | ActivityScalarWhereWithAggregatesInput[]
+    OR?: ActivityScalarWhereWithAggregatesInput[]
+    NOT?: ActivityScalarWhereWithAggregatesInput | ActivityScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Activity"> | string
+    userId?: StringWithAggregatesFilter<"Activity"> | string
+    action?: StringWithAggregatesFilter<"Activity"> | string
+    carIds?: StringNullableListFilter<"Activity">
+    query?: StringNullableWithAggregatesFilter<"Activity"> | string | null
+    timestamp?: DateTimeWithAggregatesFilter<"Activity"> | Date | string
+  }
+
+  export type PreferenceWhereInput = {
+    AND?: PreferenceWhereInput | PreferenceWhereInput[]
+    OR?: PreferenceWhereInput[]
+    NOT?: PreferenceWhereInput | PreferenceWhereInput[]
+    id?: StringFilter<"Preference"> | string
+    userId?: StringFilter<"Preference"> | string
+    budgetMin?: FloatNullableFilter<"Preference"> | number | null
+    budgetMax?: FloatNullableFilter<"Preference"> | number | null
+    carTypes?: StringNullableListFilter<"Preference">
+    fuelTypes?: StringNullableListFilter<"Preference">
+    brand?: StringNullableListFilter<"Preference">
+    features?: StringNullableListFilter<"Preference">
+    primarilyUse?: StringNullableListFilter<"Preference">
+    topPriorities?: StringNullableListFilter<"Preference">
+    updatedAt?: DateTimeFilter<"Preference"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type PreferenceOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    budgetMin?: SortOrderInput | SortOrder
+    budgetMax?: SortOrderInput | SortOrder
+    carTypes?: SortOrder
+    fuelTypes?: SortOrder
+    brand?: SortOrder
+    features?: SortOrder
+    primarilyUse?: SortOrder
+    topPriorities?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type PreferenceWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId?: string
+    AND?: PreferenceWhereInput | PreferenceWhereInput[]
+    OR?: PreferenceWhereInput[]
+    NOT?: PreferenceWhereInput | PreferenceWhereInput[]
+    budgetMin?: FloatNullableFilter<"Preference"> | number | null
+    budgetMax?: FloatNullableFilter<"Preference"> | number | null
+    carTypes?: StringNullableListFilter<"Preference">
+    fuelTypes?: StringNullableListFilter<"Preference">
+    brand?: StringNullableListFilter<"Preference">
+    features?: StringNullableListFilter<"Preference">
+    primarilyUse?: StringNullableListFilter<"Preference">
+    topPriorities?: StringNullableListFilter<"Preference">
+    updatedAt?: DateTimeFilter<"Preference"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId">
+
+  export type PreferenceOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    budgetMin?: SortOrderInput | SortOrder
+    budgetMax?: SortOrderInput | SortOrder
+    carTypes?: SortOrder
+    fuelTypes?: SortOrder
+    brand?: SortOrder
+    features?: SortOrder
+    primarilyUse?: SortOrder
+    topPriorities?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PreferenceCountOrderByAggregateInput
+    _avg?: PreferenceAvgOrderByAggregateInput
+    _max?: PreferenceMaxOrderByAggregateInput
+    _min?: PreferenceMinOrderByAggregateInput
+    _sum?: PreferenceSumOrderByAggregateInput
+  }
+
+  export type PreferenceScalarWhereWithAggregatesInput = {
+    AND?: PreferenceScalarWhereWithAggregatesInput | PreferenceScalarWhereWithAggregatesInput[]
+    OR?: PreferenceScalarWhereWithAggregatesInput[]
+    NOT?: PreferenceScalarWhereWithAggregatesInput | PreferenceScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Preference"> | string
+    userId?: StringWithAggregatesFilter<"Preference"> | string
+    budgetMin?: FloatNullableWithAggregatesFilter<"Preference"> | number | null
+    budgetMax?: FloatNullableWithAggregatesFilter<"Preference"> | number | null
+    carTypes?: StringNullableListFilter<"Preference">
+    fuelTypes?: StringNullableListFilter<"Preference">
+    brand?: StringNullableListFilter<"Preference">
+    features?: StringNullableListFilter<"Preference">
+    primarilyUse?: StringNullableListFilter<"Preference">
+    topPriorities?: StringNullableListFilter<"Preference">
+    updatedAt?: DateTimeWithAggregatesFilter<"Preference"> | Date | string
   }
 
   export type VehicleWhereInput = {
@@ -3565,9 +6458,9 @@ export namespace Prisma {
     model?: StringFilter<"Vehicle"> | string
     year?: IntFilter<"Vehicle"> | number
     price?: IntFilter<"Vehicle"> | number
-    bodyType?: StringFilter<"Vehicle"> | string
-    transmission?: StringFilter<"Vehicle"> | string
-    fuelType?: StringFilter<"Vehicle"> | string
+    bodyType?: EnumBodyTypeFilter<"Vehicle"> | $Enums.BodyType
+    transmission?: EnumTransmissionFilter<"Vehicle"> | $Enums.Transmission
+    fuelType?: EnumFuelTypeFilter<"Vehicle"> | $Enums.FuelType
     fuelConsumptionUrban?: FloatNullableFilter<"Vehicle"> | number | null
     fuelConsumptionExtraUrban?: FloatNullableFilter<"Vehicle"> | number | null
     fuelConsumptionCombined?: FloatNullableFilter<"Vehicle"> | number | null
@@ -3582,7 +6475,11 @@ export namespace Prisma {
     vin?: StringNullableFilter<"Vehicle"> | string | null
     stockNumber?: StringNullableFilter<"Vehicle"> | string | null
     images?: StringNullableListFilter<"Vehicle">
-    description?: StringNullableFilter<"Vehicle"> | string | null
+    description?: StringFilter<"Vehicle"> | string
+    status?: EnumVehicleStatusFilter<"Vehicle"> | $Enums.VehicleStatus
+    condition?: EnumVehicleConditionFilter<"Vehicle"> | $Enums.VehicleCondition
+    features?: StringNullableListFilter<"Vehicle">
+    viewsCount?: IntFilter<"Vehicle"> | number
     createdAt?: DateTimeFilter<"Vehicle"> | Date | string
     updatedAt?: DateTimeFilter<"Vehicle"> | Date | string
   }
@@ -3610,7 +6507,11 @@ export namespace Prisma {
     vin?: SortOrderInput | SortOrder
     stockNumber?: SortOrderInput | SortOrder
     images?: SortOrder
-    description?: SortOrderInput | SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    condition?: SortOrder
+    features?: SortOrder
+    viewsCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -3624,9 +6525,9 @@ export namespace Prisma {
     model?: StringFilter<"Vehicle"> | string
     year?: IntFilter<"Vehicle"> | number
     price?: IntFilter<"Vehicle"> | number
-    bodyType?: StringFilter<"Vehicle"> | string
-    transmission?: StringFilter<"Vehicle"> | string
-    fuelType?: StringFilter<"Vehicle"> | string
+    bodyType?: EnumBodyTypeFilter<"Vehicle"> | $Enums.BodyType
+    transmission?: EnumTransmissionFilter<"Vehicle"> | $Enums.Transmission
+    fuelType?: EnumFuelTypeFilter<"Vehicle"> | $Enums.FuelType
     fuelConsumptionUrban?: FloatNullableFilter<"Vehicle"> | number | null
     fuelConsumptionExtraUrban?: FloatNullableFilter<"Vehicle"> | number | null
     fuelConsumptionCombined?: FloatNullableFilter<"Vehicle"> | number | null
@@ -3641,7 +6542,11 @@ export namespace Prisma {
     vin?: StringNullableFilter<"Vehicle"> | string | null
     stockNumber?: StringNullableFilter<"Vehicle"> | string | null
     images?: StringNullableListFilter<"Vehicle">
-    description?: StringNullableFilter<"Vehicle"> | string | null
+    description?: StringFilter<"Vehicle"> | string
+    status?: EnumVehicleStatusFilter<"Vehicle"> | $Enums.VehicleStatus
+    condition?: EnumVehicleConditionFilter<"Vehicle"> | $Enums.VehicleCondition
+    features?: StringNullableListFilter<"Vehicle">
+    viewsCount?: IntFilter<"Vehicle"> | number
     createdAt?: DateTimeFilter<"Vehicle"> | Date | string
     updatedAt?: DateTimeFilter<"Vehicle"> | Date | string
   }, "id">
@@ -3669,7 +6574,11 @@ export namespace Prisma {
     vin?: SortOrderInput | SortOrder
     stockNumber?: SortOrderInput | SortOrder
     images?: SortOrder
-    description?: SortOrderInput | SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    condition?: SortOrder
+    features?: SortOrder
+    viewsCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: VehicleCountOrderByAggregateInput
@@ -3688,9 +6597,9 @@ export namespace Prisma {
     model?: StringWithAggregatesFilter<"Vehicle"> | string
     year?: IntWithAggregatesFilter<"Vehicle"> | number
     price?: IntWithAggregatesFilter<"Vehicle"> | number
-    bodyType?: StringWithAggregatesFilter<"Vehicle"> | string
-    transmission?: StringWithAggregatesFilter<"Vehicle"> | string
-    fuelType?: StringWithAggregatesFilter<"Vehicle"> | string
+    bodyType?: EnumBodyTypeWithAggregatesFilter<"Vehicle"> | $Enums.BodyType
+    transmission?: EnumTransmissionWithAggregatesFilter<"Vehicle"> | $Enums.Transmission
+    fuelType?: EnumFuelTypeWithAggregatesFilter<"Vehicle"> | $Enums.FuelType
     fuelConsumptionUrban?: FloatNullableWithAggregatesFilter<"Vehicle"> | number | null
     fuelConsumptionExtraUrban?: FloatNullableWithAggregatesFilter<"Vehicle"> | number | null
     fuelConsumptionCombined?: FloatNullableWithAggregatesFilter<"Vehicle"> | number | null
@@ -3705,85 +6614,249 @@ export namespace Prisma {
     vin?: StringNullableWithAggregatesFilter<"Vehicle"> | string | null
     stockNumber?: StringNullableWithAggregatesFilter<"Vehicle"> | string | null
     images?: StringNullableListFilter<"Vehicle">
-    description?: StringNullableWithAggregatesFilter<"Vehicle"> | string | null
+    description?: StringWithAggregatesFilter<"Vehicle"> | string
+    status?: EnumVehicleStatusWithAggregatesFilter<"Vehicle"> | $Enums.VehicleStatus
+    condition?: EnumVehicleConditionWithAggregatesFilter<"Vehicle"> | $Enums.VehicleCondition
+    features?: StringNullableListFilter<"Vehicle">
+    viewsCount?: IntWithAggregatesFilter<"Vehicle"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Vehicle"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Vehicle"> | Date | string
   }
 
   export type UserCreateInput = {
     id?: string
-    name: string
     email: string
+    name?: string | null
     password: string
-    role?: $Enums.Role
-    savedVehicles?: UserCreatesavedVehiclesInput | string[]
+    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
+    preferences?: PreferenceCreateNestedOneWithoutUserInput
+    activities?: ActivityCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: string
-    name: string
     email: string
+    name?: string | null
     password: string
-    role?: $Enums.Role
-    savedVehicles?: UserCreatesavedVehiclesInput | string[]
+    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
+    preferences?: PreferenceUncheckedCreateNestedOneWithoutUserInput
+    activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    savedVehicles?: UserUpdatesavedVehiclesInput | string[]
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    preferences?: PreferenceUpdateOneWithoutUserNestedInput
+    activities?: ActivityUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    savedVehicles?: UserUpdatesavedVehiclesInput | string[]
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    preferences?: PreferenceUncheckedUpdateOneWithoutUserNestedInput
+    activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
     id?: string
-    name: string
     email: string
+    name?: string | null
     password: string
-    role?: $Enums.Role
-    savedVehicles?: UserCreatesavedVehiclesInput | string[]
+    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    savedVehicles?: UserUpdatesavedVehiclesInput | string[]
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    savedVehicles?: UserUpdatesavedVehiclesInput | string[]
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivityCreateInput = {
+    id?: string
+    action: string
+    carIds?: ActivityCreatecarIdsInput | string[]
+    query?: string | null
+    timestamp?: Date | string
+    user: UserCreateNestedOneWithoutActivitiesInput
+  }
+
+  export type ActivityUncheckedCreateInput = {
+    id?: string
+    userId: string
+    action: string
+    carIds?: ActivityCreatecarIdsInput | string[]
+    query?: string | null
+    timestamp?: Date | string
+  }
+
+  export type ActivityUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    carIds?: ActivityUpdatecarIdsInput | string[]
+    query?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutActivitiesNestedInput
+  }
+
+  export type ActivityUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    carIds?: ActivityUpdatecarIdsInput | string[]
+    query?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivityCreateManyInput = {
+    id?: string
+    userId: string
+    action: string
+    carIds?: ActivityCreatecarIdsInput | string[]
+    query?: string | null
+    timestamp?: Date | string
+  }
+
+  export type ActivityUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    carIds?: ActivityUpdatecarIdsInput | string[]
+    query?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivityUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    carIds?: ActivityUpdatecarIdsInput | string[]
+    query?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PreferenceCreateInput = {
+    id?: string
+    budgetMin?: number | null
+    budgetMax?: number | null
+    carTypes?: PreferenceCreatecarTypesInput | string[]
+    fuelTypes?: PreferenceCreatefuelTypesInput | string[]
+    brand?: PreferenceCreatebrandInput | string[]
+    features?: PreferenceCreatefeaturesInput | string[]
+    primarilyUse?: PreferenceCreateprimarilyUseInput | string[]
+    topPriorities?: PreferenceCreatetopPrioritiesInput | string[]
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutPreferencesInput
+  }
+
+  export type PreferenceUncheckedCreateInput = {
+    id?: string
+    userId: string
+    budgetMin?: number | null
+    budgetMax?: number | null
+    carTypes?: PreferenceCreatecarTypesInput | string[]
+    fuelTypes?: PreferenceCreatefuelTypesInput | string[]
+    brand?: PreferenceCreatebrandInput | string[]
+    features?: PreferenceCreatefeaturesInput | string[]
+    primarilyUse?: PreferenceCreateprimarilyUseInput | string[]
+    topPriorities?: PreferenceCreatetopPrioritiesInput | string[]
+    updatedAt?: Date | string
+  }
+
+  export type PreferenceUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    budgetMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    carTypes?: PreferenceUpdatecarTypesInput | string[]
+    fuelTypes?: PreferenceUpdatefuelTypesInput | string[]
+    brand?: PreferenceUpdatebrandInput | string[]
+    features?: PreferenceUpdatefeaturesInput | string[]
+    primarilyUse?: PreferenceUpdateprimarilyUseInput | string[]
+    topPriorities?: PreferenceUpdatetopPrioritiesInput | string[]
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPreferencesNestedInput
+  }
+
+  export type PreferenceUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    budgetMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    carTypes?: PreferenceUpdatecarTypesInput | string[]
+    fuelTypes?: PreferenceUpdatefuelTypesInput | string[]
+    brand?: PreferenceUpdatebrandInput | string[]
+    features?: PreferenceUpdatefeaturesInput | string[]
+    primarilyUse?: PreferenceUpdateprimarilyUseInput | string[]
+    topPriorities?: PreferenceUpdatetopPrioritiesInput | string[]
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PreferenceCreateManyInput = {
+    id?: string
+    userId: string
+    budgetMin?: number | null
+    budgetMax?: number | null
+    carTypes?: PreferenceCreatecarTypesInput | string[]
+    fuelTypes?: PreferenceCreatefuelTypesInput | string[]
+    brand?: PreferenceCreatebrandInput | string[]
+    features?: PreferenceCreatefeaturesInput | string[]
+    primarilyUse?: PreferenceCreateprimarilyUseInput | string[]
+    topPriorities?: PreferenceCreatetopPrioritiesInput | string[]
+    updatedAt?: Date | string
+  }
+
+  export type PreferenceUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    budgetMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    carTypes?: PreferenceUpdatecarTypesInput | string[]
+    fuelTypes?: PreferenceUpdatefuelTypesInput | string[]
+    brand?: PreferenceUpdatebrandInput | string[]
+    features?: PreferenceUpdatefeaturesInput | string[]
+    primarilyUse?: PreferenceUpdateprimarilyUseInput | string[]
+    topPriorities?: PreferenceUpdatetopPrioritiesInput | string[]
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PreferenceUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    budgetMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    carTypes?: PreferenceUpdatecarTypesInput | string[]
+    fuelTypes?: PreferenceUpdatefuelTypesInput | string[]
+    brand?: PreferenceUpdatebrandInput | string[]
+    features?: PreferenceUpdatefeaturesInput | string[]
+    primarilyUse?: PreferenceUpdateprimarilyUseInput | string[]
+    topPriorities?: PreferenceUpdatetopPrioritiesInput | string[]
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -3793,9 +6866,9 @@ export namespace Prisma {
     model: string
     year: number
     price: number
-    bodyType: string
-    transmission: string
-    fuelType: string
+    bodyType: $Enums.BodyType
+    transmission: $Enums.Transmission
+    fuelType: $Enums.FuelType
     fuelConsumptionUrban?: number | null
     fuelConsumptionExtraUrban?: number | null
     fuelConsumptionCombined?: number | null
@@ -3810,7 +6883,11 @@ export namespace Prisma {
     vin?: string | null
     stockNumber?: string | null
     images?: VehicleCreateimagesInput | string[]
-    description?: string | null
+    description: string
+    status: $Enums.VehicleStatus
+    condition: $Enums.VehicleCondition
+    features?: VehicleCreatefeaturesInput | string[]
+    viewsCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -3821,9 +6898,9 @@ export namespace Prisma {
     model: string
     year: number
     price: number
-    bodyType: string
-    transmission: string
-    fuelType: string
+    bodyType: $Enums.BodyType
+    transmission: $Enums.Transmission
+    fuelType: $Enums.FuelType
     fuelConsumptionUrban?: number | null
     fuelConsumptionExtraUrban?: number | null
     fuelConsumptionCombined?: number | null
@@ -3838,7 +6915,11 @@ export namespace Prisma {
     vin?: string | null
     stockNumber?: string | null
     images?: VehicleCreateimagesInput | string[]
-    description?: string | null
+    description: string
+    status: $Enums.VehicleStatus
+    condition: $Enums.VehicleCondition
+    features?: VehicleCreatefeaturesInput | string[]
+    viewsCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -3849,9 +6930,9 @@ export namespace Prisma {
     model?: StringFieldUpdateOperationsInput | string
     year?: IntFieldUpdateOperationsInput | number
     price?: IntFieldUpdateOperationsInput | number
-    bodyType?: StringFieldUpdateOperationsInput | string
-    transmission?: StringFieldUpdateOperationsInput | string
-    fuelType?: StringFieldUpdateOperationsInput | string
+    bodyType?: EnumBodyTypeFieldUpdateOperationsInput | $Enums.BodyType
+    transmission?: EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+    fuelType?: EnumFuelTypeFieldUpdateOperationsInput | $Enums.FuelType
     fuelConsumptionUrban?: NullableFloatFieldUpdateOperationsInput | number | null
     fuelConsumptionExtraUrban?: NullableFloatFieldUpdateOperationsInput | number | null
     fuelConsumptionCombined?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -3866,7 +6947,11 @@ export namespace Prisma {
     vin?: NullableStringFieldUpdateOperationsInput | string | null
     stockNumber?: NullableStringFieldUpdateOperationsInput | string | null
     images?: VehicleUpdateimagesInput | string[]
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumVehicleStatusFieldUpdateOperationsInput | $Enums.VehicleStatus
+    condition?: EnumVehicleConditionFieldUpdateOperationsInput | $Enums.VehicleCondition
+    features?: VehicleUpdatefeaturesInput | string[]
+    viewsCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3877,9 +6962,9 @@ export namespace Prisma {
     model?: StringFieldUpdateOperationsInput | string
     year?: IntFieldUpdateOperationsInput | number
     price?: IntFieldUpdateOperationsInput | number
-    bodyType?: StringFieldUpdateOperationsInput | string
-    transmission?: StringFieldUpdateOperationsInput | string
-    fuelType?: StringFieldUpdateOperationsInput | string
+    bodyType?: EnumBodyTypeFieldUpdateOperationsInput | $Enums.BodyType
+    transmission?: EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+    fuelType?: EnumFuelTypeFieldUpdateOperationsInput | $Enums.FuelType
     fuelConsumptionUrban?: NullableFloatFieldUpdateOperationsInput | number | null
     fuelConsumptionExtraUrban?: NullableFloatFieldUpdateOperationsInput | number | null
     fuelConsumptionCombined?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -3894,7 +6979,11 @@ export namespace Prisma {
     vin?: NullableStringFieldUpdateOperationsInput | string | null
     stockNumber?: NullableStringFieldUpdateOperationsInput | string | null
     images?: VehicleUpdateimagesInput | string[]
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumVehicleStatusFieldUpdateOperationsInput | $Enums.VehicleStatus
+    condition?: EnumVehicleConditionFieldUpdateOperationsInput | $Enums.VehicleCondition
+    features?: VehicleUpdatefeaturesInput | string[]
+    viewsCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3905,9 +6994,9 @@ export namespace Prisma {
     model: string
     year: number
     price: number
-    bodyType: string
-    transmission: string
-    fuelType: string
+    bodyType: $Enums.BodyType
+    transmission: $Enums.Transmission
+    fuelType: $Enums.FuelType
     fuelConsumptionUrban?: number | null
     fuelConsumptionExtraUrban?: number | null
     fuelConsumptionCombined?: number | null
@@ -3922,7 +7011,11 @@ export namespace Prisma {
     vin?: string | null
     stockNumber?: string | null
     images?: VehicleCreateimagesInput | string[]
-    description?: string | null
+    description: string
+    status: $Enums.VehicleStatus
+    condition: $Enums.VehicleCondition
+    features?: VehicleCreatefeaturesInput | string[]
+    viewsCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -3933,9 +7026,9 @@ export namespace Prisma {
     model?: StringFieldUpdateOperationsInput | string
     year?: IntFieldUpdateOperationsInput | number
     price?: IntFieldUpdateOperationsInput | number
-    bodyType?: StringFieldUpdateOperationsInput | string
-    transmission?: StringFieldUpdateOperationsInput | string
-    fuelType?: StringFieldUpdateOperationsInput | string
+    bodyType?: EnumBodyTypeFieldUpdateOperationsInput | $Enums.BodyType
+    transmission?: EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+    fuelType?: EnumFuelTypeFieldUpdateOperationsInput | $Enums.FuelType
     fuelConsumptionUrban?: NullableFloatFieldUpdateOperationsInput | number | null
     fuelConsumptionExtraUrban?: NullableFloatFieldUpdateOperationsInput | number | null
     fuelConsumptionCombined?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -3950,7 +7043,11 @@ export namespace Prisma {
     vin?: NullableStringFieldUpdateOperationsInput | string | null
     stockNumber?: NullableStringFieldUpdateOperationsInput | string | null
     images?: VehicleUpdateimagesInput | string[]
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumVehicleStatusFieldUpdateOperationsInput | $Enums.VehicleStatus
+    condition?: EnumVehicleConditionFieldUpdateOperationsInput | $Enums.VehicleCondition
+    features?: VehicleUpdatefeaturesInput | string[]
+    viewsCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3961,9 +7058,9 @@ export namespace Prisma {
     model?: StringFieldUpdateOperationsInput | string
     year?: IntFieldUpdateOperationsInput | number
     price?: IntFieldUpdateOperationsInput | number
-    bodyType?: StringFieldUpdateOperationsInput | string
-    transmission?: StringFieldUpdateOperationsInput | string
-    fuelType?: StringFieldUpdateOperationsInput | string
+    bodyType?: EnumBodyTypeFieldUpdateOperationsInput | $Enums.BodyType
+    transmission?: EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+    fuelType?: EnumFuelTypeFieldUpdateOperationsInput | $Enums.FuelType
     fuelConsumptionUrban?: NullableFloatFieldUpdateOperationsInput | number | null
     fuelConsumptionExtraUrban?: NullableFloatFieldUpdateOperationsInput | number | null
     fuelConsumptionCombined?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -3978,7 +7075,11 @@ export namespace Prisma {
     vin?: NullableStringFieldUpdateOperationsInput | string | null
     stockNumber?: NullableStringFieldUpdateOperationsInput | string | null
     images?: VehicleUpdateimagesInput | string[]
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumVehicleStatusFieldUpdateOperationsInput | $Enums.VehicleStatus
+    condition?: EnumVehicleConditionFieldUpdateOperationsInput | $Enums.VehicleCondition
+    features?: VehicleUpdatefeaturesInput | string[]
+    viewsCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3998,19 +7099,26 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type EnumRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
+  export type EnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -4024,21 +7132,40 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type PreferenceNullableScalarRelationFilter = {
+    is?: PreferenceWhereInput | null
+    isNot?: PreferenceWhereInput | null
+  }
+
+  export type ActivityListRelationFilter = {
+    every?: ActivityWhereInput
+    some?: ActivityWhereInput
+    none?: ActivityWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type ActivityOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
     email?: SortOrder
+    name?: SortOrder
     password?: SortOrder
     role?: SortOrder
-    savedVehicles?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
     email?: SortOrder
+    name?: SortOrder
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
@@ -4047,8 +7174,8 @@ export namespace Prisma {
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
     email?: SortOrder
+    name?: SortOrder
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
@@ -4073,14 +7200,32 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumRoleFilter<$PrismaModel>
-    _max?: NestedEnumRoleFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -4097,15 +7242,42 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type ActivityCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    carIds?: SortOrder
+    query?: SortOrder
+    timestamp?: SortOrder
+  }
+
+  export type ActivityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    query?: SortOrder
+    timestamp?: SortOrder
+  }
+
+  export type ActivityMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    query?: SortOrder
+    timestamp?: SortOrder
   }
 
   export type FloatNullableFilter<$PrismaModel = never> = {
@@ -4119,6 +7291,94 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
+  export type PreferenceCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    budgetMin?: SortOrder
+    budgetMax?: SortOrder
+    carTypes?: SortOrder
+    fuelTypes?: SortOrder
+    brand?: SortOrder
+    features?: SortOrder
+    primarilyUse?: SortOrder
+    topPriorities?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PreferenceAvgOrderByAggregateInput = {
+    budgetMin?: SortOrder
+    budgetMax?: SortOrder
+  }
+
+  export type PreferenceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    budgetMin?: SortOrder
+    budgetMax?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PreferenceMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    budgetMin?: SortOrder
+    budgetMax?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PreferenceSumOrderByAggregateInput = {
+    budgetMin?: SortOrder
+    budgetMax?: SortOrder
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type EnumBodyTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.BodyType | EnumBodyTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.BodyType[] | ListEnumBodyTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BodyType[] | ListEnumBodyTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumBodyTypeFilter<$PrismaModel> | $Enums.BodyType
+  }
+
+  export type EnumTransmissionFilter<$PrismaModel = never> = {
+    equals?: $Enums.Transmission | EnumTransmissionFieldRefInput<$PrismaModel>
+    in?: $Enums.Transmission[] | ListEnumTransmissionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Transmission[] | ListEnumTransmissionFieldRefInput<$PrismaModel>
+    not?: NestedEnumTransmissionFilter<$PrismaModel> | $Enums.Transmission
+  }
+
+  export type EnumFuelTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.FuelType | EnumFuelTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.FuelType[] | ListEnumFuelTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.FuelType[] | ListEnumFuelTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumFuelTypeFilter<$PrismaModel> | $Enums.FuelType
+  }
+
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -4130,24 +7390,18 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  export type EnumVehicleStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.VehicleStatus | EnumVehicleStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.VehicleStatus[] | ListEnumVehicleStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VehicleStatus[] | ListEnumVehicleStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumVehicleStatusFilter<$PrismaModel> | $Enums.VehicleStatus
   }
 
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
+  export type EnumVehicleConditionFilter<$PrismaModel = never> = {
+    equals?: $Enums.VehicleCondition | EnumVehicleConditionFieldRefInput<$PrismaModel>
+    in?: $Enums.VehicleCondition[] | ListEnumVehicleConditionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VehicleCondition[] | ListEnumVehicleConditionFieldRefInput<$PrismaModel>
+    not?: NestedEnumVehicleConditionFilter<$PrismaModel> | $Enums.VehicleCondition
   }
 
   export type VehicleCountOrderByAggregateInput = {
@@ -4174,6 +7428,10 @@ export namespace Prisma {
     stockNumber?: SortOrder
     images?: SortOrder
     description?: SortOrder
+    status?: SortOrder
+    condition?: SortOrder
+    features?: SortOrder
+    viewsCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4189,6 +7447,7 @@ export namespace Prisma {
     odometer?: SortOrder
     doors?: SortOrder
     seats?: SortOrder
+    viewsCount?: SortOrder
   }
 
   export type VehicleMaxOrderByAggregateInput = {
@@ -4214,6 +7473,9 @@ export namespace Prisma {
     vin?: SortOrder
     stockNumber?: SortOrder
     description?: SortOrder
+    status?: SortOrder
+    condition?: SortOrder
+    viewsCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4241,6 +7503,9 @@ export namespace Prisma {
     vin?: SortOrder
     stockNumber?: SortOrder
     description?: SortOrder
+    status?: SortOrder
+    condition?: SortOrder
+    viewsCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4256,6 +7521,7 @@ export namespace Prisma {
     odometer?: SortOrder
     doors?: SortOrder
     seats?: SortOrder
+    viewsCount?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -4274,20 +7540,34 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
+  export type EnumBodyTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BodyType | EnumBodyTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.BodyType[] | ListEnumBodyTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BodyType[] | ListEnumBodyTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumBodyTypeWithAggregatesFilter<$PrismaModel> | $Enums.BodyType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBodyTypeFilter<$PrismaModel>
+    _max?: NestedEnumBodyTypeFilter<$PrismaModel>
+  }
+
+  export type EnumTransmissionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Transmission | EnumTransmissionFieldRefInput<$PrismaModel>
+    in?: $Enums.Transmission[] | ListEnumTransmissionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Transmission[] | ListEnumTransmissionFieldRefInput<$PrismaModel>
+    not?: NestedEnumTransmissionWithAggregatesFilter<$PrismaModel> | $Enums.Transmission
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTransmissionFilter<$PrismaModel>
+    _max?: NestedEnumTransmissionFilter<$PrismaModel>
+  }
+
+  export type EnumFuelTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.FuelType | EnumFuelTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.FuelType[] | ListEnumFuelTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.FuelType[] | ListEnumFuelTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumFuelTypeWithAggregatesFilter<$PrismaModel> | $Enums.FuelType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumFuelTypeFilter<$PrismaModel>
+    _max?: NestedEnumFuelTypeFilter<$PrismaModel>
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -4306,46 +7586,220 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
+  export type EnumVehicleStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VehicleStatus | EnumVehicleStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.VehicleStatus[] | ListEnumVehicleStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VehicleStatus[] | ListEnumVehicleStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumVehicleStatusWithAggregatesFilter<$PrismaModel> | $Enums.VehicleStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumVehicleStatusFilter<$PrismaModel>
+    _max?: NestedEnumVehicleStatusFilter<$PrismaModel>
   }
 
-  export type UserCreatesavedVehiclesInput = {
-    set: string[]
+  export type EnumVehicleConditionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VehicleCondition | EnumVehicleConditionFieldRefInput<$PrismaModel>
+    in?: $Enums.VehicleCondition[] | ListEnumVehicleConditionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VehicleCondition[] | ListEnumVehicleConditionFieldRefInput<$PrismaModel>
+    not?: NestedEnumVehicleConditionWithAggregatesFilter<$PrismaModel> | $Enums.VehicleCondition
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumVehicleConditionFilter<$PrismaModel>
+    _max?: NestedEnumVehicleConditionFilter<$PrismaModel>
+  }
+
+  export type PreferenceCreateNestedOneWithoutUserInput = {
+    create?: XOR<PreferenceCreateWithoutUserInput, PreferenceUncheckedCreateWithoutUserInput>
+    connectOrCreate?: PreferenceCreateOrConnectWithoutUserInput
+    connect?: PreferenceWhereUniqueInput
+  }
+
+  export type ActivityCreateNestedManyWithoutUserInput = {
+    create?: XOR<ActivityCreateWithoutUserInput, ActivityUncheckedCreateWithoutUserInput> | ActivityCreateWithoutUserInput[] | ActivityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivityCreateOrConnectWithoutUserInput | ActivityCreateOrConnectWithoutUserInput[]
+    createMany?: ActivityCreateManyUserInputEnvelope
+    connect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+  }
+
+  export type PreferenceUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<PreferenceCreateWithoutUserInput, PreferenceUncheckedCreateWithoutUserInput>
+    connectOrCreate?: PreferenceCreateOrConnectWithoutUserInput
+    connect?: PreferenceWhereUniqueInput
+  }
+
+  export type ActivityUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ActivityCreateWithoutUserInput, ActivityUncheckedCreateWithoutUserInput> | ActivityCreateWithoutUserInput[] | ActivityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivityCreateOrConnectWithoutUserInput | ActivityCreateOrConnectWithoutUserInput[]
+    createMany?: ActivityCreateManyUserInputEnvelope
+    connect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
-  export type EnumRoleFieldUpdateOperationsInput = {
-    set?: $Enums.Role
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
-  export type UserUpdatesavedVehiclesInput = {
-    set?: string[]
-    push?: string | string[]
+  export type EnumUserRoleFieldUpdateOperationsInput = {
+    set?: $Enums.UserRole
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
 
+  export type PreferenceUpdateOneWithoutUserNestedInput = {
+    create?: XOR<PreferenceCreateWithoutUserInput, PreferenceUncheckedCreateWithoutUserInput>
+    connectOrCreate?: PreferenceCreateOrConnectWithoutUserInput
+    upsert?: PreferenceUpsertWithoutUserInput
+    disconnect?: PreferenceWhereInput | boolean
+    delete?: PreferenceWhereInput | boolean
+    connect?: PreferenceWhereUniqueInput
+    update?: XOR<XOR<PreferenceUpdateToOneWithWhereWithoutUserInput, PreferenceUpdateWithoutUserInput>, PreferenceUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ActivityUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ActivityCreateWithoutUserInput, ActivityUncheckedCreateWithoutUserInput> | ActivityCreateWithoutUserInput[] | ActivityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivityCreateOrConnectWithoutUserInput | ActivityCreateOrConnectWithoutUserInput[]
+    upsert?: ActivityUpsertWithWhereUniqueWithoutUserInput | ActivityUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ActivityCreateManyUserInputEnvelope
+    set?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    disconnect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    delete?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    connect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    update?: ActivityUpdateWithWhereUniqueWithoutUserInput | ActivityUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ActivityUpdateManyWithWhereWithoutUserInput | ActivityUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ActivityScalarWhereInput | ActivityScalarWhereInput[]
+  }
+
+  export type PreferenceUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<PreferenceCreateWithoutUserInput, PreferenceUncheckedCreateWithoutUserInput>
+    connectOrCreate?: PreferenceCreateOrConnectWithoutUserInput
+    upsert?: PreferenceUpsertWithoutUserInput
+    disconnect?: PreferenceWhereInput | boolean
+    delete?: PreferenceWhereInput | boolean
+    connect?: PreferenceWhereUniqueInput
+    update?: XOR<XOR<PreferenceUpdateToOneWithWhereWithoutUserInput, PreferenceUpdateWithoutUserInput>, PreferenceUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ActivityUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ActivityCreateWithoutUserInput, ActivityUncheckedCreateWithoutUserInput> | ActivityCreateWithoutUserInput[] | ActivityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivityCreateOrConnectWithoutUserInput | ActivityCreateOrConnectWithoutUserInput[]
+    upsert?: ActivityUpsertWithWhereUniqueWithoutUserInput | ActivityUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ActivityCreateManyUserInputEnvelope
+    set?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    disconnect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    delete?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    connect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    update?: ActivityUpdateWithWhereUniqueWithoutUserInput | ActivityUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ActivityUpdateManyWithWhereWithoutUserInput | ActivityUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ActivityScalarWhereInput | ActivityScalarWhereInput[]
+  }
+
+  export type ActivityCreatecarIdsInput = {
+    set: string[]
+  }
+
+  export type UserCreateNestedOneWithoutActivitiesInput = {
+    create?: XOR<UserCreateWithoutActivitiesInput, UserUncheckedCreateWithoutActivitiesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutActivitiesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ActivityUpdatecarIdsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type UserUpdateOneRequiredWithoutActivitiesNestedInput = {
+    create?: XOR<UserCreateWithoutActivitiesInput, UserUncheckedCreateWithoutActivitiesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutActivitiesInput
+    upsert?: UserUpsertWithoutActivitiesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutActivitiesInput, UserUpdateWithoutActivitiesInput>, UserUncheckedUpdateWithoutActivitiesInput>
+  }
+
+  export type PreferenceCreatecarTypesInput = {
+    set: string[]
+  }
+
+  export type PreferenceCreatefuelTypesInput = {
+    set: string[]
+  }
+
+  export type PreferenceCreatebrandInput = {
+    set: string[]
+  }
+
+  export type PreferenceCreatefeaturesInput = {
+    set: string[]
+  }
+
+  export type PreferenceCreateprimarilyUseInput = {
+    set: string[]
+  }
+
+  export type PreferenceCreatetopPrioritiesInput = {
+    set: string[]
+  }
+
+  export type UserCreateNestedOneWithoutPreferencesInput = {
+    create?: XOR<UserCreateWithoutPreferencesInput, UserUncheckedCreateWithoutPreferencesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPreferencesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type PreferenceUpdatecarTypesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type PreferenceUpdatefuelTypesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type PreferenceUpdatebrandInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type PreferenceUpdatefeaturesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type PreferenceUpdateprimarilyUseInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type PreferenceUpdatetopPrioritiesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type UserUpdateOneRequiredWithoutPreferencesNestedInput = {
+    create?: XOR<UserCreateWithoutPreferencesInput, UserUncheckedCreateWithoutPreferencesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPreferencesInput
+    upsert?: UserUpsertWithoutPreferencesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPreferencesInput, UserUpdateWithoutPreferencesInput>, UserUncheckedUpdateWithoutPreferencesInput>
+  }
+
   export type VehicleCreateimagesInput = {
+    set: string[]
+  }
+
+  export type VehicleCreatefeaturesInput = {
     set: string[]
   }
 
@@ -4357,12 +7811,16 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type NullableFloatFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type EnumBodyTypeFieldUpdateOperationsInput = {
+    set?: $Enums.BodyType
+  }
+
+  export type EnumTransmissionFieldUpdateOperationsInput = {
+    set?: $Enums.Transmission
+  }
+
+  export type EnumFuelTypeFieldUpdateOperationsInput = {
+    set?: $Enums.FuelType
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -4373,11 +7831,20 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
+  export type VehicleUpdateimagesInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
-  export type VehicleUpdateimagesInput = {
+  export type EnumVehicleStatusFieldUpdateOperationsInput = {
+    set?: $Enums.VehicleStatus
+  }
+
+  export type EnumVehicleConditionFieldUpdateOperationsInput = {
+    set?: $Enums.VehicleCondition
+  }
+
+  export type VehicleUpdatefeaturesInput = {
     set?: string[]
     push?: string | string[]
   }
@@ -4396,11 +7863,25 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedEnumRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -4442,14 +7923,42 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumRoleFilter<$PrismaModel>
-    _max?: NestedEnumRoleFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -4477,29 +7986,55 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  export type NestedEnumBodyTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.BodyType | EnumBodyTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.BodyType[] | ListEnumBodyTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BodyType[] | ListEnumBodyTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumBodyTypeFilter<$PrismaModel> | $Enums.BodyType
+  }
+
+  export type NestedEnumTransmissionFilter<$PrismaModel = never> = {
+    equals?: $Enums.Transmission | EnumTransmissionFieldRefInput<$PrismaModel>
+    in?: $Enums.Transmission[] | ListEnumTransmissionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Transmission[] | ListEnumTransmissionFieldRefInput<$PrismaModel>
+    not?: NestedEnumTransmissionFilter<$PrismaModel> | $Enums.Transmission
+  }
+
+  export type NestedEnumFuelTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.FuelType | EnumFuelTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.FuelType[] | ListEnumFuelTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.FuelType[] | ListEnumFuelTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumFuelTypeFilter<$PrismaModel> | $Enums.FuelType
+  }
+
+  export type NestedEnumVehicleStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.VehicleStatus | EnumVehicleStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.VehicleStatus[] | ListEnumVehicleStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VehicleStatus[] | ListEnumVehicleStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumVehicleStatusFilter<$PrismaModel> | $Enums.VehicleStatus
+  }
+
+  export type NestedEnumVehicleConditionFilter<$PrismaModel = never> = {
+    equals?: $Enums.VehicleCondition | EnumVehicleConditionFieldRefInput<$PrismaModel>
+    in?: $Enums.VehicleCondition[] | ListEnumVehicleConditionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VehicleCondition[] | ListEnumVehicleConditionFieldRefInput<$PrismaModel>
+    not?: NestedEnumVehicleConditionFilter<$PrismaModel> | $Enums.VehicleCondition
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -4529,20 +8064,34 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
+  export type NestedEnumBodyTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BodyType | EnumBodyTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.BodyType[] | ListEnumBodyTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BodyType[] | ListEnumBodyTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumBodyTypeWithAggregatesFilter<$PrismaModel> | $Enums.BodyType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBodyTypeFilter<$PrismaModel>
+    _max?: NestedEnumBodyTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTransmissionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Transmission | EnumTransmissionFieldRefInput<$PrismaModel>
+    in?: $Enums.Transmission[] | ListEnumTransmissionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Transmission[] | ListEnumTransmissionFieldRefInput<$PrismaModel>
+    not?: NestedEnumTransmissionWithAggregatesFilter<$PrismaModel> | $Enums.Transmission
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTransmissionFilter<$PrismaModel>
+    _max?: NestedEnumTransmissionFilter<$PrismaModel>
+  }
+
+  export type NestedEnumFuelTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.FuelType | EnumFuelTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.FuelType[] | ListEnumFuelTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.FuelType[] | ListEnumFuelTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumFuelTypeWithAggregatesFilter<$PrismaModel> | $Enums.FuelType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumFuelTypeFilter<$PrismaModel>
+    _max?: NestedEnumFuelTypeFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -4561,21 +8110,298 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
+  export type NestedEnumVehicleStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VehicleStatus | EnumVehicleStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.VehicleStatus[] | ListEnumVehicleStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VehicleStatus[] | ListEnumVehicleStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumVehicleStatusWithAggregatesFilter<$PrismaModel> | $Enums.VehicleStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumVehicleStatusFilter<$PrismaModel>
+    _max?: NestedEnumVehicleStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumVehicleConditionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VehicleCondition | EnumVehicleConditionFieldRefInput<$PrismaModel>
+    in?: $Enums.VehicleCondition[] | ListEnumVehicleConditionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VehicleCondition[] | ListEnumVehicleConditionFieldRefInput<$PrismaModel>
+    not?: NestedEnumVehicleConditionWithAggregatesFilter<$PrismaModel> | $Enums.VehicleCondition
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumVehicleConditionFilter<$PrismaModel>
+    _max?: NestedEnumVehicleConditionFilter<$PrismaModel>
+  }
+
+  export type PreferenceCreateWithoutUserInput = {
+    id?: string
+    budgetMin?: number | null
+    budgetMax?: number | null
+    carTypes?: PreferenceCreatecarTypesInput | string[]
+    fuelTypes?: PreferenceCreatefuelTypesInput | string[]
+    brand?: PreferenceCreatebrandInput | string[]
+    features?: PreferenceCreatefeaturesInput | string[]
+    primarilyUse?: PreferenceCreateprimarilyUseInput | string[]
+    topPriorities?: PreferenceCreatetopPrioritiesInput | string[]
+    updatedAt?: Date | string
+  }
+
+  export type PreferenceUncheckedCreateWithoutUserInput = {
+    id?: string
+    budgetMin?: number | null
+    budgetMax?: number | null
+    carTypes?: PreferenceCreatecarTypesInput | string[]
+    fuelTypes?: PreferenceCreatefuelTypesInput | string[]
+    brand?: PreferenceCreatebrandInput | string[]
+    features?: PreferenceCreatefeaturesInput | string[]
+    primarilyUse?: PreferenceCreateprimarilyUseInput | string[]
+    topPriorities?: PreferenceCreatetopPrioritiesInput | string[]
+    updatedAt?: Date | string
+  }
+
+  export type PreferenceCreateOrConnectWithoutUserInput = {
+    where: PreferenceWhereUniqueInput
+    create: XOR<PreferenceCreateWithoutUserInput, PreferenceUncheckedCreateWithoutUserInput>
+  }
+
+  export type ActivityCreateWithoutUserInput = {
+    id?: string
+    action: string
+    carIds?: ActivityCreatecarIdsInput | string[]
+    query?: string | null
+    timestamp?: Date | string
+  }
+
+  export type ActivityUncheckedCreateWithoutUserInput = {
+    id?: string
+    action: string
+    carIds?: ActivityCreatecarIdsInput | string[]
+    query?: string | null
+    timestamp?: Date | string
+  }
+
+  export type ActivityCreateOrConnectWithoutUserInput = {
+    where: ActivityWhereUniqueInput
+    create: XOR<ActivityCreateWithoutUserInput, ActivityUncheckedCreateWithoutUserInput>
+  }
+
+  export type ActivityCreateManyUserInputEnvelope = {
+    data: ActivityCreateManyUserInput | ActivityCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PreferenceUpsertWithoutUserInput = {
+    update: XOR<PreferenceUpdateWithoutUserInput, PreferenceUncheckedUpdateWithoutUserInput>
+    create: XOR<PreferenceCreateWithoutUserInput, PreferenceUncheckedCreateWithoutUserInput>
+    where?: PreferenceWhereInput
+  }
+
+  export type PreferenceUpdateToOneWithWhereWithoutUserInput = {
+    where?: PreferenceWhereInput
+    data: XOR<PreferenceUpdateWithoutUserInput, PreferenceUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PreferenceUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    budgetMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    carTypes?: PreferenceUpdatecarTypesInput | string[]
+    fuelTypes?: PreferenceUpdatefuelTypesInput | string[]
+    brand?: PreferenceUpdatebrandInput | string[]
+    features?: PreferenceUpdatefeaturesInput | string[]
+    primarilyUse?: PreferenceUpdateprimarilyUseInput | string[]
+    topPriorities?: PreferenceUpdatetopPrioritiesInput | string[]
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PreferenceUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    budgetMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    carTypes?: PreferenceUpdatecarTypesInput | string[]
+    fuelTypes?: PreferenceUpdatefuelTypesInput | string[]
+    brand?: PreferenceUpdatebrandInput | string[]
+    features?: PreferenceUpdatefeaturesInput | string[]
+    primarilyUse?: PreferenceUpdateprimarilyUseInput | string[]
+    topPriorities?: PreferenceUpdatetopPrioritiesInput | string[]
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivityUpsertWithWhereUniqueWithoutUserInput = {
+    where: ActivityWhereUniqueInput
+    update: XOR<ActivityUpdateWithoutUserInput, ActivityUncheckedUpdateWithoutUserInput>
+    create: XOR<ActivityCreateWithoutUserInput, ActivityUncheckedCreateWithoutUserInput>
+  }
+
+  export type ActivityUpdateWithWhereUniqueWithoutUserInput = {
+    where: ActivityWhereUniqueInput
+    data: XOR<ActivityUpdateWithoutUserInput, ActivityUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ActivityUpdateManyWithWhereWithoutUserInput = {
+    where: ActivityScalarWhereInput
+    data: XOR<ActivityUpdateManyMutationInput, ActivityUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ActivityScalarWhereInput = {
+    AND?: ActivityScalarWhereInput | ActivityScalarWhereInput[]
+    OR?: ActivityScalarWhereInput[]
+    NOT?: ActivityScalarWhereInput | ActivityScalarWhereInput[]
+    id?: StringFilter<"Activity"> | string
+    userId?: StringFilter<"Activity"> | string
+    action?: StringFilter<"Activity"> | string
+    carIds?: StringNullableListFilter<"Activity">
+    query?: StringNullableFilter<"Activity"> | string | null
+    timestamp?: DateTimeFilter<"Activity"> | Date | string
+  }
+
+  export type UserCreateWithoutActivitiesInput = {
+    id?: string
+    email: string
+    name?: string | null
+    password: string
+    role?: $Enums.UserRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    preferences?: PreferenceCreateNestedOneWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutActivitiesInput = {
+    id?: string
+    email: string
+    name?: string | null
+    password: string
+    role?: $Enums.UserRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    preferences?: PreferenceUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutActivitiesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutActivitiesInput, UserUncheckedCreateWithoutActivitiesInput>
+  }
+
+  export type UserUpsertWithoutActivitiesInput = {
+    update: XOR<UserUpdateWithoutActivitiesInput, UserUncheckedUpdateWithoutActivitiesInput>
+    create: XOR<UserCreateWithoutActivitiesInput, UserUncheckedCreateWithoutActivitiesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutActivitiesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutActivitiesInput, UserUncheckedUpdateWithoutActivitiesInput>
+  }
+
+  export type UserUpdateWithoutActivitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    preferences?: PreferenceUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutActivitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    preferences?: PreferenceUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutPreferencesInput = {
+    id?: string
+    email: string
+    name?: string | null
+    password: string
+    role?: $Enums.UserRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    activities?: ActivityCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutPreferencesInput = {
+    id?: string
+    email: string
+    name?: string | null
+    password: string
+    role?: $Enums.UserRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutPreferencesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPreferencesInput, UserUncheckedCreateWithoutPreferencesInput>
+  }
+
+  export type UserUpsertWithoutPreferencesInput = {
+    update: XOR<UserUpdateWithoutPreferencesInput, UserUncheckedUpdateWithoutPreferencesInput>
+    create: XOR<UserCreateWithoutPreferencesInput, UserUncheckedCreateWithoutPreferencesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPreferencesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPreferencesInput, UserUncheckedUpdateWithoutPreferencesInput>
+  }
+
+  export type UserUpdateWithoutPreferencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activities?: ActivityUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPreferencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ActivityCreateManyUserInput = {
+    id?: string
+    action: string
+    carIds?: ActivityCreatecarIdsInput | string[]
+    query?: string | null
+    timestamp?: Date | string
+  }
+
+  export type ActivityUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    carIds?: ActivityUpdatecarIdsInput | string[]
+    query?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivityUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    carIds?: ActivityUpdatecarIdsInput | string[]
+    query?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivityUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    carIds?: ActivityUpdatecarIdsInput | string[]
+    query?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

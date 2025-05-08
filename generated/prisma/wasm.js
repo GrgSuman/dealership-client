@@ -119,12 +119,34 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  name: 'name',
   email: 'email',
+  name: 'name',
   password: 'password',
   role: 'role',
-  savedVehicles: 'savedVehicles',
   createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ActivityScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  action: 'action',
+  carIds: 'carIds',
+  query: 'query',
+  timestamp: 'timestamp'
+};
+
+exports.Prisma.PreferenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  budgetMin: 'budgetMin',
+  budgetMax: 'budgetMax',
+  carTypes: 'carTypes',
+  fuelTypes: 'fuelTypes',
+  brand: 'brand',
+  features: 'features',
+  primarilyUse: 'primarilyUse',
+  topPriorities: 'topPriorities',
   updatedAt: 'updatedAt'
 };
 
@@ -152,6 +174,10 @@ exports.Prisma.VehicleScalarFieldEnum = {
   stockNumber: 'stockNumber',
   images: 'images',
   description: 'description',
+  status: 'status',
+  condition: 'condition',
+  features: 'features',
+  viewsCount: 'viewsCount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -170,13 +196,53 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.Role = exports.$Enums.Role = {
-  USER: 'USER',
-  ADMIN: 'ADMIN'
+exports.UserRole = exports.$Enums.UserRole = {
+  ADMIN: 'ADMIN',
+  USER: 'USER'
+};
+
+exports.BodyType = exports.$Enums.BodyType = {
+  SEDAN: 'SEDAN',
+  SUV: 'SUV',
+  HATCHBACK: 'HATCHBACK',
+  WAGON: 'WAGON',
+  UTE: 'UTE',
+  VAN: 'VAN',
+  COUPE: 'COUPE',
+  CONVERTIBLE: 'CONVERTIBLE'
+};
+
+exports.Transmission = exports.$Enums.Transmission = {
+  MANUAL: 'MANUAL',
+  AUTOMATIC: 'AUTOMATIC',
+  CVT: 'CVT',
+  DCT: 'DCT'
+};
+
+exports.FuelType = exports.$Enums.FuelType = {
+  PETROL: 'PETROL',
+  DIESEL: 'DIESEL',
+  ELECTRIC: 'ELECTRIC',
+  HYBRID: 'HYBRID',
+  PLUGIN_HYBRID: 'PLUGIN_HYBRID'
+};
+
+exports.VehicleStatus = exports.$Enums.VehicleStatus = {
+  AVAILABLE: 'AVAILABLE',
+  SOLD: 'SOLD',
+  COMING_SOON: 'COMING_SOON'
+};
+
+exports.VehicleCondition = exports.$Enums.VehicleCondition = {
+  NEW: 'NEW',
+  USED: 'USED',
+  CERTIFIED: 'CERTIFIED'
 };
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Activity: 'Activity',
+  Preference: 'Preference',
   Vehicle: 'Vehicle'
 };
 
