@@ -45,15 +45,16 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
     return new Intl.NumberFormat("en-AU", {
       style: "currency",
       currency: "AUD",
-      maximumFractionDigits: 0,
-    }).format(price / 100)
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2,
+    }).format(price)
   }
 
   const formatOdometer = (odometer: number) => {
     return new Intl.NumberFormat("en-AU").format(odometer)
   }
 
-  const primaryImage = vehicle.images?.[0] ?? "/images/placeholder.jpg"
+  const primaryImage = vehicle.images?.[0] ?? "/images/placeholder.svg"
 
   const handleSave = async (e: React.MouseEvent) => {
     e.stopPropagation()

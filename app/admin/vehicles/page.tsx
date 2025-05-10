@@ -65,7 +65,7 @@ export default function AdminVehiclesPage() {
   }, [])
 
   const handleEdit = (id: string) => {
-    router.push(`/admin/vehicles/${id}/edit`)
+    router.push(`/admin/vehicles/addEdit?id=${id}`)
   }
 
   const handleDelete = async (id: string) => {

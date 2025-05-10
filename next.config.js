@@ -9,6 +9,7 @@ const nextConfig = {
                 pathname: '/uploads/**',
             },
         ],
+        domains: ['localhost'],
     },
 }
 

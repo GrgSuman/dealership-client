@@ -105,7 +105,7 @@ model Vehicle {
   make             String    @db.VarChar(100)
   model            String    @db.VarChar(100)
   year             Int
-  price            Int       // store in cents
+  price            Float     // store as float to allow decimal values (e.g., 120000.50)
   bodyType         BodyType
   transmission     Transmission
   fuelType         FuelType

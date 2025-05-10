@@ -59,7 +59,7 @@ export default function UsersPage() {
     }, [])
 
     const handleEdit = (userId: string) => {
-        router.push(`/admin/users/${userId}/edit`)
+        router.push(`/admin/users/addEdit?id=${userId}`)
     }
 
     const handleDelete = async (userId: string) => {

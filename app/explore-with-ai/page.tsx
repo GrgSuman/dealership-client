@@ -11,11 +11,11 @@ export default function ConversationalCarSearch() {
       content: "Hi there! I'm your AI car assistant. Tell me what you're looking for in your next vehicle, and I'll help you find the perfect match.",
     },
   ]);
-  
+
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
-  
+
   // Scroll to bottom of messages
   useEffect(() => {
     scrollToBottom();
@@ -28,22 +28,22 @@ export default function ConversationalCarSearch() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
-    
+
     // Add user message
     const userMessage = {
       id: messages.length + 1,
       type: 'user',
       content: inputValue,
     };
-    
+
     setMessages((prev) => [...prev, userMessage]);
     setInputValue('');
     setIsLoading(true);
-    
+
     // Simulate API delay
     setTimeout(() => {
       let responseMessage;
-      
+
       // Mock responses based on user input
       if (inputValue.toLowerCase().includes('suv')) {
         responseMessage = {
@@ -203,7 +203,7 @@ export default function ConversationalCarSearch() {
           ]
         };
       }
-      
+
       setMessages((prev) => [...prev, responseMessage]);
       setIsLoading(false);
     }, 1500);
@@ -232,7 +232,7 @@ export default function ConversationalCarSearch() {
           <h2 className="text-lg font-bold text-gray-800 mb-4">Quick Search</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {['SUVs & Crossovers', 'Electric Vehicles', 'Under $25,000', 'Luxury Models'].map((category, index) => (
-              <button 
+              <button
                 key={index}
                 className="bg-gray-50 hover:bg-green-50 border border-gray-200 hover:border-green-200 rounded-xl p-4 text-left transition duration-300 hover:shadow-sm"
                 onClick={() => {
@@ -259,29 +259,27 @@ export default function ConversationalCarSearch() {
             </h2>
             <p className="text-sm text-gray-600">Describe what you're looking for in a vehicle, and I'll help you find the perfect match.</p>
           </div>
-          
+
           {/* Messages container */}
           <div className="flex-1 overflow-y-auto p-4">
             <div className="space-y-6">
               {messages.map((message) => (
                 <div
                   key={message.id}
-                  className={`${
-                    message.type === 'user' ? 'justify-end' : 'justify-start'
-                  } flex`}
+                  className={`${message.type === 'user' ? 'justify-end' : 'justify-start'
+                    } flex`}
                 >
                   <div
-                    className={`${
-                      message.type === 'user'
+                    className={`${message.type === 'user'
                         ? 'bg-green-500 text-white rounded-br-none'
                         : 'bg-gray-50 border border-gray-100 rounded-bl-none text-gray-800'
-                    } max-w-3xl rounded-xl p-4 shadow-sm`}
+                      } max-w-3xl rounded-xl p-4 shadow-sm`}
                   >
                     <div className="prose">
                       <p className={message.type === 'user' ? 'text-white mb-0' : 'text-gray-800 mb-2'}>
                         {message.content}
                       </p>
-                      
+
                       {/* Bulleted list */}
                       {message.bullets && (
                         <ul className="mt-2 space-y-1">
@@ -301,7 +299,7 @@ export default function ConversationalCarSearch() {
                         <div className="p-4 border-b border-gray-100 bg-gray-50">
                           <h3 className="font-bold text-gray-800">{message.results.title}</h3>
                         </div>
-                        
+
                         {/* Sources/Results */}
                         <div className="divide-y divide-gray-100">
                           {message.results.sources.map((source, index) => (
@@ -321,7 +319,7 @@ export default function ConversationalCarSearch() {
                                     <h4 className="text-lg font-bold text-gray-800">{source.title}</h4>
                                     <span className="font-bold text-green-500">{source.price}</span>
                                   </div>
-                                  
+
                                   {/* Details grid */}
                                   <div className="grid grid-cols-2 gap-3 mb-4">
                                     {source.details.map((detail, i) => (
@@ -331,7 +329,7 @@ export default function ConversationalCarSearch() {
                                       </div>
                                     ))}
                                   </div>
-                                  
+
                                   {/* Highlights */}
                                   <div>
                                     <h5 className="font-medium text-gray-700 mb-2">Highlights</h5>
@@ -344,7 +342,7 @@ export default function ConversationalCarSearch() {
                                       ))}
                                     </ul>
                                   </div>
-                                  
+
                                   <div className="mt-4 flex space-x-3">
                                     <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transform transition duration-300 hover:scale-95 shadow-sm flex items-center">
                                       View Details
@@ -360,7 +358,7 @@ export default function ConversationalCarSearch() {
                             </div>
                           ))}
                         </div>
-                        
+
                         {/* Related questions */}
                         <div className="p-4 bg-gray-50 border-t border-gray-100">
                           <h4 className="font-medium text-gray-700 mb-2">Related Questions</h4>
@@ -421,25 +419,25 @@ export default function ConversationalCarSearch() {
               </button>
             </form>
             <div className="mt-3 text-center flex flex-wrap justify-center gap-2">
-              <button 
+              <button
                 className="text-xs bg-white border border-gray-200 hover:border-green-300 text-gray-700 px-3 py-1 rounded-full transition duration-200 hover:bg-green-50"
                 onClick={() => setInputValue("I need an SUV with good gas mileage")}
               >
                 SUV with good MPG
               </button>
-              <button 
+              <button
                 className="text-xs bg-white border border-gray-200 hover:border-green-300 text-gray-700 px-3 py-1 rounded-full transition duration-200 hover:bg-green-50"
                 onClick={() => setInputValue("Show me electric vehicles under $50,000")}
               >
                 EVs under $50k
               </button>
-              <button 
+              <button
                 className="text-xs bg-white border border-gray-200 hover:border-green-300 text-gray-700 px-3 py-1 rounded-full transition duration-200 hover:bg-green-50"
                 onClick={() => setInputValue("Family-friendly cars with 3 rows")}
               >
                 3-row family vehicles
               </button>
-              <button 
+              <button
                 className="text-xs bg-white border border-gray-200 hover:border-green-300 text-gray-700 px-3 py-1 rounded-full transition duration-200 hover:bg-green-50"
                 onClick={() => setInputValue("Most reliable cars under $30,000")}
               >

@@ -45,13 +45,19 @@ export function middleware(request: NextRequest) {
 
     try {
         // Verify token
-        const decoded = verify(token, JWT_SECRET, { algorithms: ['HS256'] })
+        const decoded = verify(token, JWT_SECRET, { algorithms: ['HS256'] }) as any
+
+        // Check if user is trying to access admin routes
+        if (path.startsWith('/admin') && decoded.role !== 'ADMIN') {
+            return NextResponse.redirect(new URL("/", request.url))
+        }
 
         // Add user info to request headers for API routes
         if (path.startsWith('/api/')) {
             const requestHeaders = new Headers(request.headers)
-            requestHeaders.set('x-user-id', (decoded as any).userId)
-            requestHeaders.set('x-user-email', (decoded as any).email)
+            requestHeaders.set('x-user-id', decoded.id)
+            requestHeaders.set('x-user-email', decoded.email)
+            requestHeaders.set('x-user-role', decoded.role)
 
             return NextResponse.next({
                 request: {

@@ -42,7 +42,7 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
     <div className="relative">
       <div className="relative h-[500px] w-full">
         <Image
-          src={images[currentIndex] || "/placeholder.svg"}
+          src={images[currentIndex] || "/images/placeholder.svg"}
           alt={`${alt} - Image ${currentIndex + 1}`}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -84,9 +84,10 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
                 "flex-shrink-0 relative h-16 w-24 rounded-md overflow-hidden border-2",
                 currentIndex === index ? "border-green-500" : "border-transparent",
               )}
+              title={`View image ${index + 1}`}
             >
               <Image
-                src={image || "/placeholder.svg"}
+                src={image || "/images/placeholder.svg"}
                 alt={`${alt} thumbnail ${index + 1}`}
                 fill
                 sizes="96px"
