@@ -1,9 +1,9 @@
 "use client"
 
-import { useState } from 'react'
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import {
   Select,
   SelectContent,
@@ -11,73 +11,139 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card"
+import { Textarea } from "@/components/ui/textarea"
+import { Upload, X } from "lucide-react"
 import { toast } from "sonner"
 
-const bodyTypes = [
-  'Hatchback', 'Sedan', 'SUV', 'Coupe', 'Wagon', 
-  'Convertible', 'Ute', 'Van', 'Truck', 'Other'
-]
+// Define enum values
+const bodyTypes = ["SEDAN", "SUV", "HATCHBACK", "WAGON", "UTE", "VAN", "COUPE", "CONVERTIBLE"]
+const transmissionTypes = ["MANUAL", "AUTOMATIC", "CVT", "DCT"]
+const fuelTypes = ["PETROL", "DIESEL", "ELECTRIC", "HYBRID", "PLUGIN_HYBRID"]
 
-const transmissionTypes = [
-  'Manual', 'Automatic', 'Sports Automatic Dual Clutch', 
-  'CVT', 'Semi-Automatic', 'Other'
-]
+// Maximum file size (5MB)
+const MAX_FILE_SIZE = 5 * 1024 * 1024
 
-const fuelTypes = [
-  'Petrol', 'Diesel', 'Hybrid', 'Electric', 
-  'LPG', 'Hydrogen', 'Other'
-]
-
-const driveTypes = ['FWD', 'RWD', 'AWD', '4WD', 'Other']
-
-export default function AddVehicle() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
+export default function AddVehiclePage() {
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
-    make: '',
-    model: '',
-    year: new Date().getFullYear(),
-    price: '',
-    bodyType: '',
-    transmission: '',
-    fuelType: '',
-    engineCapacity: '',
-    cylinders: '',
-    odometer: '',
-    driveType: '',
-    doors: '',
-    seats: '',
-    color: '',
-    rego: '',
-    vin: '',
-    stockNumber: '',
-    description: '',
-    images: [] as string[]
+    make: "",
+    model: "",
+    year: "",
+    price: "",
+    bodyType: "",
+    transmission: "",
+    fuelType: "",
+    odometer: "",
+    color: "",
+    stockNumber: "",
+    description: "",
+    features: "",
+    images: [] as File[]
   })
 
-  const [errors, setErrors] = useState<Record<string, string>>({})
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
 
-  const handleChange = (name: string, value: string) => {
-    setFormData(prev => ({ ...prev, [name]: value }))
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }))
+    try {
+      // First, upload images and get their URLs
+      const imageUrls = await Promise.all(
+        formData.images.map(async (file) => {
+          // Validate file size
+          if (file.size > MAX_FILE_SIZE) {
+            throw new Error(`File ${file.name} is too large. Maximum size is 5MB.`)
+          }
+
+          // Validate file type
+          if (!file.type.startsWith("image/")) {
+            throw new Error(`File ${file.name} is not an image.`)
+          }
+
+          const formData = new FormData()
+          formData.append("file", file)
+
+          try {
+            const response = await fetch("/api/upload", {
+              method: "POST",
+              body: formData,
+            })
+
+            if (!response.ok) {
+              const error = await response.json()
+              throw new Error(error.error || error.details || "Failed to upload image")
+            }
+
+            const data = await response.json()
+            return data.url
+          } catch (error) {
+            console.error(`Error uploading ${file.name}:`, error)
+            throw new Error(`Failed to upload ${file.name}: ${error instanceof Error ? error.message : "Unknown error"}`)
+          }
+        })
+      )
+
+      // Then create the vehicle with image URLs
+      const response = await fetch("/api/admin/vehicles", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          year: parseInt(formData.year),
+          price: parseFloat(formData.price),
+          odometer: parseInt(formData.odometer),
+          images: imageUrls,
+          status: "AVAILABLE",
+          condition: "USED",
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || data.details || "Failed to add vehicle")
+      }
+
+      toast.success("Vehicle added successfully")
+      router.push("/admin/vehicles")
+    } catch (error) {
+      console.error("Error adding vehicle:", error)
+      toast.error(error instanceof Error ? error.message : "Failed to add vehicle")
+    } finally {
+      setLoading(false)
     }
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleSelect = (name: string, value: string) => {
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const fileArray = Array.from(e.target.files).map(file => URL.createObjectURL(file))
-      setFormData(prev => ({
-        ...prev,
-        images: [...prev.images, ...fileArray]
-      }))
+    const files = Array.from(e.target.files || [])
+
+    // Validate files
+    for (const file of files) {
+      if (file.size > MAX_FILE_SIZE) {
+        toast.error(`File ${file.name} is too large. Maximum size is 5MB.`)
+        return
+      }
+      if (!file.type.startsWith("image/")) {
+        toast.error(`File ${file.name} is not an image.`)
+        return
+      }
     }
+
+    setFormData(prev => ({
+      ...prev,
+      images: [...prev.images, ...files]
+    }))
   }
 
   const removeImage = (index: number) => {
@@ -87,274 +153,230 @@ export default function AddVehicle() {
     }))
   }
 
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {}
-    
-    if (!formData.make) newErrors.make = "Make is required"
-    if (!formData.model) newErrors.model = "Model is required"
-    if (!formData.price) newErrors.price = "Price is required"
-    if (!formData.bodyType) newErrors.bodyType = "Body type is required"
-    if (!formData.transmission) newErrors.transmission = "Transmission is required"
-    if (!formData.fuelType) newErrors.fuelType = "Fuel type is required"
-    if (!formData.odometer) newErrors.odometer = "Odometer is required"
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
-
-  const handleSubmit = async () => {
-    if (!validateForm()) {
-      toast.error("Please fill in all required fields")
-      return
-    }
-
-    setIsSubmitting(true)
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      toast.success("Vehicle added successfully!")
-      // Reset form
-      setFormData({
-        make: '',
-        model: '',
-        year: new Date().getFullYear(),
-        price: '',
-        bodyType: '',
-        transmission: '',
-        fuelType: '',
-        engineCapacity: '',
-        cylinders: '',
-        odometer: '',
-        driveType: '',
-        doors: '',
-        seats: '',
-        color: '',
-        rego: '',
-        vin: '',
-        stockNumber: '',
-        description: '',
-        images: []
-      })
-      setErrors({})
-    } catch (error) {
-      toast.error("Failed to add vehicle")
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
   return (
-    <div className="container mx-auto py-6 space-y-6 max-w-5xl">
+    <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Add New Vehicle</h1>
-        <p className="text-muted-foreground mt-2">
-          Enter the vehicle details below. Required fields are marked with an asterisk (*).
-        </p>
+        <h1 className="text-2xl font-bold tracking-tight">Add New Vehicle</h1>
+        <p className="text-gray-500">Enter the details of the new vehicle</p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Basic Information</CardTitle>
-          <CardDescription>Enter the main details of the vehicle</CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Make <span className="text-red-500">*</span>
-              </label>
-              <Input
-                placeholder="e.g., Audi"
-                value={formData.make}
-                onChange={(e) => handleChange('make', e.target.value)}
-                className={errors.make ? 'border-red-500' : ''}
-              />
-              {errors.make && (
-                <p className="text-sm text-red-500">{errors.make}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Model <span className="text-red-500">*</span>
-              </label>
-              <Input
-                placeholder="e.g., A4"
-                value={formData.model}
-                onChange={(e) => handleChange('model', e.target.value)}
-                className={errors.model ? 'border-red-500' : ''}
-              />
-              {errors.model && (
-                <p className="text-sm text-red-500">{errors.model}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Body Type <span className="text-red-500">*</span>
-              </label>
-              <Select
-                value={formData.bodyType}
-                onValueChange={(value) => handleChange('bodyType', value)}
-              >
-                <SelectTrigger className={errors.bodyType ? 'border-red-500' : ''}>
-                  <SelectValue placeholder="Select body type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {bodyTypes.map((type) => (
-                    <SelectItem key={type} value={type}>
-                      {type}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {errors.bodyType && (
-                <p className="text-sm text-red-500">{errors.bodyType}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Price ($) <span className="text-red-500">*</span>
-              </label>
-              <Input
-                type="number"
-                placeholder="Enter price"
-                value={formData.price}
-                onChange={(e) => handleChange('price', e.target.value)}
-                className={errors.price ? 'border-red-500' : ''}
-              />
-              {errors.price && (
-                <p className="text-sm text-red-500">{errors.price}</p>
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Technical Details</CardTitle>
-          <CardDescription>Enter the vehicle's technical specifications</CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Transmission <span className="text-red-500">*</span>
-              </label>
-              <Select
-                value={formData.transmission}
-                onValueChange={(value) => handleChange('transmission', value)}
-              >
-                <SelectTrigger className={errors.transmission ? 'border-red-500' : ''}>
-                  <SelectValue placeholder="Select transmission" />
-                </SelectTrigger>
-                <SelectContent>
-                  {transmissionTypes.map((type) => (
-                    <SelectItem key={type} value={type}>
-                      {type}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {errors.transmission && (
-                <p className="text-sm text-red-500">{errors.transmission}</p>
-              )}
-            </div>
-
-            {/* Add other technical fields similarly */}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Images & Description</CardTitle>
-          <CardDescription>Add vehicle images and description</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Image Upload Section */}
+        <div className="space-y-4">
+          <div>
             <label className="text-sm font-medium">Vehicle Images</label>
+            <div className="mt-2 flex flex-wrap gap-4">
+              {formData.images.map((file, index) => (
+                <div key={index} className="relative group">
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt={`Preview ${index + 1}`}
+                    className="w-32 h-32 object-cover rounded-lg"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeImage(index)}
+                    className="absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    title="Remove image"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              ))}
+              <label className="w-32 h-32 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-gray-400 transition-colors">
+                <Upload className="h-8 w-8 text-gray-400" />
+                <span className="text-sm text-gray-500 mt-2">Add Image</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  onChange={handleImageUpload}
+                />
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Make</label>
             <Input
-              type="file"
-              onChange={handleImageUpload}
-              accept="image/*"
-              multiple
-              className="cursor-pointer"
+              name="make"
+              value={formData.make}
+              onChange={handleChange}
+              placeholder="e.g., Toyota"
+              required
             />
-            {formData.images.length > 0 && (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {formData.images.map((image, index) => (
-                  <div key={index} className="relative group">
-                    <img
-                      src={image}
-                      alt={`Vehicle ${index + 1}`}
-                      className="h-24 w-full object-cover rounded-lg"
-                    />
-                    <button
-                      onClick={() => removeImage(index)}
-                      className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full 
-                               opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">Description</label>
-            <Textarea
-              placeholder="Enter vehicle description..."
-              value={formData.description}
-              onChange={(e) => handleChange('description', e.target.value)}
-              className="min-h-[100px]"
+            <label className="text-sm font-medium">Model</label>
+            <Input
+              name="model"
+              value={formData.model}
+              onChange={handleChange}
+              placeholder="e.g., Camry"
+              required
             />
           </div>
-        </CardContent>
-      </Card>
 
-      <div className="flex justify-end gap-4">
-        <Button
-          variant="outline"
-          onClick={() => {
-            setFormData({
-              make: '',
-              model: '',
-              year: new Date().getFullYear(),
-              price: '',
-              bodyType: '',
-              transmission: '',
-              fuelType: '',
-              engineCapacity: '',
-              cylinders: '',
-              odometer: '',
-              driveType: '',
-              doors: '',
-              seats: '',
-              color: '',
-              rego: '',
-              vin: '',
-              stockNumber: '',
-              description: '',
-              images: []
-            })
-            setErrors({})
-          }}
-          disabled={isSubmitting}
-        >
-          Reset
-        </Button>
-        <Button
-          onClick={handleSubmit}
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? 'Saving...' : 'Save Vehicle'}
-        </Button>
-      </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Year</label>
+            <Input
+              name="year"
+              type="number"
+              value={formData.year}
+              onChange={handleChange}
+              placeholder="e.g., 2023"
+              min="1900"
+              max={new Date().getFullYear() + 1}
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Price</label>
+            <Input
+              name="price"
+              type="number"
+              value={formData.price}
+              onChange={handleChange}
+              placeholder="e.g., 25000"
+              min="0"
+              step="0.01"
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Body Type</label>
+            <Select
+              value={formData.bodyType}
+              onValueChange={(value: string) => handleSelect("bodyType", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select body type" />
+              </SelectTrigger>
+              <SelectContent>
+                {bodyTypes.map((type) => (
+                  <SelectItem key={type} value={type}>
+                    {type.charAt(0) + type.slice(1).toLowerCase()}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Transmission</label>
+            <Select
+              value={formData.transmission}
+              onValueChange={(value: string) => handleSelect("transmission", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select transmission" />
+              </SelectTrigger>
+              <SelectContent>
+                {transmissionTypes.map((type) => (
+                  <SelectItem key={type} value={type}>
+                    {type.charAt(0) + type.slice(1).toLowerCase()}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Fuel Type</label>
+            <Select
+              value={formData.fuelType}
+              onValueChange={(value: string) => handleSelect("fuelType", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select fuel type" />
+              </SelectTrigger>
+              <SelectContent>
+                {fuelTypes.map((type) => (
+                  <SelectItem key={type} value={type}>
+                    {type.split('_').map(word => word.charAt(0) + word.slice(1).toLowerCase()).join(' ')}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Odometer (km)</label>
+            <Input
+              name="odometer"
+              type="number"
+              value={formData.odometer}
+              onChange={handleChange}
+              placeholder="e.g., 50000"
+              min="0"
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Color</label>
+            <Input
+              name="color"
+              value={formData.color}
+              onChange={handleChange}
+              placeholder="e.g., Silver"
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Stock Number</label>
+            <Input
+              name="stockNumber"
+              value={formData.stockNumber}
+              onChange={handleChange}
+              placeholder="e.g., STK123"
+              required
+            />
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Description</label>
+          <Textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Enter vehicle description..."
+            rows={4}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Features</label>
+          <Textarea
+            name="features"
+            value={formData.features}
+            onChange={handleChange}
+            placeholder="Enter vehicle features (one per line)..."
+            rows={4}
+          />
+        </div>
+
+        <div className="flex justify-end gap-4">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => router.back()}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" disabled={loading}>
+            {loading ? "Adding..." : "Add Vehicle"}
+          </Button>
+        </div>
+      </form>
     </div>
   )
 }

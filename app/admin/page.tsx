@@ -1,16 +1,28 @@
 "use client"
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Car, Users, Plus, DollarSign, TrendingUp, Package, Clock } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 export default function AdminDashboard() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    console.log("User role:", user.role); // Debug log
+    if (user.role !== "ADMIN") {
+      router.replace("/");
+    }
+  }, [router]);
+
   return (
     <div className="container mx-auto p-6 space-y-8">
       {/* Quick Actions Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Link href="/admin/add-vehicle">
+        <Link href="/admin/vehicles/add">
           <Card className="hover:shadow-md transition-shadow cursor-pointer border-green-100 hover:border-green-200">
             <CardContent className="flex items-center gap-4 p-6">
               <div className="p-4 bg-green-50 rounded-full">
@@ -38,15 +50,15 @@ export default function AdminDashboard() {
           </Card>
         </Link>
 
-        <Link href="/admin/inventory">
+        <Link href="/admin/vehicles">
           <Card className="hover:shadow-md transition-shadow cursor-pointer">
             <CardContent className="flex items-center gap-4 p-6">
               <div className="p-4 bg-purple-50 rounded-full">
-                <Package className="h-6 w-6 text-purple-600" />
+                <Car className="h-6 w-6 text-purple-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-lg text-gray-900">Inventory</h3>
-                <p className="text-sm text-gray-500">Manage vehicle listings</p>
+                <h3 className="font-semibold text-lg text-gray-900">Manage Vehicles</h3>
+                <p className="text-sm text-gray-500">View and manage vehicle listings</p>
               </div>
             </CardContent>
           </Card>
@@ -114,7 +126,9 @@ export default function AdminDashboard() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Recent Vehicle Listings</CardTitle>
-            <Button variant="outline" size="sm">View All</Button>
+            <Link href="/admin/vehicles">
+              <Button variant="outline" size="sm">View All</Button>
+            </Link>
           </div>
         </CardHeader>
         <CardContent>
@@ -129,14 +143,15 @@ export default function AdminDashboard() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className={`px-2 py-1 text-xs rounded-full ${
-                    listing.status === 'Active' 
-                      ? 'bg-green-100 text-green-700' 
-                      : 'bg-yellow-100 text-yellow-700'
-                  }`}>
+                  <span className={`px-2 py-1 text-xs rounded-full ${listing.status === 'Active'
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-yellow-100 text-yellow-700'
+                    }`}>
                     {listing.status}
                   </span>
-                  <Button variant="ghost" size="sm">Edit</Button>
+                  <Link href={`/admin/vehicles/edit/${listing.id}`}>
+                    <Button variant="ghost" size="sm">Edit</Button>
+                  </Link>
                 </div>
               </div>
             ))}

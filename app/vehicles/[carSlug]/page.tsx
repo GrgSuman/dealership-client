@@ -5,36 +5,29 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Car, Fuel, Info, Gauge, Calendar, Cog, DollarSign, Palette, Key, Hash, BarChart3, Eye } from "lucide-react"
-import { vehicles } from "@/data"
+import { notFound } from "next/navigation"
 
 const VehicleDetail = async ({ params }: { params: { carSlug: string } }) => {
   const { carSlug } = params
 
-  // Find the vehicle by ID from the URL slug
-  const vehicle = vehicles.find((v) => v.id === carSlug)
+  // Fetch the vehicle data from the API
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+  const response = await fetch(`${baseUrl}/api/admin/vehicles/${carSlug}`, {
+    cache: 'no-store'
+  })
 
-  if (!vehicle) {
-    return (
-      <div className="container mx-auto px-4 py-12">
-        <Card className="max-w-2xl mx-auto">
-          <CardContent className="pt-6 text-center">
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">Vehicle Not Found</h1>
-            <p className="text-gray-600 mb-6">The vehicle you're looking for doesn't exist or has been removed.</p>
-            <Button asChild>
-              <Link href="/vehicles">Return to Vehicles</Link>
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    )
+  if (!response.ok) {
+    notFound()
   }
+
+  const vehicle = await response.json()
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-AU", {
       style: "currency",
       currency: "AUD",
       maximumFractionDigits: 0,
-    }).format(price / 100)
+    }).format(price)
   }
 
   const formatNumber = (num: number) => {
@@ -56,7 +49,7 @@ const VehicleDetail = async ({ params }: { params: { carSlug: string } }) => {
         {/* Left Column - Images */}
         <div className="lg:col-span-2">
           <div className="bg-white rounded-xl shadow-md overflow-hidden">
-            <ImageGallery images={vehicle.images} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} />
+            <ImageGallery images={vehicle.images || []} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} />
 
             <div className="p-6">
               <div className="flex flex-wrap gap-2 mb-6">
@@ -79,7 +72,7 @@ const VehicleDetail = async ({ params }: { params: { carSlug: string } }) => {
 
               <h2 className="text-xl font-bold text-gray-900 mb-3">Features</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
-                {vehicle.features.map((feature, index) => (
+                {vehicle.features?.map((feature: string, index: number) => (
                   <div key={index} className="flex items-center bg-gray-50 p-3 rounded-lg">
                     <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
@@ -102,7 +95,7 @@ const VehicleDetail = async ({ params }: { params: { carSlug: string } }) => {
               </h1>
               <div className="flex items-center text-gray-600 mb-4">
                 <Eye className="w-4 h-4 mr-1" />
-                <span>{vehicle.viewsCount} views</span>
+                <span>{vehicle.viewsCount || 0} views</span>
               </div>
 
               <div className="text-3xl font-bold text-green-600 mb-4">{formatPrice(vehicle.price)}</div>

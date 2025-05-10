@@ -9,18 +9,79 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Loader2 } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
-export default function LoginPage() {
+export default function SignUpPage() {
   const [isLoading, setIsLoading] = useState(false)
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  })
+  const router = useRouter()
 
-  const handleGoogleLogin = async () => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
     setIsLoading(true)
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match")
+      setIsLoading(false)
+      return
+    }
+
     try {
-      // Add your Google authentication logic here
-      // Example: await signInWithGoogle()
+      console.log("Attempting registration...")
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+        }),
+      })
+
+      console.log("Response status:", response.status)
+      const contentType = response.headers.get("content-type")
+      console.log("Response content type:", contentType)
+
+      let data
+      try {
+        data = await response.json()
+        console.log("Response data:", data)
+      } catch (e) {
+        console.error("Failed to parse response:", e)
+        throw new Error("Invalid server response")
+      }
+
+      if (response.ok) {
+        toast.success("Profile created successfully!")
+        router.push("/login")
+      } else {
+        toast.error(data.error || "Registration failed")
+      }
     } catch (error) {
-      console.error("Login failed:", error)
+      toast.error("Registration failed")
     } finally {
       setIsLoading(false)
     }
@@ -53,71 +114,94 @@ export default function LoginPage() {
 
       <Card className="w-full max-w-md mx-4">
         <CardHeader className="space-y-2 text-center">
-          <CardTitle className="text-2xl font-bold">Continue with Google</CardTitle>
+          <CardTitle className="text-2xl font-bold">Create an Account</CardTitle>
           <CardDescription>
-            Sign in to access your dealership dashboard
+            Sign up to start managing your dealership
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex flex-col space-y-4">
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="firstName">First Name</Label>
+              <Input
+                id="firstName"
+                name="firstName"
+                type="text"
+                placeholder="Enter your first name"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="lastName">Last Name</Label>
+              <Input
+                id="lastName"
+                name="lastName"
+                type="text"
+                placeholder="Enter your last name"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Create a password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                placeholder="Confirm your password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+            </div>
             <Button
-              variant="outline"
-              className="relative h-12"
-              onClick={handleGoogleLogin}
+              type="submit"
+              className="w-full"
               disabled={isLoading}
             >
               {isLoading ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating account...
+                </>
               ) : (
-                <svg
-                  className="mr-2 h-5 w-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M23.766 12.2764C23.766 11.4607 23.6999 10.6406 23.5588 9.83807H12.24V14.4591H18.7217C18.4528 15.9494 17.5885 17.2678 16.323 18.1056V21.1039H20.19C22.4608 19.0139 23.766 15.9274 23.766 12.2764Z"
-                    fill="#4285F4"
-                  />
-                  <path
-                    d="M12.24 24.0008C15.4764 24.0008 18.2058 22.9382 20.1944 21.1039L16.3274 18.1055C15.2516 18.8375 13.8626 19.252 12.24 19.252C9.0362 19.252 6.3106 17.1399 5.3646 14.3003H1.3916V17.3912C3.37038 21.4434 7.48078 24.0008 12.24 24.0008Z"
-                    fill="#34A853"
-                  />
-                  <path
-                    d="M5.36451 14.3003C4.87332 12.8099 4.87332 11.1961 5.36451 9.70575V6.61481H1.39157C-0.465551 10.0056 -0.465551 14.0004 1.39157 17.3912L5.36451 14.3003Z"
-                    fill="#FBBC04"
-                  />
-                  <path
-                    d="M12.24 4.74966C13.9508 4.7232 15.6043 5.36697 16.8433 6.54867L20.2694 3.12262C18.0999 1.0855 15.2207 -0.034466 12.24 0.000808666C7.48078 0.000808666 3.37038 2.55822 1.3916 6.61481L5.36454 9.70575C6.30637 6.86173 9.03454 4.74966 12.24 4.74966Z"
-                    fill="#EA4335"
-                  />
-                </svg>
+                "Create Account"
               )}
-              Sign up with Google
             </Button>
+          </form>
 
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-muted-foreground">
-                  Secure Authentication
-                </span>
-              </div>
-            </div>
-
-            <div className="text-center text-sm text-muted-foreground">
-              By signing in, you agree to our{" "}
-              <a href="#" className="underline underline-offset-4 hover:text-primary">
-                Terms of Service
-              </a>{" "}
-              and{" "}
-              <a href="#" className="underline underline-offset-4 hover:text-primary">
-                Privacy Policy
-              </a>
-              .
-            </div>
+          <div className="mt-4 text-center text-sm">
+            Already have an account?{" "}
+            <Link href="/signin" className="text-green-600 hover:underline">
+              Sign in
+            </Link>
           </div>
         </CardContent>
       </Card>

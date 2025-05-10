@@ -2,16 +2,59 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Search, CreditCard, Heart, HelpCircle, Settings, Menu, X, LogIn, UserPlus, TrendingUp, Bot, Home, GitCompare } from "lucide-react"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { toast } from "sonner"
+
+interface SidebarItemProps {
+  icon: React.ReactNode
+  label: string
+  href: string
+}
+
+const SidebarItem: React.FC<SidebarItemProps> = ({ icon, label, href }) => (
+  <Link href={href} className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg">
+    {icon}
+    <span>{label}</span>
+  </Link>
+)
 
 export default function Sidebar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const router = useRouter()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [userName, setUserName] = useState("")
 
   const path = usePathname()
   const isAdminPath = path?.includes("/admin")
+
+  useEffect(() => {
+    const checkUser = () => {
+      const user = localStorage.getItem("user")
+      if (user) {
+        const userData = JSON.parse(user)
+        setIsLoggedIn(true)
+        setUserName(userData.firstName)
+      } else {
+        setIsLoggedIn(false)
+        setUserName("")
+      }
+    }
+
+    checkUser()
+    window.addEventListener("userChanged", checkUser)
+    return () => window.removeEventListener("userChanged", checkUser)
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.removeItem("user")
+    setIsLoggedIn(false)
+    toast.success("Logged out successfully")
+    window.dispatchEvent(new Event("userChanged"))
+    router.push("/login")
+  }
 
   if (isAdminPath) return null
 
@@ -32,98 +75,58 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0 ${
-          isMobileOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0 ${isMobileOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="flex flex-col h-full">
           {/* Mobile auth buttons */}
           <div className="md:hidden p-4 border-b border-gray-100">
-            <div className="flex space-x-2">
-              <Link
-                href="/signin"
-                className="flex items-center justify-center gap-2 flex-1 py-2 px-3 rounded-md text-sm text-gray-700 border border-gray-200 hover:bg-gray-50"
-              >
-                <LogIn size={16} />
-                <span>Sign In</span>
-              </Link>
-              <Link
-                href="/signup"
-                className="flex items-center justify-center gap-2 flex-1 py-2 px-3 rounded-md text-sm bg-green-600 text-white hover:bg-green-700"
-              >
-                <UserPlus size={16} />
-                <span>Create Account</span>
-              </Link>
-            </div>
+            {isLoggedIn ? (
+              <div className="flex flex-col space-y-2">
+                <span className="text-gray-700 font-medium">{userName}</span>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-600 hover:bg-red-700 text-white font-medium px-4 py-2 rounded-lg transition-colors"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col space-y-2">
+                <SidebarItem icon={<LogIn />} label="Sign In" href="/login" />
+                <SidebarItem icon={<UserPlus />} label="Create Account" href="/signup" />
+              </div>
+            )}
           </div>
 
-          {/* Main navigation area - with flex-grow to push AI chat to bottom */}
+          {/* Main navigation area */}
           <div className="flex-grow p-4">
             <nav className="space-y-1 mb-5">
-              <SidebarItem path="/" icon={<Home size={16}/>} label="Home" />
-              <SidebarItem path="/saved-cars" icon={<Heart size={16} />} label="Saved Cars" />
+              <SidebarItem icon={<Home size={16} />} label="Home" href="/" />
+              <SidebarItem icon={<Heart size={16} />} label="Saved Cars" href="/saved-cars" />
             </nav>
-            
+
             <div className="mb-5">
               <h2 className="mb-2 px-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Explore</h2>
               <nav className="space-y-1">
-                <SidebarItem path="/popular-cars" icon={<TrendingUp size={16}/>} label="Popular" />
-                <SidebarItem path="/explore-with-ai" icon={<Bot size={16} />} label="Explore with AI" />
-                <SidebarItem path="/search-cars" icon={<Search size={16} />} label="Search Cars" />
-                <SidebarItem path="/compare-cars" icon={<GitCompare size={16} />} label="Compare Cars" />
-                <SidebarItem path="/finance" icon={<CreditCard size={16} />} label="Financing Options" />
+                <SidebarItem icon={<TrendingUp size={16} />} label="Popular" href="/popular-cars" />
+                <SidebarItem icon={<Bot size={16} />} label="Explore with AI" href="/explore-with-ai" />
+                <SidebarItem icon={<Search size={16} />} label="Search Cars" href="/search-cars" />
+                <SidebarItem icon={<GitCompare size={16} />} label="Compare Cars" href="/compare-cars" />
+                <SidebarItem icon={<CreditCard size={16} />} label="Financing Options" href="/finance" />
               </nav>
             </div>
-          
-            <div>
+
+            <div className="mb-5">
               <h2 className="mb-2 px-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Other</h2>
               <nav className="space-y-1">
-                <SidebarItem path="/help" icon={<HelpCircle size={16} />} label="Help & Support" />
-                <SidebarItem path="/preferences" icon={<Settings size={16} />} label="Preferences" />
+                <SidebarItem icon={<HelpCircle size={16} />} label="Help & Support" href="/help" />
+                <SidebarItem icon={<Settings size={16} />} label="Preferences" href="/preferences" />
               </nav>
             </div>
           </div>
-
-          {/* AI assistant promo - now properly stuck to the bottom */}
-          {/* <div className="p-4 mt-auto border-t border-gray-100">
-            <div className="bg-green-50 rounded-lg p-3 border border-green-100">
-              <h3 className="text-sm font-medium text-green-800">Need assistance?</h3>
-              <p className="text-xs text-green-700 mt-1">Our AI assistant can help you find the perfect car.</p>
-              <button
-                className="mt-3 text-xs bg-green-600 text-white py-2 px-3 rounded-md w-full hover:bg-green-700"
-                onClick={() => (window.location.href = "/ai-search")}
-              >
-                Chat with AI
-              </button>
-            </div>
-          </div> */}
         </div>
       </aside>
     </>
-  )
-}
-
-interface SidebarItemProps {
-  icon: React.ReactNode
-  label: string
-  active?: boolean
-  path: string
-}
-
-function SidebarItem({ icon, label, path }: SidebarItemProps) {
-  const pathName = usePathname()
-  // For home route, we need exact match
-  const isActive = path === "/" ? pathName === path : pathName?.startsWith(path)
-
-  return (
-    <Link
-      href={path}
-      className={`flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-        isActive ? "bg-green-100 text-green-700" : "text-gray-700 hover:bg-green-50 hover:text-green-700"
-      }`}
-    >
-      <span className={`mr-3 ${isActive ? "text-green-600" : "text-gray-500"}`}>{icon}</span>
-      {label}
-    </Link>
   )
 }

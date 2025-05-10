@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -60,11 +59,13 @@ enum UserRole {
 model User {
   id           String       @id @default(cuid())
   email        String       @unique
-  name         String?      @db.VarChar(100)
+  firstName    String?      @db.VarChar(50)
+  lastName     String?      @db.VarChar(50)
   password     String
   preferences  Preference?
   role         UserRole     @default(USER)
   activities   Activity[]
+  savedVehicles SavedVehicle[]
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 }
@@ -113,26 +114,40 @@ model Vehicle {
   fuelConsumptionCombined    Float?
   engineCapacity   Float?
   cylinders        Int?
-  odometer        Int
+  odometer         Int
   driveType        String?   @db.VarChar(50)
-  doors           Int?
-  seats           Int?
-  color           String?    @db.VarChar(50)
-  rego           String?     @db.VarChar(20)
-  vin            String?     @db.VarChar(17)
-  stockNumber     String?    @db.VarChar(50)
-  images         String[]
-  description     String    @db.Text
-  status         VehicleStatus
-  condition      VehicleCondition
-  features       String[]
-  viewsCount    Int          @default(0)
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  doors            Int?
+  seats            Int?
+  color            String?    @db.VarChar(50)
+  rego             String?     @db.VarChar(20)
+  vin              String?     @db.VarChar(17)
+  stockNumber      String?     @db.VarChar(50)
+  images           String[]
+  description      String    @db.Text
+  status           VehicleStatus
+  condition        VehicleCondition
+  features         String[]
+  viewsCount       Int          @default(0)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  savedBy          SavedVehicle[]
 
   @@index([make, model])
   @@index([price])
   @@index([status])
   @@index([condition])
   @@index([year])
+}
+
+model SavedVehicle {
+  id        String   @id @default(cuid())
+  userId    String
+  vehicleId String
+  user      User     @relation(fields: [userId], references: [id])
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, vehicleId])
+  @@index([userId])
+  @@index([vehicleId])
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   Table,
   TableBody,
@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/select"
 import { Plus, Search, Filter, MoreHorizontal, Pencil, Trash2 } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 // Types based on your schema
 interface Vehicle {
@@ -46,7 +47,54 @@ interface Vehicle {
 }
 
 export default function VehiclesPage() {
+  const router = useRouter()
+  const [vehicles, setVehicles] = useState<Vehicle[]>([])
+  const [loading, setLoading] = useState(true)
   const [filterOpen, setFilterOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+
+  useEffect(() => {
+    fetchVehicles()
+  }, [])
+
+  const fetchVehicles = async () => {
+    try {
+      const response = await fetch("/api/admin/vehicles")
+      const data = await response.json()
+      setVehicles(data)
+    } catch (error) {
+      console.error("Error fetching vehicles:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this vehicle?")) return
+
+    try {
+      const response = await fetch(`/api/admin/vehicles/${id}`, {
+        method: "DELETE",
+      })
+
+      if (response.ok) {
+        setVehicles(vehicles.filter(vehicle => vehicle.id !== id))
+      } else {
+        console.error("Failed to delete vehicle")
+      }
+    } catch (error) {
+      console.error("Error deleting vehicle:", error)
+    }
+  }
+
+  const filteredVehicles = vehicles.filter(vehicle => {
+    const searchString = `${vehicle.make} ${vehicle.model} ${vehicle.year} ${vehicle.stockNumber}`.toLowerCase()
+    return searchString.includes(searchQuery.toLowerCase())
+  })
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className="space-y-6">
@@ -72,6 +120,8 @@ export default function VehiclesPage() {
             <Input
               placeholder="Search vehicles..."
               className="pl-9 bg-white"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           <Button
@@ -163,7 +213,7 @@ export default function VehiclesPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {sampleVehicles.map((vehicle) => (
+            {filteredVehicles.map((vehicle) => (
               <TableRow key={vehicle.id}>
                 <TableCell>
                   <div>
@@ -193,12 +243,16 @@ export default function VehiclesPage() {
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem className="cursor-pointer">
+                      <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={() => router.push(`/admin/vehicles/edit/${vehicle.id}`)}
+                      >
                         <Pencil className="mr-2 h-4 w-4" />
                         Edit
                       </DropdownMenuItem>
-                      <DropdownMenuItem 
-                        className="cursor-pointer text-red-600 focus:text-red-600"
+                      <DropdownMenuItem
+                        className="cursor-pointer text-red-600"
+                        onClick={() => handleDelete(vehicle.id)}
                       >
                         <Trash2 className="mr-2 h-4 w-4" />
                         Delete
