@@ -2,43 +2,25 @@ import type React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
-import { Car, Gauge, Calendar, Heart, Loader2 } from "lucide-react"
+import { Heart, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { toast } from "sonner"
 
-// This type matches your schema
 interface Vehicle {
   id: string
   make: string
   model: string
   year: number
-  price: number // in cents
+  price: number
   bodyType: string
   transmission: string
   fuelType: string
-  fuelConsumptionUrban: number
-  fuelConsumptionExtraUrban: number
-  fuelConsumptionCombined: number
-  engineCapacity: number
-  cylinders: number
   odometer: number
-  driveType: string
-  doors: number
-  seats: number
-  color: string
-  rego: string
-  vin: string
-  stockNumber: string
   images: string[]
-  description: string
   status: string
   condition: string
-  features: string[]
-  viewsCount: number
   createdAt: Date
-  updatedAt: Date
   isSaved?: boolean
 }
 
@@ -57,78 +39,39 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
       style: "currency",
       currency: "AUD",
       maximumFractionDigits: 0,
-    }).format(price / 100) // Convert cents to dollars
+    }).format(price / 100)
   }
 
   const formatOdometer = (odometer: number) => {
     return new Intl.NumberFormat("en-AU").format(odometer)
   }
 
-  // Get the first image from the images array or use a placeholder
-  const primaryImage =
-    vehicle.images && vehicle.images.length > 0 ? vehicle.images[0] : "/placeholder.svg?height=400&width=600"
+  const primaryImage = vehicle.images?.[0] ?? "/images/placeholder.jpg"
 
   const handleSave = async (e: React.MouseEvent) => {
-    e.preventDefault()
     e.stopPropagation()
-
-    // Check if user is logged in
-    const user = localStorage.getItem("user")
-    if (!user) {
-      toast.error("Please log in to save vehicles")
-      router.push("/login")
-      return
-    }
-
     setIsSaving(true)
+
     try {
-      console.log('Sending save request for vehicle:', vehicle.id)
-      console.log('User from localStorage:', user)
-
-      // Get token from cookie
-      const token = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('token='))
-        ?.split('=')[1]
-
-      console.log('Token from cookie:', token)
-
       const response = await fetch(`/api/vehicles/${vehicle.id}/save`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Add token to headers
         },
-        credentials: 'include', // Important: This ensures cookies are sent with the request
       })
 
-      console.log('Response status:', response.status)
-      console.log('Response headers:', Object.fromEntries(response.headers.entries()))
-
-      const responseText = await response.text()
-      console.log('Raw response:', responseText)
-
-      if (response.status === 401) {
-        // If unauthorized, clear local storage and redirect to login
-        localStorage.removeItem("user")
-        window.dispatchEvent(new Event("userChanged"))
-        toast.error("Your session has expired. Please log in again.")
-        router.push("/login?error=session_expired")
-        return
-      }
-
       if (!response.ok) {
-        throw new Error(`Failed to save vehicle: ${responseText}`)
+        if (response.status === 401) {
+          router.push('/login')
+          return
+        }
+        throw new Error('Failed to save vehicle')
       }
 
-      const data = JSON.parse(responseText)
-      console.log('Parsed response data:', data)
-
+      const data = await response.json()
       setIsSaved(data.saved)
-      toast.success(data.saved ? "Vehicle saved" : "Vehicle removed from saved")
     } catch (error) {
       console.error('Error saving vehicle:', error)
-      toast.error(error instanceof Error ? error.message : "Failed to save vehicle")
     } finally {
       setIsSaving(false)
     }
@@ -137,6 +80,8 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
   const handleClick = () => {
     router.push(`/vehicles/${vehicle.id}`)
   }
+
+  const isNew = new Date(vehicle.createdAt).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000
 
   if (viewMode === "list") {
     return (
@@ -151,6 +96,11 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
             fill
             className="object-cover rounded-md"
           />
+          {isNew && (
+            <Badge className="absolute top-2 left-2 bg-green-500">
+              New
+            </Badge>
+          )}
         </div>
         <div className="flex-1">
           <div className="flex justify-between items-start">
@@ -166,6 +116,7 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
               onClick={handleSave}
               disabled={isSaving}
               aria-label={isSaved ? "Remove from saved" : "Save vehicle"}
+              aria-pressed={isSaved}
             >
               {isSaving ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -190,7 +141,6 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
     )
   }
 
-  // Grid view (default)
   return (
     <div
       className="group relative bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
@@ -204,6 +154,11 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover group-hover:scale-105 transition-transform duration-300"
         />
+        {isNew && (
+          <Badge className="absolute top-2 left-2 bg-green-500">
+            New
+          </Badge>
+        )}
         <Button
           variant="ghost"
           size="icon"
@@ -211,6 +166,7 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
           onClick={handleSave}
           disabled={isSaving}
           aria-label={isSaved ? "Remove from saved" : "Save vehicle"}
+          aria-pressed={isSaved}
         >
           {isSaving ? (
             <Loader2 className="h-4 w-4 animate-spin" />

@@ -39,6 +39,13 @@ interface Vehicle {
   isSaved?: boolean
 }
 
+interface SavedVehicle {
+  id: string
+  vehicleId: string
+  userId: string
+  vehicle: Vehicle
+}
+
 const VehicleGrid = () => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [vehicles, setVehicles] = useState<Vehicle[]>([])
@@ -56,22 +63,18 @@ const VehicleGrid = () => {
           throw new Error('Failed to fetch vehicles')
         }
         const data = await response.json()
-        // Add default values for optional fields
-        const formattedData = data.map((vehicle: any) => ({
-          ...vehicle,
-          fuelConsumptionUrban: vehicle.fuelConsumptionUrban || 0,
-          fuelConsumptionExtraUrban: vehicle.fuelConsumptionExtraUrban || 0,
-          fuelConsumptionCombined: vehicle.fuelConsumptionCombined || 0,
-          engineCapacity: vehicle.engineCapacity || 0,
-          cylinders: vehicle.cylinders || 0,
-          driveType: vehicle.driveType || 'FWD',
-          doors: vehicle.doors || 4,
-          seats: vehicle.seats || 5,
-          rego: vehicle.rego || '',
-          vin: vehicle.vin || '',
-          viewsCount: vehicle.viewsCount || 0,
-          isSaved: isSavedCarsPage ? true : false
-        }))
+
+        // Handle saved vehicles data structure
+        const formattedData = isSavedCarsPage
+          ? data.map((savedVehicle: SavedVehicle) => ({
+            ...savedVehicle.vehicle,
+            isSaved: true
+          }))
+          : data.map((vehicle: Vehicle) => ({
+            ...vehicle,
+            isSaved: false
+          }))
+
         setVehicles(formattedData)
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred')
@@ -143,11 +146,7 @@ const VehicleGrid = () => {
 
       <p className="text-gray-600 mb-4">Showing {vehicles.length} vehicles</p>
 
-      <div
-        className={
-          viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" : "flex flex-col space-y-4"
-        }
-      >
+      <div className={`grid gap-6 ${viewMode === "grid" ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}`}>
         {vehicles.map((vehicle) => (
           <CarCard key={vehicle.id} vehicle={vehicle} viewMode={viewMode} />
         ))}

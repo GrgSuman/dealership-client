@@ -11,42 +11,46 @@ export default function LoginPage() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState("")
     const router = useRouter()
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
+        setError("")
 
         try {
-            console.log('Sending login request...')
             const response = await fetch("/api/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ email, password }),
-                credentials: 'include', // Important: This ensures cookies are sent with the request
+                credentials: 'include' // Important for cookies
             })
 
-            console.log('Login response status:', response.status)
             const data = await response.json()
-            console.log('Login response data:', data)
 
             if (!response.ok) {
-                throw new Error(data.message || "Login failed")
+                throw new Error(data.message || "Failed to login")
             }
 
-            // Store user data in localStorage
-            localStorage.setItem("user", JSON.stringify(data.user))
-
-            // Dispatch event to update UI
+            // Store user data and token in localStorage
+            const userData = {
+                id: data.user.id,
+                email: data.user.email,
+                firstName: data.user.firstName,
+                lastName: data.user.lastName,
+                token: data.token // Add token to localStorage
+            }
+            localStorage.setItem("user", JSON.stringify(userData))
             window.dispatchEvent(new Event("userChanged"))
 
             toast.success("Login successful")
             router.push("/")
         } catch (error) {
             console.error("Login error:", error)
-            toast.error(error instanceof Error ? error.message : "Login failed")
+            setError(error instanceof Error ? error.message : "Failed to login")
         } finally {
             setIsLoading(false)
         }
