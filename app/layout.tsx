@@ -1,44 +1,37 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientHeader from "@/components/layouts/ClientHeader";
 import Sidebar from "@/components/layouts/Sidebar";
 import SessionProvider from "@/components/providers/SessionProvider";
+import { Toaster } from "sonner";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Car Dealership",
-  description: "The next generation car search engine",
+  title: "The Final Group",
+  description: "AI-powered car exploration",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={inter.className}>
         <SessionProvider>
-          <div className="flex h-screen flex-col">
-            <ClientHeader/>
-            <div className="flex flex-1 overflow-hidden">
+          <div className="min-h-screen bg-gray-50">
+            <ClientHeader />
+            <div className="flex">
               <Sidebar />
-              {/* p-6 */}
-              <main className="flex-1 overflow-auto "> 
+              <main className="flex-1 p-6">
                 {children}
               </main>
             </div>
           </div>
+          <Toaster />
         </SessionProvider>
       </body>
     </html>

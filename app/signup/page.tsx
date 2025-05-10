@@ -10,17 +10,17 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Loader2 } from "lucide-react"
+import { signIn } from "next-auth/react"
 
-export default function LoginPage() {
+export default function SignUpPage() {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleGoogleLogin = async () => {
     setIsLoading(true)
     try {
-      // Add your Google authentication logic here
-      // Example: await signInWithGoogle()
+      await signIn("google", { callbackUrl: "/" })
     } catch (error) {
-      console.error("Login failed:", error)
+      console.error("Sign up failed:", error)
     } finally {
       setIsLoading(false)
     }
@@ -53,9 +53,9 @@ export default function LoginPage() {
 
       <Card className="w-full max-w-md mx-4">
         <CardHeader className="space-y-2 text-center">
-          <CardTitle className="text-2xl font-bold">Continue with Google</CardTitle>
+          <CardTitle className="text-2xl font-bold">Create an Account</CardTitle>
           <CardDescription>
-            Sign in to access your dealership dashboard
+            Sign up to access your dealership dashboard
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -108,7 +108,7 @@ export default function LoginPage() {
             </div>
 
             <div className="text-center text-sm text-muted-foreground">
-              By signing in, you agree to our{" "}
+              By signing up, you agree to our{" "}
               <a href="#" className="underline underline-offset-4 hover:text-primary">
                 Terms of Service
               </a>{" "}

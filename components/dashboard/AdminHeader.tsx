@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
   LayoutDashboard,
@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useSession, signOut } from "next-auth/react"
 
 const sidebarLinks = [
   {
@@ -63,6 +64,12 @@ const sidebarLinks = [
 
 export default function AdminHeader() {
   const pathname = usePathname()
+  const router = useRouter()
+  const { data: session } = useSession()
+
+  const handleSignOut = () => {
+    signOut()
+  }
 
   return (
     <div className="flex flex-col h-screen border-r bg-white w-64">
@@ -93,7 +100,7 @@ export default function AdminHeader() {
       </div>
 
       {/* Navigation Links */}
-      <nav className="flex-1 overflow-y-auto p-4">
+      <nav className="flex-1 p-4">
         <ul className="space-y-2">
           {sidebarLinks.map((link) => {
             const Icon = link.icon
@@ -117,7 +124,7 @@ export default function AdminHeader() {
       </nav>
 
       {/* User Profile Section */}
-      <div className="border-t p-4">
+      <div className="p-4 border-t">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button 
@@ -125,12 +132,14 @@ export default function AdminHeader() {
               className="w-full flex items-center gap-2 px-2 hover:bg-gray-100"
             >
               <Avatar className="h-8 w-8 border-2 border-green-100">
-                <AvatarImage src="/avatars/admin.png" alt="Admin" />
-                <AvatarFallback className="bg-green-50 text-green-600">AD</AvatarFallback>
+                <AvatarImage src={session?.user?.image || ""} alt={session?.user?.name || "Admin"} />
+                <AvatarFallback className="bg-green-50 text-green-600">
+                  {session?.user?.name?.charAt(0) || "A"}
+                </AvatarFallback>
               </Avatar>
               <div className="flex-1 text-left">
-                <p className="text-sm font-medium text-gray-700">John Doe</p>
-                <p className="text-xs text-gray-500">Administrator</p>
+                <p className="text-sm font-medium text-gray-700">{session?.user?.name || "Admin"}</p>
+                <p className="text-xs text-gray-500">{session?.user?.email || "admin@example.com"}</p>
               </div>
             </Button>
           </DropdownMenuTrigger>
@@ -141,8 +150,8 @@ export default function AdminHeader() {
           >
             <div className="flex items-center gap-2 p-2">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium">John Doe</p>
-                <p className="text-xs text-gray-500">admin@autodealer.com</p>
+                <p className="text-sm font-medium">{session?.user?.name}</p>
+                <p className="text-xs text-gray-500">{session?.user?.email}</p>
               </div>
             </div>
             <DropdownMenuSeparator />
@@ -150,7 +159,7 @@ export default function AdminHeader() {
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600">
+            <DropdownMenuItem className="text-red-600" onClick={handleSignOut}>
               <LogOut className="mr-2 h-4 w-4" />
               <span>Log out</span>
             </DropdownMenuItem>

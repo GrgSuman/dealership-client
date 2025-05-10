@@ -3,11 +3,17 @@ import Link from "next/link"
 import { CarFront } from "lucide-react"
 import { usePathname } from "next/navigation"
 import { useSession, signOut } from "next-auth/react"
+import { useEffect } from "react"
 
 const ClientHeader = () => {
   const path = usePathname()
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const isAdminPath = path?.includes("/admin")
+
+  useEffect(() => {
+    console.log("Current session:", session)
+    console.log("Session status:", status)
+  }, [session, status])
 
   if (isAdminPath) return null
   return (
@@ -31,7 +37,7 @@ const ClientHeader = () => {
           {session ? (
             <div className="flex items-center gap-4">
               <span className="text-sm text-gray-600">
-                Welcome, {session.user?.name}
+                Welcome, {session.user?.name} [{session.user?.role}]
               </span>
               <button
                 onClick={() => signOut()}

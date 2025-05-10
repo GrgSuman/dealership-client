@@ -54,14 +54,22 @@ declare module "next-auth" {
       name?: string | null
       email?: string | null
       image?: string | null
+      role?: string
     }
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    id: string
+    role?: string
   }
 }
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID!
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!
 
-const authOption: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
@@ -77,7 +85,7 @@ const authOption: NextAuthOptions = {
         throw new Error('No profile')
       }
 
-      await prisma.user.upsert({
+      const user = await prisma.user.upsert({
         where: {
           email: profile.email,
         },
@@ -85,35 +93,48 @@ const authOption: NextAuthOptions = {
           email: profile.email,
           name: profile.name,
           password: "",
+          role: "USER", // Default role for new users
         },
         update: {
           name: profile.name,
         },
       })
+
       return true
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string
+        session.user.id = token.id
+        session.user.role = token.role || "USER" // Ensure role is set
       }
       return session
     },
     async jwt({ token, user, account, profile }) {
-      if (profile) {
-        const user = await prisma.user.findUnique({
+      if (profile?.email) {
+        const dbUser = await prisma.user.findUnique({
           where: {
             email: profile.email,
           },
+          select: {
+            id: true,
+            role: true,
+          },
         })
-        if (!user) {
-          throw new Error('No user found')
+        
+        if (dbUser) {
+          token.id = dbUser.id
+          token.role = dbUser.role
         }
-        token.id = user.id
       }
       return token
     },
   },
+  pages: {
+    signIn: '/signin',
+    signOut: '/',
+    error: '/error',
+  },
 }
 
-const handler = NextAuth(authOption)
+const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST }

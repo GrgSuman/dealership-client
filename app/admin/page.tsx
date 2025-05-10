@@ -4,8 +4,67 @@ import { Car, Users, Plus, DollarSign, TrendingUp, Package, Clock } from "lucide
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
+
+interface DashboardStats {
+  totalVehicles: number
+  activeUsers: number
+  totalSales: number
+  pendingReviews: number
+  recentListings: {
+    id: string
+    name: string
+    price: number
+    status: string
+  }[]
+}
 
 export default function AdminDashboard() {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  const [stats, setStats] = useState<DashboardStats | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (status === "authenticated" && session?.user?.role !== "ADMIN") {
+      router.push("/")
+    }
+  }, [session, status, router])
+
+  useEffect(() => {
+    fetchDashboardStats()
+  }, [])
+
+  const fetchDashboardStats = async () => {
+    try {
+      const response = await fetch("/api/admin/dashboard")
+      if (!response.ok) throw new Error("Failed to fetch dashboard stats")
+      const data = await response.json()
+      setStats(data)
+    } catch (error) {
+      toast.error("Failed to load dashboard statistics")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (status === "loading" || loading) {
+    return (
+      <div className="container mx-auto p-6">
+        <div className="flex items-center justify-center h-[50vh]">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+        </div>
+      </div>
+    )
+  }
+
+  if (status === "unauthenticated" || session?.user?.role !== "ADMIN") {
+    return null
+  }
+
   return (
     <div className="container mx-auto p-6 space-y-8">
       {/* Quick Actions Section */}
@@ -61,10 +120,10 @@ export default function AdminDashboard() {
             <Car className="h-4 w-4 text-gray-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">123</div>
+            <div className="text-2xl font-bold">{stats?.totalVehicles || 0}</div>
             <p className="text-xs text-green-500 flex items-center gap-1">
               <TrendingUp className="h-3 w-3" />
-              +5% from last month
+              Active listings
             </p>
           </CardContent>
         </Card>
@@ -75,10 +134,10 @@ export default function AdminDashboard() {
             <Users className="h-4 w-4 text-gray-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">1,234</div>
+            <div className="text-2xl font-bold">{stats?.activeUsers || 0}</div>
             <p className="text-xs text-green-500 flex items-center gap-1">
               <TrendingUp className="h-3 w-3" />
-              +12% from last month
+              Registered users
             </p>
           </CardContent>
         </Card>
@@ -89,10 +148,10 @@ export default function AdminDashboard() {
             <DollarSign className="h-4 w-4 text-gray-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">$45,231</div>
+            <div className="text-2xl font-bold">${stats?.totalSales?.toLocaleString() || 0}</div>
             <p className="text-xs text-green-500 flex items-center gap-1">
               <TrendingUp className="h-3 w-3" />
-              +8% from last month
+              Total revenue
             </p>
           </CardContent>
         </Card>
@@ -103,7 +162,7 @@ export default function AdminDashboard() {
             <Clock className="h-4 w-4 text-gray-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">12</div>
+            <div className="text-2xl font-bold">{stats?.pendingReviews || 0}</div>
             <p className="text-xs text-gray-500">Requires attention</p>
           </CardContent>
         </Card>
@@ -114,12 +173,14 @@ export default function AdminDashboard() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Recent Vehicle Listings</CardTitle>
-            <Button variant="outline" size="sm">View All</Button>
+            <Button variant="outline" size="sm" onClick={() => router.push("/admin/inventory")}>
+              View All
+            </Button>
           </div>
         </CardHeader>
         <CardContent>
           <div className="divide-y">
-            {recentListings.map((listing) => (
+            {stats?.recentListings.map((listing) => (
               <div key={listing.id} className="flex items-center justify-between py-4">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-gray-100 rounded-lg" />
@@ -136,7 +197,13 @@ export default function AdminDashboard() {
                   }`}>
                     {listing.status}
                   </span>
-                  <Button variant="ghost" size="sm">Edit</Button>
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    onClick={() => router.push(`/admin/inventory/${listing.id}`)}
+                  >
+                    Edit
+                  </Button>
                 </div>
               </div>
             ))}
@@ -146,11 +213,3 @@ export default function AdminDashboard() {
     </div>
   )
 }
-
-// Sample data
-const recentListings = [
-  { id: 1, name: '2023 Tesla Model 3', price: 45000, status: 'Active' },
-  { id: 2, name: '2022 BMW X5', price: 62000, status: 'Pending' },
-  { id: 3, name: '2023 Mercedes-Benz C-Class', price: 55000, status: 'Active' },
-  { id: 4, name: '2022 Audi Q7', price: 68000, status: 'Active' },
-]
