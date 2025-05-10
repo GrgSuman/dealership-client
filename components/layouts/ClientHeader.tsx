@@ -2,9 +2,11 @@
 import Link from "next/link"
 import { CarFront } from "lucide-react"
 import { usePathname } from "next/navigation"
+import { useSession, signOut } from "next-auth/react"
 
 const ClientHeader = () => {
   const path = usePathname()
+  const { data: session } = useSession()
   const isAdminPath = path?.includes("/admin")
 
   if (isAdminPath) return null
@@ -24,17 +26,33 @@ const ClientHeader = () => {
           </div>
         </div>
         
-        {/* Auth buttons - kept exactly the same */}
+        {/* Auth buttons */}
         <div className="hidden md:flex items-center space-x-3">
-          <Link href="/signin" className="text-sm hover:text-gray-800 text-gray-600 font-medium transition-colors">
-            Sign In
-          </Link>
-          <Link
-            href="/signup"
-            className="bg-green-600 hover:bg-green-700 text-white font-medium px-3 py-2 rounded-lg transition-colors"
-          >
-            Create Account
-          </Link>
+          {session ? (
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-gray-600">
+                Welcome, {session.user?.name}
+              </span>
+              <button
+                onClick={() => signOut()}
+                className="text-sm hover:text-gray-800 text-gray-600 font-medium transition-colors"
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <>
+              <Link href="/signin" className="text-sm hover:text-gray-800 text-gray-600 font-medium transition-colors">
+                Sign In
+              </Link>
+              <Link
+                href="/signup"
+                className="bg-green-600 hover:bg-green-700 text-white font-medium px-3 py-2 rounded-lg transition-colors"
+              >
+                Create Account
+              </Link>
+            </>
+          )}
         </div>
       </header>
     </div>

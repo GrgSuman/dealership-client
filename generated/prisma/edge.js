@@ -228,7 +228,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\595\\nextclient\\generated\\prisma",
+      "value": "C:\\Users\\LEGION\\Downloads\\dealership-client\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -242,7 +242,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\595\\nextclient\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\LEGION\\Downloads\\dealership-client\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -256,11 +256,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://neondb_owner:npg_CjeOT42wpLQK@ep-fragrant-brook-a78578zd-pooler.ap-southeast-2.aws.neon.tech/neondb?sslmode=require"
+        "value": null
       }
     }
   },

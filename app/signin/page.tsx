@@ -10,20 +10,48 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Loader2 } from "lucide-react"
+import { signIn, useSession } from "next-auth/react"
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
+  const { data: session } = useSession()
 
   const handleGoogleLogin = async () => {
     setIsLoading(true)
     try {
-      // Add your Google authentication logic here
-      // Example: await signInWithGoogle()
+      await signIn("google", { callbackUrl: "/" })
     } catch (error) {
       console.error("Login failed:", error)
     } finally {
       setIsLoading(false)
     }
+  }
+
+  if (session) {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center bg-gray-50">
+        <Card className="w-full max-w-md mx-4">
+          <CardHeader className="space-y-2 text-center">
+            <CardTitle className="text-2xl font-bold">Welcome, {session.user?.name}!</CardTitle>
+            <CardDescription>You are signed in</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <p><strong>Email:</strong> {session.user?.email}</p>
+              {session.user?.image && (
+                <div className="flex justify-center">
+                  <img 
+                    src={session.user.image} 
+                    alt="Profile" 
+                    className="w-20 h-20 rounded-full"
+                  />
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
   }
 
   return (
