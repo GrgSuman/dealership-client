@@ -46,7 +46,11 @@ interface SavedVehicle {
   vehicle: Vehicle
 }
 
-const VehicleGrid = () => {
+interface VehicleGridProps {
+  vehicles?: Vehicle[]
+}
+
+const VehicleGrid = ({ vehicles: propVehicles }: VehicleGridProps) => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [vehicles, setVehicles] = useState<Vehicle[]>([])
   const [loading, setLoading] = useState(true)
@@ -57,11 +61,34 @@ const VehicleGrid = () => {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
+        if (propVehicles) {
+          setVehicles(propVehicles)
+          setLoading(false)
+          return
+        }
+
         const endpoint = isSavedCarsPage ? '/api/vehicles/saved' : '/api/admin/vehicles'
-        const response = await fetch(endpoint)
+        const token = localStorage.getItem('token')
+
+        const headers: HeadersInit = {
+          'Content-Type': 'application/json'
+        }
+
+        if (isSavedCarsPage && token) {
+          headers['Authorization'] = `Bearer ${token}`
+        }
+
+        const response = await fetch(endpoint, {
+          headers
+        })
+
         if (!response.ok) {
+          if (response.status === 401) {
+            throw new Error('Please log in to view saved vehicles')
+          }
           throw new Error('Failed to fetch vehicles')
         }
+
         const data = await response.json()
 
         // Handle saved vehicles data structure
@@ -78,13 +105,17 @@ const VehicleGrid = () => {
         setVehicles(formattedData)
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred')
+        if (err instanceof Error && err.message === 'Please log in to view saved vehicles') {
+          // Redirect to login page if not authenticated
+          window.location.href = '/login'
+        }
       } finally {
         setLoading(false)
       }
     }
 
     fetchVehicles()
-  }, [isSavedCarsPage])
+  }, [propVehicles, isSavedCarsPage])
 
   if (loading) {
     return (

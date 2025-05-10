@@ -4,8 +4,9 @@ import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Heart, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 interface Vehicle {
   id: string
@@ -32,7 +33,13 @@ interface CarCardProps {
 const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
   const [isSaved, setIsSaved] = useState(vehicle.isSaved || false)
   const [isSaving, setIsSaving] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const router = useRouter()
+
+  useEffect(() => {
+    const user = localStorage.getItem("user")
+    setIsLoggedIn(!!user)
+  }, [])
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-AU", {
@@ -53,25 +60,35 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
     setIsSaving(true)
 
     try {
+      const token = localStorage.getItem("token")
+      if (!token) {
+        router.push('/login')
+        return
+      }
+
       const response = await fetch(`/api/vehicles/${vehicle.id}/save`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
       })
+
+      const data = await response.json()
 
       if (!response.ok) {
         if (response.status === 401) {
           router.push('/login')
           return
         }
-        throw new Error('Failed to save vehicle')
+        throw new Error(data.message || 'Failed to save vehicle')
       }
 
-      const data = await response.json()
       setIsSaved(data.saved)
+      toast.success(data.saved ? "Vehicle saved successfully" : "Vehicle removed from saved")
     } catch (error) {
       console.error('Error saving vehicle:', error)
+      toast.error(error instanceof Error ? error.message : 'Failed to save vehicle')
     } finally {
       setIsSaving(false)
     }
@@ -82,6 +99,33 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
   }
 
   const isNew = new Date(vehicle.createdAt).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000
+
+  const SaveButton = () => {
+    if (!isLoggedIn) return null
+
+    return (
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={handleSave}
+        disabled={isSaving}
+        aria-label={isSaved ? "Remove from saved" : "Save vehicle"}
+        aria-pressed={isSaved}
+        className={`transition-all duration-300 ${isSaved ? 'hover:bg-red-50' : 'hover:bg-gray-100'}`}
+      >
+        {isSaving ? (
+          <Loader2 className="h-4 w-4 animate-spin" />
+        ) : (
+          <Heart
+            className={`h-5 w-5 transition-all duration-300 ${isSaved
+              ? "fill-red-600 text-red-600 scale-110"
+              : "text-gray-400 hover:text-red-400"
+              }`}
+          />
+        )}
+      </Button>
+    )
+  }
 
   if (viewMode === "list") {
     return (
@@ -110,20 +154,7 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
               </h3>
               <p className="text-gray-600">{vehicle.year}</p>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleSave}
-              disabled={isSaving}
-              aria-label={isSaved ? "Remove from saved" : "Save vehicle"}
-              aria-pressed={isSaved}
-            >
-              {isSaving ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Heart className={`h-4 w-4 ${isSaved ? "fill-red-500 text-red-500" : ""}`} />
-              )}
-            </Button>
+            <SaveButton />
           </div>
           <div className="mt-2 grid grid-cols-3 gap-4 text-sm text-gray-600">
             <div>
@@ -159,21 +190,9 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
             New
           </Badge>
         )}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-2 right-2 bg-white/80 hover:bg-white"
-          onClick={handleSave}
-          disabled={isSaving}
-          aria-label={isSaved ? "Remove from saved" : "Save vehicle"}
-          aria-pressed={isSaved}
-        >
-          {isSaving ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Heart className={`h-4 w-4 ${isSaved ? "fill-red-500 text-red-500" : ""}`} />
-          )}
-        </Button>
+        <div className="absolute top-2 right-2">
+          <SaveButton />
+        </div>
       </div>
       <div className="p-4">
         <h3 className="text-lg font-semibold">

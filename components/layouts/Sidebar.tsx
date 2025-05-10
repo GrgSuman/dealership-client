@@ -14,12 +14,23 @@ interface SidebarItemProps {
   href: string
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ icon, label, href }) => (
-  <Link href={href} className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg">
-    {icon}
-    <span>{label}</span>
-  </Link>
-)
+const SidebarItem: React.FC<SidebarItemProps> = ({ icon, label, href }) => {
+  const pathname = usePathname()
+  const isActive = pathname === href
+
+  return (
+    <Link
+      href={href}
+      className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors ${isActive
+        ? "bg-green-50 text-green-700"
+        : "text-gray-700 hover:bg-gray-50"
+        }`}
+    >
+      <icon.type size={20} />
+      <span>{label}</span>
+    </Link>
+  )
+}
 
 export default function Sidebar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
@@ -58,6 +69,51 @@ export default function Sidebar() {
 
   if (isAdminPath) return null
 
+  // If user is not logged in, only show basic navigation
+  if (!isLoggedIn) {
+    return (
+      <>
+        {/* Mobile sidebar toggle */}
+        <button
+          className="fixed top-4 right-4 z-50 md:hidden flex items-center justify-center w-10 h-10 rounded-md bg-white border border-gray-100"
+          onClick={() => setIsMobileOpen(!isMobileOpen)}
+        >
+          {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+
+        {/* Sidebar overlay for mobile */}
+        {isMobileOpen && (
+          <div className="fixed inset-0 bg-black/20 z-40 md:hidden" onClick={() => setIsMobileOpen(false)} />
+        )}
+
+        {/* Sidebar */}
+        <aside
+          className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0 ${isMobileOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
+        >
+          <div className="flex flex-col h-full">
+            {/* Mobile auth buttons */}
+            <div className="md:hidden p-4 border-b border-gray-100">
+              <div className="flex flex-col space-y-2">
+                <SidebarItem icon={<LogIn />} label="Sign In" href="/login" />
+                <SidebarItem icon={<UserPlus />} label="Create Account" href="/signup" />
+              </div>
+            </div>
+
+            {/* Main navigation area */}
+            <div className="flex-grow p-4">
+              <nav className="space-y-1">
+                <SidebarItem icon={<Home />} label="Home" href="/" />
+                <SidebarItem icon={<HelpCircle />} label="Help & Support" href="/help" />
+              </nav>
+            </div>
+          </div>
+        </aside>
+      </>
+    )
+  }
+
+  // Full sidebar for logged-in users
   return (
     <>
       {/* Mobile sidebar toggle */}
@@ -81,47 +137,39 @@ export default function Sidebar() {
         <div className="flex flex-col h-full">
           {/* Mobile auth buttons */}
           <div className="md:hidden p-4 border-b border-gray-100">
-            {isLoggedIn ? (
-              <div className="flex flex-col space-y-2">
-                <span className="text-gray-700 font-medium">{userName}</span>
-                <button
-                  onClick={handleLogout}
-                  className="bg-red-600 hover:bg-red-700 text-white font-medium px-4 py-2 rounded-lg transition-colors"
-                >
-                  Logout
-                </button>
-              </div>
-            ) : (
-              <div className="flex flex-col space-y-2">
-                <SidebarItem icon={<LogIn />} label="Sign In" href="/login" />
-                <SidebarItem icon={<UserPlus />} label="Create Account" href="/signup" />
-              </div>
-            )}
+            <div className="flex flex-col space-y-2">
+              <span className="text-gray-700 font-medium">{userName}</span>
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 hover:bg-red-700 text-white font-medium px-4 py-2 rounded-lg transition-colors"
+              >
+                Logout
+              </button>
+            </div>
           </div>
 
           {/* Main navigation area */}
           <div className="flex-grow p-4">
             <nav className="space-y-1 mb-5">
-              <SidebarItem icon={<Home size={16} />} label="Home" href="/" />
-              <SidebarItem icon={<Heart size={16} />} label="Saved Cars" href="/saved-cars" />
+              <SidebarItem icon={<Home />} label="Home" href="/" />
+              <SidebarItem icon={<Heart />} label="Saved Cars" href="/saved-cars" />
             </nav>
 
             <div className="mb-5">
               <h2 className="mb-2 px-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Explore</h2>
               <nav className="space-y-1">
-                <SidebarItem icon={<TrendingUp size={16} />} label="Popular" href="/popular-cars" />
-                <SidebarItem icon={<Bot size={16} />} label="Explore with AI" href="/explore-with-ai" />
-                <SidebarItem icon={<Search size={16} />} label="Search Cars" href="/search-cars" />
-                <SidebarItem icon={<GitCompare size={16} />} label="Compare Cars" href="/compare-cars" />
-                <SidebarItem icon={<CreditCard size={16} />} label="Financing Options" href="/finance" />
+                <SidebarItem icon={<TrendingUp />} label="Popular" href="/popular" />
+                <SidebarItem icon={<Bot />} label="AI Exploration" href="/explore" />
+                <SidebarItem icon={<GitCompare />} label="Compare Cars" href="/compare" />
+                <SidebarItem icon={<CreditCard />} label="Financing" href="/finance" />
               </nav>
             </div>
 
             <div className="mb-5">
               <h2 className="mb-2 px-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Other</h2>
               <nav className="space-y-1">
-                <SidebarItem icon={<HelpCircle size={16} />} label="Help & Support" href="/help" />
-                <SidebarItem icon={<Settings size={16} />} label="Preferences" href="/preferences" />
+                <SidebarItem icon={<HelpCircle />} label="Help & Support" href="/help" />
+                <SidebarItem icon={<Settings />} label="Preferences" href="/preferences" />
               </nav>
             </div>
           </div>

@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation"
 import VehicleGrid from "@/components/sections/VehicleGrid"
 import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
+import Sidebar from "@/components/layouts/Sidebar"
+import ClientHeader from "@/components/layouts/ClientHeader"
 
 export default function SavedCarsPage() {
   const [isLoading, setIsLoading] = useState(true)
@@ -31,11 +33,19 @@ export default function SavedCarsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Saved Vehicles</h1>
+    <div className="min-h-screen bg-gray-50">
+      <ClientHeader />
+      <div className="flex">
+        <Sidebar />
+        <main className="flex-1">
+          <div className="container mx-auto px-4 py-8">
+            <div className="flex justify-between items-center mb-8">
+              <h1 className="text-3xl font-bold">Saved Vehicles</h1>
+            </div>
+            <VehicleGrid />
+          </div>
+        </main>
       </div>
-      <VehicleGrid />
     </div>
   )
 }

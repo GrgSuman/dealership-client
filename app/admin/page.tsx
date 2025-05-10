@@ -22,7 +22,7 @@ export default function AdminDashboard() {
     <div className="container mx-auto p-6 space-y-8">
       {/* Quick Actions Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Link href="/admin/vehicles/add">
+        <Link href="/admin/vehicles/addEdit">
           <Card className="hover:shadow-md transition-shadow cursor-pointer border-green-100 hover:border-green-200">
             <CardContent className="flex items-center gap-4 p-6">
               <div className="p-4 bg-green-50 rounded-full">

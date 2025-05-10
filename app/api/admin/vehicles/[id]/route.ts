@@ -2,17 +2,17 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/config/db";
 
 export async function DELETE(
-    req: Request,
+    request: Request,
     { params }: { params: { id: string } }
 ) {
     try {
-        await prisma.vehicle.delete({
+        const vehicle = await prisma.vehicle.delete({
             where: {
                 id: params.id,
             },
         });
 
-        return NextResponse.json({ message: "Vehicle deleted successfully" });
+        return NextResponse.json(vehicle);
     } catch (error) {
         console.error("Error deleting vehicle:", error);
         return NextResponse.json(
@@ -23,43 +23,31 @@ export async function DELETE(
 }
 
 export async function PUT(
-    req: Request,
+    request: Request,
     { params }: { params: { id: string } }
 ) {
     try {
-        const body = await req.json();
-        const {
-            make,
-            model,
-            year,
-            price,
-            bodyType,
-            transmission,
-            fuelType,
-            odometer,
-            color,
-            stockNumber,
-            description,
-            features,
-        } = body;
+        const data = await request.json();
 
         const vehicle = await prisma.vehicle.update({
             where: {
                 id: params.id,
             },
             data: {
-                make,
-                model,
-                year,
-                price,
-                bodyType,
-                transmission,
-                fuelType,
-                odometer,
-                color,
-                stockNumber,
-                description,
-                features: features ? features.split("\n") : [],
+                make: data.make,
+                model: data.model,
+                year: data.year,
+                price: data.price,
+                mileage: data.mileage,
+                color: data.color,
+                vin: data.vin,
+                description: data.description,
+                bodyType: data.bodyType,
+                transmission: data.transmission,
+                fuelType: data.fuelType,
+                status: data.status,
+                condition: data.condition,
+                images: data.images,
             },
         });
 
