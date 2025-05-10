@@ -8,7 +8,10 @@ export async function GET(request: Request) {
         const session = await getServerSession(authOptions)
 
         if (!session?.user?.id) {
-            return new NextResponse("Unauthorized", { status: 401 })
+            return NextResponse.json(
+                { error: "Unauthorized" },
+                { status: 401 }
+            )
         }
 
         // Get saved vehicles for the user
@@ -24,6 +27,9 @@ export async function GET(request: Request) {
         return NextResponse.json(savedVehicles)
     } catch (error) {
         console.error("Error fetching saved vehicles:", error)
-        return new NextResponse("Internal Server Error", { status: 500 })
+        return NextResponse.json(
+            { error: "Internal Server Error" },
+            { status: 500 }
+        )
     }
 } 

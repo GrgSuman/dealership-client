@@ -1,14 +1,19 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { compare } from "bcrypt"
-import { signIn } from "next-auth/react"
+import { sign } from "jsonwebtoken"
+
+const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key"
 
 export async function POST(request: Request) {
     try {
         const { email, password } = await request.json()
 
         if (!email || !password) {
-            return new NextResponse("Missing email or password", { status: 400 })
+            return NextResponse.json(
+                { error: "Missing email or password" },
+                { status: 400 }
+            )
         }
 
         const user = await prisma.user.findUnique({
@@ -18,28 +23,52 @@ export async function POST(request: Request) {
                 email: true,
                 firstName: true,
                 lastName: true,
-                password: true
+                password: true,
+                role: true
             }
         })
 
         if (!user || !(await compare(password, user.password))) {
-            return new NextResponse("Invalid credentials", { status: 401 })
+            return NextResponse.json(
+                { error: "Invalid credentials" },
+                { status: 401 }
+            )
         }
 
-        const result = await signIn("credentials", {
-            email,
-            password,
-            redirect: false,
+        // Create JWT token
+        const token = sign(
+            {
+                userId: user.id,
+                email: user.email,
+                role: user.role
+            },
+            JWT_SECRET,
+            { expiresIn: "7d" }
+        )
+
+        // Create response with user data
+        const { password: _, ...userData } = user
+        const response = NextResponse.json({
+            user: userData,
+            token,
+            isAdmin: user.role === "ADMIN"
         })
 
-        if (result?.error) {
-            return new NextResponse(result.error, { status: 401 })
-        }
+        // Set token in httpOnly cookie
+        response.cookies.set("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            maxAge: 60 * 60 * 24 * 7, // 7 days
+            path: "/"
+        })
 
-        const { password: _, ...userData } = user
-        return NextResponse.json(userData)
+        return response
     } catch (error) {
         console.error("Login error:", error)
-        return new NextResponse("Internal Server Error", { status: 500 })
+        return NextResponse.json(
+            { error: "Internal Server Error" },
+            { status: 500 }
+        )
     }
 } 
