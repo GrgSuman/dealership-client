@@ -17,6 +17,5 @@ process.on('beforeExit', async () => {
   await prisma.$disconnect()
 })
 
-console.log(123)
 
 export default prisma
