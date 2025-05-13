@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -60,11 +59,12 @@ enum UserRole {
 model User {
   id           String       @id @default(cuid())
   email        String       @unique
-  name         String?      @db.VarChar(100)
-  password     String
+  name         String    @db.VarChar(50) //we will get fname by splitting
+  password     String?      //google or other provider dont need it
   preferences  Preference?
   role         UserRole     @default(USER)
   activities   Activity[]
+  savedVehicles SavedVehicle[]
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 }
@@ -74,7 +74,7 @@ model Activity {
   userId    String
   user      User      @relation(fields: [userId], references: [id])
   action    String    @db.VarChar(50)  // e.g., "viewed", "searched", "compared", "saved"
-  carIds    String[]  // one or more car IDs, flexible for all actions
+  carTitles    String[]  // one or more car titles, flexible for all actions
   query     String?   @db.VarChar(255) // search query (if action = "searched")
   timestamp DateTime  @default(now())
 
@@ -104,7 +104,7 @@ model Vehicle {
   make             String    @db.VarChar(100)
   model            String    @db.VarChar(100)
   year             Int
-  price            Int       // store in cents
+  price            Float     // store as float to allow decimal values (e.g., 120000.50)
   bodyType         BodyType
   transmission     Transmission
   fuelType         FuelType
@@ -113,26 +113,40 @@ model Vehicle {
   fuelConsumptionCombined    Float?
   engineCapacity   Float?
   cylinders        Int?
-  odometer        Int
+  odometer         Int
   driveType        String?   @db.VarChar(50)
-  doors           Int?
-  seats           Int?
-  color           String?    @db.VarChar(50)
-  rego           String?     @db.VarChar(20)
-  vin            String?     @db.VarChar(17)
-  stockNumber     String?    @db.VarChar(50)
-  images         String[]
-  description     String    @db.Text
-  status         VehicleStatus
-  condition      VehicleCondition
-  features       String[]
-  viewsCount    Int          @default(0)
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  doors            Int?
+  seats            Int?
+  color            String?    @db.VarChar(50)
+  rego             String?     @db.VarChar(20)
+  vin              String?     @db.VarChar(17)
+  stockNumber      String?     @db.VarChar(50)
+  images           String[]
+  description      String    @db.Text
+  status           VehicleStatus
+  condition        VehicleCondition
+  features         String[]
+  viewsCount       Int          @default(0)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  savedBy          SavedVehicle[]
 
   @@index([make, model])
   @@index([price])
   @@index([status])
   @@index([condition])
   @@index([year])
+}
+
+model SavedVehicle {
+  id        String   @id @default(cuid())
+  userId    String
+  vehicleId String
+  user      User     @relation(fields: [userId], references: [id])
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, vehicleId])
+  @@index([userId])
+  @@index([vehicleId])
 }
