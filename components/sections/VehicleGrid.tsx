@@ -4,9 +4,10 @@ import { useState } from "react"
 import CarCard from "@/components/cards/CarCard"
 import { Button } from "@/components/ui/button"
 import { LayoutGrid, List } from "lucide-react"
-import { vehicles } from "@/data"
+import { Vehicle } from "@prisma/client"
+// import { vehicles } from "@/data"
 
-const VehicleGrid = () => {
+const VehicleGrid = ({vehicles}: {vehicles: Vehicle[]}) => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
 
   return (
