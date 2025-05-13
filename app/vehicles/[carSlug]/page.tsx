@@ -5,13 +5,16 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Car, Fuel, Info, Gauge, Calendar, Cog, DollarSign, Palette, Key, Hash, BarChart3, Eye } from "lucide-react"
-import { vehicles } from "@/data"
+import prisma from "@/config/db"
 
-const VehicleDetail = async ({ params }: { params: { carSlug: string } }) => {
-  const { carSlug } = params
+const VehicleDetail = async ({ params }: { params: Promise<{ carSlug: string }> }) => {
+  const { carSlug } = await params
 
-  // Find the vehicle by ID from the URL slug
-  const vehicle = vehicles.find((v) => v.id === carSlug)
+  const vehicle = await prisma.vehicle.findUnique({
+    where: {
+      id: carSlug
+    }
+  })
 
   if (!vehicle) {
     return (
@@ -27,14 +30,6 @@ const VehicleDetail = async ({ params }: { params: { carSlug: string } }) => {
         </Card>
       </div>
     )
-  }
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("en-AU", {
-      style: "currency",
-      currency: "AUD",
-      maximumFractionDigits: 0,
-    }).format(price / 100)
   }
 
   const formatNumber = (num: number) => {
@@ -105,7 +100,7 @@ const VehicleDetail = async ({ params }: { params: { carSlug: string } }) => {
                 <span>{vehicle.viewsCount} views</span>
               </div>
 
-              <div className="text-3xl font-bold text-green-600 mb-4">{formatPrice(vehicle.price)}</div>
+              <div className="text-3xl font-bold text-green-600 mb-4">${vehicle.price}</div>
 
               <Button className="w-full mb-2">Contact Seller</Button>
               <Button variant="outline" className="w-full">

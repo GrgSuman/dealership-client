@@ -13,14 +13,31 @@ const ClientHeader = () => {
       <header className="flex justify-between items-center">
         {/* Improved Logo */}
         <div className="flex items-center">
-          <CarFront className="w-6 h-6 text-green-600 mr-2" />
-          <div>
-            <h1 className="text-2xl font-[700]">
+          <div className="relative">
+            {/* Modern Car Icon */}
+            <div className="relative w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-5 h-5"
+              >
+                <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
+                <circle cx="7" cy="17" r="2" />
+                <circle cx="17" cy="17" r="2" />
+              </svg>
+            </div>
+          </div>
+          <div className="ml-3">
+            <h1 className="text-2xl font-bold tracking-tight">
               <span className="text-gray-900">The</span>
               <span className="text-green-600">Final</span>
               <span className="text-gray-900">Group</span>
             </h1>
-            <p className="text-gray-600 text-xs font-mono">AI-powered car exploration</p>
           </div>
         </div>
         

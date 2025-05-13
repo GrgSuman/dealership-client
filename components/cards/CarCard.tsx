@@ -1,41 +1,10 @@
-import type React from "react"
+import  React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Car, Gauge, Calendar } from "lucide-react"
+import { Vehicle } from "@prisma/client"
 
-// This type matches your schema
-interface Vehicle {
-  id: string
-  make: string
-  model: string
-  year: number
-  price: number // in cents
-  bodyType: string
-  transmission: string
-  fuelType: string
-  fuelConsumptionUrban: number
-  fuelConsumptionExtraUrban: number
-  fuelConsumptionCombined: number
-  engineCapacity: number
-  cylinders: number
-  odometer: number
-  driveType: string
-  doors: number
-  seats: number
-  color: string
-  rego: string
-  vin: string
-  stockNumber: string
-  images: string[]
-  description: string
-  status: string
-  condition: string
-  features: string[]
-  viewsCount: number
-  createdAt: Date
-  updatedAt: Date
-}
 
 interface CarCardProps {
   vehicle: Vehicle
@@ -43,17 +12,6 @@ interface CarCardProps {
 }
 
 const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("en-AU", {
-      style: "currency",
-      currency: "AUD",
-      maximumFractionDigits: 0,
-    }).format(price / 100) // Convert cents to dollars
-  }
-
-  const formatOdometer = (odometer: number) => {
-    return new Intl.NumberFormat("en-AU").format(odometer)
-  }
 
   // Get the first image from the images array or use a placeholder
   const primaryImage =
@@ -86,13 +44,13 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
             <h3 className="text-lg font-bold text-gray-900">
               {vehicle.year} {vehicle.make} {vehicle.model}
             </h3>
-            <span className="text-lg font-bold text-green-600">{formatPrice(vehicle.price)}</span>
+            <span className="text-lg font-bold text-green-600">${vehicle.price}</span>
           </div>
 
           <div className="flex flex-wrap items-center text-sm text-gray-600 mb-3 gap-2">
             <div className="flex items-center">
               <Gauge className="w-4 h-4 mr-1" />
-              <span>{formatOdometer(vehicle.odometer)} km</span>
+              <span>{vehicle.odometer} km</span>
             </div>
             <span className="mx-1">•</span>
             <div className="flex items-center">
@@ -164,13 +122,13 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
           <h3 className="text-lg font-bold text-gray-900 line-clamp-1">
             {vehicle.year} {vehicle.make} {vehicle.model}
           </h3>
-          <span className="text-lg font-bold text-green-600">{formatPrice(vehicle.price)}</span>
+          <span className="text-lg font-bold text-green-600">${vehicle.price}</span>
         </div>
 
         <div className="flex flex-wrap items-center text-sm text-gray-600 mb-3 gap-2">
           <div className="flex items-center">
             <Gauge className="w-4 h-4 mr-1" />
-            <span>{formatOdometer(vehicle.odometer)} km</span>
+            <span>{vehicle.odometer} km</span>
           </div>
           <span className="mx-1">•</span>
           <div className="flex items-center">
@@ -194,7 +152,7 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
 
         <div className="flex justify-between items-center">
           <div className="text-sm text-gray-600">
-            <span className="font-medium">{vehicle.transmission}</span> • {vehicle.fuelType}
+            <span className="font-medium">{vehicle.transmission}</span>
           </div>
           <Link
             href={`/vehicles/${vehicle.id}`}
