@@ -25,8 +25,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { User as UserType } from "next-auth"
-import { signOut } from "@/auth"
-
+import { signOutUser } from "@/app/actions/auth/userAuth"
 export default function Sidebar({ user }: { user: UserType }) {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const path = usePathname()
@@ -84,7 +83,7 @@ export default function Sidebar({ user }: { user: UserType }) {
           <div className="flex-grow p-4 overflow-y-auto">
             <nav className="space-y-1.5 mb-6">
               <SidebarItem path="/" icon={<Home size={18} />} label="Home" />
-              {/* <SidebarItem path="/saved-cars" icon={<Heart size={18} />} label="Saved Cars" /> */}
+              <SidebarItem path="/saved-cars" icon={<Heart size={18} />} label="Saved Cars" />
               {/* <SidebarItem path="/popular-cars" icon={<TrendingUp size={18} />} label="Popular" />
               <SidebarItem path="/explore-with-ai" icon={<Bot size={18} />} label="Explore with AI" /> */}
               <SidebarItem path="/explore-cars" icon={<Search size={18} />} label="Explore Cars" />
@@ -145,7 +144,7 @@ export default function Sidebar({ user }: { user: UserType }) {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    onClick={() => signOut()}
+                    onClick={async () => await signOutUser()}
                     className="text-destructive focus:text-destructive cursor-pointer"
                   >
                     <LogOut className="mr-2 h-4 w-4" />
