@@ -4,7 +4,6 @@ import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { useSession, signOut } from "next-auth/react"
 import { usePathname } from "next/navigation"
 import {
   Search,
@@ -25,10 +24,11 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { User as UserType } from "next-auth"
+import { signOut } from "@/auth"
 
-export default function Sidebar() {
+export default function Sidebar({ user }: { user: UserType }) {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
-  const { data: session } = useSession()
   const path = usePathname()
   const isAdminPath = path?.includes("/admin")
 
@@ -60,8 +60,7 @@ export default function Sidebar() {
       >
         <div className="flex flex-col h-full">
           {/* User profile or auth buttons - ONLY SHOW ON MOBILE */}
-          {
-            !session && <div className="p-4 border-b border-gray-100 md:hidden">
+          {!user && <div className="p-4 border-b border-gray-100 md:hidden">
               <div className="flex space-x-3">
                 <Link
                   href="/signin"
@@ -116,7 +115,7 @@ export default function Sidebar() {
           </div>
 
           {/* Mobile-only user profile for bottom of sidebar */}
-          {session && (
+          {user && (
             <div className="md:hidden p-4 mt-auto border-t border-gray-100">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -124,16 +123,16 @@ export default function Sidebar() {
                     <div className="flex items-center">
                       <div className="h-8 w-8 rounded-full overflow-hidden border mr-3">
                         <Image
-                          src={session.user?.image || "/placeholder.svg?height=32&width=32"}
-                          alt={session.user?.name || "Profile"}
+                          src={user.image || "/placeholder.svg?height=32&width=32"}
+                          alt={user.name || "Profile"}
                           width={32}
                           height={32}
                           className="h-full w-full object-cover"
                         />
                       </div>
                       <div className="flex-1 min-w-0 text-left">
-                        <p className="text-sm font-medium text-gray-900 truncate">{session.user?.name}</p>
-                        <p className="text-xs text-gray-500 truncate">{session.user?.email}</p>
+                        <p className="text-sm font-medium text-gray-900 truncate">{user?.name}</p>
+                        <p className="text-xs text-gray-500 truncate">{user?.email}</p>
                       </div>
                     </div>
                   </Button>
