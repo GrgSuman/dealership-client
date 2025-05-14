@@ -1,21 +1,14 @@
 import { PrismaClient } from '@prisma/client'
 
-// Initialize Prisma Client
-const prisma = new PrismaClient()
+// Prevent multiple instances in development
+declare global {
+  var prisma: PrismaClient | undefined
+}
 
-// Error handling for connection issues
-prisma.$connect()
-  .then(() => {
-    console.log('Successfully connected to the database')
-  })
-  .catch((error: Error) => {
-    console.error('Failed to connect to the database:', error)
-  })
+const prisma = global.prisma || new PrismaClient()
 
-// Handle application termination
-process.on('beforeExit', async () => {
-  await prisma.$disconnect()
-})
-
+if (process.env.NODE_ENV === 'development') {
+  global.prisma = prisma
+}
 
 export default prisma

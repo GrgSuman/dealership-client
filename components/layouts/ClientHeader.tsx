@@ -1,20 +1,26 @@
-"use client";
-import Link from "next/link";
-import { CarFront } from "lucide-react";
-import { usePathname } from "next/navigation";
+"use client"
+
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useSession, signOut } from "next-auth/react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
+import { User, LogOut } from "lucide-react"
+import Image from "next/image"
 
 const ClientHeader = () => {
-  const path = usePathname();
-  const isAdminPath = path?.includes("/admin");
+  const path = usePathname()
+  const { data: session } = useSession()
+  const isAdminPath = path?.includes("/admin")
 
-  if (isAdminPath) return null;
+  if (isAdminPath) return null
+
   return (
-    <div className="sticky top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 py-4 px-4">
-      <header className="flex justify-between items-center">
+    <div className="sticky top-0 left-0 right-0 z-40 bg-background border-b py-3 px-4">
+      <header className="flex justify-between items-center mx-auto">
         <div className="flex items-center">
           <Link href="/" className="flex items-center">
             <div className="relative">
-              {/* Modern Car Icon */}
               <div className="relative w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -35,32 +41,62 @@ const ClientHeader = () => {
 
             <div className="ml-3">
               <h1 className="text-2xl font-bold tracking-tight">
-                <span className="text-gray-900">The</span>
+                <span className="text-foreground">The</span>
                 <span className="text-green-600">Final</span>
-                <span className="text-gray-900">Group</span>
+                <span className="text-foreground">Group</span>
               </h1>
             </div>
           </Link>
         </div>
 
-        {/* Auth buttons - kept exactly the same */}
+        {/* Auth buttons or User Profile */}
         <div className="hidden md:flex items-center space-x-3">
-          <Link
-            href="/signin"
-            className="text-sm hover:text-gray-800 text-gray-600 font-medium transition-colors"
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/signup"
-            className="bg-green-600 hover:bg-green-700 text-white font-medium px-3 py-2 rounded-lg transition-colors"
-          >
-            Create Account
-          </Link>
+          {session ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-10 px-3 gap-2 hover:bg-muted">
+                  <span className="font-medium text-sm hidden sm:inline-block">{session.user?.name}</span>
+                  <div className="h-8 w-8 rounded-full overflow-hidden border">
+                    <Image
+                      src={session.user.image || "/placeholder.svg"}
+                      alt={session.user.name || "Profile"}
+                      width={32}
+                      height={32}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem asChild>
+                  <Link href="/user" className="flex items-center cursor-pointer">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => signOut()}
+                  className="text-destructive focus:text-destructive cursor-pointer"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Sign out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <Button variant="ghost" asChild>
+                <Link href="/signin">Sign In</Link>
+              </Button>
+              <Button asChild className="bg-green-600 hover:bg-green-700">
+                <Link href="/signin">Create Account</Link>
+              </Button>
+            </>
+          )}
         </div>
       </header>
     </div>
-  );
-};
+  )
+}
 
-export default ClientHeader;
+export default ClientHeader
