@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ClientHeader from "@/components/layouts/ClientHeader";
 import Sidebar from "@/components/layouts/Sidebar";
-import { SessionProvider } from "next-auth/react"
 import { auth } from "@/auth";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -28,12 +28,12 @@ export default async function RootLayout({
   const user = await auth()
   return (
     <html lang="en">
-      <SessionProvider session={user}>
+
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="flex h-screen flex-col">
-          <ClientHeader/>
+          <ClientHeader user={user?.user}/>
         <div className="flex flex-1 overflow-hidden">
-          <Sidebar />
+          <Sidebar user={user?.user} />
           {/* p-6 */}
           <main className="flex-1 overflow-auto "> 
             {children}
@@ -41,7 +41,6 @@ export default async function RootLayout({
         </div>
       </div>
       </body>
-      </SessionProvider>
     </html>
   );
 }

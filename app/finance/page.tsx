@@ -3,10 +3,10 @@ import { Mail } from 'lucide-react'
 
 const FinancePage = () => {
   return (
-    <div className="min-h-[60vh] flex items-center justify-center px-4">
-      <div className="max-w-6xl mx-auto ">
+    <div className=" flex items-center justify-center px-4 pt-8">
+      <div className="container mx-auto ">
         <div className="mb-8">
-          <h1 className="text-3xl tracking-tight mb-4">
+          <h1 className="text-2xl font-medium tracking-tight mb-2">
             Finance Calculator
             <span className="block text-gray-500 text-xl mt-2">Coming Soon</span>
           </h1>
@@ -16,7 +16,7 @@ const FinancePage = () => {
         </div>
 
         <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-          <div className="flex items-center justify-center gap-3 mb-4">
+          <div className="flex items-center gap-3 mb-4">
             <Mail className="h-5 w-5 text-gray-600" />
             <h2 className="text-lg">Need Finance Information?</h2>
           </div>

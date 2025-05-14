@@ -3,40 +3,40 @@ import { PrismaClient, BodyType, Transmission, FuelType, VehicleStatus, VehicleC
 
 
 const vehicles = [
-    {
-        make: "Hyundai",
-        model: "i30 N Line",
-        year: 2024,
-        price: 38990.00,
-        bodyType: "HATCHBACK",
-        transmission: "DCT",
-        fuelType: "PETROL",
-        fuelConsumptionUrban: 8.2,
-        fuelConsumptionExtraUrban: 5.6,
-        fuelConsumptionCombined: 6.8,
-        engineCapacity: 1.5,
-        cylinders: 4,
-        odometer: 15,
-        driveType: "FWD",
-        doors: 5,
-        seats: 5,
-        color: "Performance Blue",
-        rego: "JKL012",
-        vin: "KMHH351CBNU123456",
-        stockNumber: "HY24I30004",
-        images: [
-          "https://www.hyundai.com/au/en/vehicles/i30-n-line/hero.jpg",
-          "https://www.hyundai.com/au/en/vehicles/i30-n-line/interior.jpg",
-          "https://www.hyundai.com/au/en/vehicles/i30-n-line/exterior.jpg"
-        ],
-        description: "This sporty 2024 Hyundai i30 N Line features a turbocharged 1.5L engine paired with a quick-shifting 7-speed DCT. Designed with performance styling and enhanced handling characteristics for an engaging driving experience. Packed with tech and safety features for daily practicality.",
-        status: "AVAILABLE",
-        condition: "NEW",
-        features: ["Sports Body Kit", "LED Headlights", "10.25\" Touchscreen", "Paddle Shifters", "Wireless Charging", "Blind Spot Monitoring", "Sports Seats", "Apple CarPlay", "Android Auto"],
-        viewsCount: 78,
-        createdAt: new Date("2024-03-18T16:20:00Z"),
-        updatedAt: new Date("2024-03-18T16:20:00Z")
-      }
+  {
+    make: "Hyundai",
+    model: "Tucson Elite N Line",
+    year: 2022,
+    price: 41990.00,
+    bodyType: "SUV",
+    transmission: "AUTOMATIC",
+    fuelType: "PETROL",
+    fuelConsumptionUrban: 9.6,
+    fuelConsumptionExtraUrban: 6.5,
+    fuelConsumptionCombined: 7.7,
+    engineCapacity: 1.6,
+    cylinders: 4,
+    odometer: 27860,
+    driveType: "AWD",
+    doors: 5,
+    seats: 5,
+    color: "Shadow Grey",
+    rego: "CDE567",
+    vin: "TMAJ38A67NJ789012",
+    stockNumber: "HY22TUC019",
+    images: [
+      "https://www.hyundai.com/au/en/vehicles/tucson/2022/elite-n-line/hero.jpg",
+      "https://www.hyundai.com/au/en/vehicles/tucson/2022/elite-n-line/interior.jpg",
+      "https://www.hyundai.com/au/en/vehicles/tucson/2022/elite-n-line/exterior.jpg"
+    ],
+    description: "This Hyundai Tucson Elite N Line combines distinctive sporty styling with practical SUV versatility. The turbocharged 1.6L engine delivers 132kW through a responsive 7-speed DCT transmission. Features N Line exterior and interior styling with all-wheel drive capability for all-weather confidence.",
+    status: "AVAILABLE",
+    condition: "USED",
+    features: ["N Line Sports Package", "Leather Interior", "Panoramic Sunroof", "Bose Premium Audio", "10.25\" Touchscreen", "Heated & Ventilated Seats", "Blind-Spot View Monitor", "Apple CarPlay", "Android Auto"],
+    viewsCount: 124,
+    createdAt: new Date("2024-12-05T11:30:00Z"),
+    updatedAt: new Date("2024-12-05T11:30:00Z")
+  }
 ]
 
 const prisma = new PrismaClient();

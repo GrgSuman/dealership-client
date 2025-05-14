@@ -2,15 +2,15 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useSession, signOut } from "next-auth/react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { User, LogOut } from "lucide-react"
 import Image from "next/image"
+import { User as UserType } from "next-auth"
+import { signOutUser } from "@/app/actions/auth/userAuth"
 
-const ClientHeader = () => {
+const ClientHeader = ({ user }: { user: UserType }) => {
   const path = usePathname()
-  const { data: session } = useSession()
   const isAdminPath = path?.includes("/admin")
 
   if (isAdminPath) return null
@@ -51,15 +51,15 @@ const ClientHeader = () => {
 
         {/* Auth buttons or User Profile */}
         <div className="hidden md:flex items-center space-x-3">
-          {session ? (
+          {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-10 px-3 gap-2 hover:bg-muted">
-                  <span className="font-medium text-sm hidden sm:inline-block">{session.user?.name}</span>
+                  <span className="font-medium text-sm hidden sm:inline-block">{user?.name}</span>
                   <div className="h-8 w-8 rounded-full overflow-hidden border">
                     <Image
-                      src={session.user.image || "/placeholder.svg"}
-                      alt={session.user.name || "Profile"}
+                      src={user.image || "/placeholder.svg"}
+                      alt={user.name || "Profile"}
                       width={32}
                       height={32}
                       className="h-full w-full object-cover"
@@ -75,7 +75,7 @@ const ClientHeader = () => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => signOut()}
+                  onClick={async () => await signOutUser()}
                   className="text-destructive focus:text-destructive cursor-pointer"
                 >
                   <LogOut className="mr-2 h-4 w-4" />
