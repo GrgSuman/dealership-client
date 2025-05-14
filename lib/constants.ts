@@ -33,4 +33,12 @@ const PRIORITIES = [
   "Reliability",
 ]
 
-export { CAR_TYPES, FUEL_TYPES, BRANDS, FEATURES, PRIMARY_USES, PRIORITIES }
+const ACTIVITIES = [
+  "viewed",
+  "saved",
+  "compared",
+  "searched",
+]
+
+export { CAR_TYPES, FUEL_TYPES, BRANDS, FEATURES, PRIMARY_USES, PRIORITIES, ACTIVITIES }
+

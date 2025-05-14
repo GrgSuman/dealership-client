@@ -6,15 +6,25 @@ import { Button } from "@/components/ui/button"
 import { LayoutGrid, List } from "lucide-react"
 import { Vehicle } from "@prisma/client"
 
-const VehicleGrid = ({vehicles}: {vehicles: Vehicle[]}) => {
+interface VehicleGridProps {
+  vehicles: Vehicle[]
+  title?: string
+  description?: string
+}
+
+const VehicleGrid = ({ 
+  vehicles, 
+  title = "Featured Vehicles", 
+  description = "Browse our selection of premium vehicles" 
+}: VehicleGridProps) => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
 
   return (
     <main className="container mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Featured Vehicles</h1>
-          <p className="text-gray-600">Browse our selection of premium vehicles</p>
+          <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
+          <p className="text-gray-600">{description}</p>
         </div>
 
         <div className="flex items-center bg-gray-100 p-1 rounded-lg">
@@ -42,8 +52,6 @@ const VehicleGrid = ({vehicles}: {vehicles: Vehicle[]}) => {
           </Button>
         </div>
       </div>
-
-      <p className="text-gray-600 mb-4">Showing {vehicles.length} vehicles</p>
 
       <div
         className={
