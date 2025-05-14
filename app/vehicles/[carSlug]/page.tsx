@@ -6,16 +6,20 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Car, Fuel, Info, Gauge, Calendar, Cog, DollarSign, Palette, Key, Hash, BarChart3, Eye } from "lucide-react"
 import prisma from "@/config/db"
+import SaveVehicle from "./SaveVehicle"
+import { getSavedVehicleByUserIdAndVehicleId, trackUserActivity } from "@/app/actions/user/user"
+import { auth } from "@/auth"
 
 const VehicleDetail = async ({ params }: { params: Promise<{ carSlug: string }> }) => {
   const { carSlug } = await params
+  const user = await auth()
 
   const vehicle = await prisma.vehicle.findUnique({
     where: {
       id: carSlug
     }
   })
-
+  
   if (!vehicle) {
     return (
       <div className="container mx-auto px-4 py-12">
@@ -31,6 +35,29 @@ const VehicleDetail = async ({ params }: { params: Promise<{ carSlug: string }> 
       </div>
     )
   }
+
+  const isSavedByUser = await getSavedVehicleByUserIdAndVehicleId(user?.user.id, vehicle.id)
+
+  if(user) {
+    await trackUserActivity({
+      action: "viewed",
+      carTitles: `${vehicle.year} ${vehicle.make} ${vehicle.model}`
+    })
+  }
+
+  // if(user) {
+  //   await trackUserActivity({
+  //     action: "compared",
+  //     carTitles: `${vehicle.year} ${vehicle.make} ${vehicle.model}`
+  //   })
+  // }
+
+  // if(user) {
+  //   await trackUserActivity({
+  //     action: "searched",
+  //     query:"nice car with good price"
+  //   })
+  // }
 
   const formatNumber = (num: number) => {
     return new Intl.NumberFormat("en-AU").format(num)
@@ -103,9 +130,7 @@ const VehicleDetail = async ({ params }: { params: Promise<{ carSlug: string }> 
               <div className="text-3xl font-bold text-green-600 mb-4">${vehicle.price}</div>
 
               <Button className="w-full mb-2">Contact Seller</Button>
-              <Button variant="outline" className="w-full">
-                Request Test Drive
-              </Button>
+              <SaveVehicle vehicleId={vehicle.id} isSavedByUser={isSavedByUser ? true : false} />
             </div>
           </div>
 
