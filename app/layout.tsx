@@ -3,7 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ClientHeader from "@/components/layouts/ClientHeader";
 import Sidebar from "@/components/layouts/Sidebar";
-
+import { SessionProvider } from "next-auth/react"
+import { auth } from "@/auth";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -19,13 +20,15 @@ export const metadata: Metadata = {
   description: "The next generation car search engine",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await auth()
   return (
     <html lang="en">
+      <SessionProvider session={user}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="flex h-screen flex-col">
           <ClientHeader/>
@@ -38,6 +41,7 @@ export default function RootLayout({
         </div>
       </div>
       </body>
+      </SessionProvider>
     </html>
   );
 }

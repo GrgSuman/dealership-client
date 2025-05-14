@@ -1,126 +1,118 @@
-"use client"
-
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
+import { auth, signIn } from "@/auth";
+import { redirect } from "next/navigation";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Loader2 } from "lucide-react"
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Mail } from "lucide-react";
 
-export default function LoginPage() {
-  const [isLoading, setIsLoading] = useState(false)
-
-  const handleGoogleLogin = async () => {
-    setIsLoading(true)
-    try {
-      // Add your Google authentication logic here
-      // Example: await signInWithGoogle()
-    } catch (error) {
-      console.error("Login failed:", error)
-    } finally {
-      setIsLoading(false)
+export default async function AuthPage() {
+  const authenticated = await auth();
+  if (authenticated) {
+    if(authenticated.user.role === "ADMIN") {
+      redirect("/admin");
+    } else {
+      redirect("/user");
     }
   }
 
-  return (
-    <div className="min-h-[80vh] flex items-center justify-center bg-gray-50">
-      <div className="absolute top-8 left-8">
-        {/* Logo */}
-        <div className="flex items-center gap-2">
-          <div className="p-1 bg-green-50 rounded-lg">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-6 w-6 text-green-600"
-            >
-              <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
-              <circle cx="7" cy="17" r="2" />
-              <circle cx="17" cy="17" r="2" />
-            </svg>
-          </div>
-          <span className="text-xl font-bold text-gray-900">AutoDealer</span>
-        </div>
-      </div>
+  async function signInWithGoogle() {
+    "use server";
+    await signIn("google", { callbackUrl: "/user" });
+  }
 
-      <Card className="w-full max-w-md mx-4">
-        <CardHeader className="space-y-2 text-center">
-          <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
-          <CardDescription>
-            Sign in to access your dealership dashboard
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex flex-col space-y-4">
-            <Button
-              variant="outline"
-              className="relative h-12"
-              onClick={handleGoogleLogin}
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <svg
-                  className="mr-2 h-5 w-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+  return (
+    <div className="min-h-screen  py-12 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center relative">
+      <div className="w-full max-w-md space-y-6">
+        <Card className="w-full shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+          <CardHeader className="space-y-3 pb-6">
+            <CardTitle className="text-2xl text-center font-bold">
+              Welcome Back
+            </CardTitle>
+            <CardDescription className="text-center text-base">
+             Access to your personalized cars list
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form action={signInWithGoogle} className="space-y-6">
+              <Button
+                type="submit"
+                className="w-full h-12 text-base flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 shadow-sm hover:shadow transition-all duration-200"
+                variant="outline"
+              >
+                <svg viewBox="0 0 24 24" className="h-6 w-6">
                   <path
-                    d="M23.766 12.2764C23.766 11.4607 23.6999 10.6406 23.5588 9.83807H12.24V14.4591H18.7217C18.4528 15.9494 17.5885 17.2678 16.323 18.1056V21.1039H20.19C22.4608 19.0139 23.766 15.9274 23.766 12.2764Z"
+                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                     fill="#4285F4"
                   />
                   <path
-                    d="M12.24 24.0008C15.4764 24.0008 18.2058 22.9382 20.1944 21.1039L16.3274 18.1055C15.2516 18.8375 13.8626 19.252 12.24 19.252C9.0362 19.252 6.3106 17.1399 5.3646 14.3003H1.3916V17.3912C3.37038 21.4434 7.48078 24.0008 12.24 24.0008Z"
+                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
                     fill="#34A853"
                   />
                   <path
-                    d="M5.36451 14.3003C4.87332 12.8099 4.87332 11.1961 5.36451 9.70575V6.61481H1.39157C-0.465551 10.0056 -0.465551 14.0004 1.39157 17.3912L5.36451 14.3003Z"
-                    fill="#FBBC04"
+                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                    fill="#FBBC05"
                   />
                   <path
-                    d="M12.24 4.74966C13.9508 4.7232 15.6043 5.36697 16.8433 6.54867L20.2694 3.12262C18.0999 1.0855 15.2207 -0.034466 12.24 0.000808666C7.48078 0.000808666 3.37038 2.55822 1.3916 6.61481L5.36454 9.70575C6.30637 6.86173 9.03454 4.74966 12.24 4.74966Z"
+                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                     fill="#EA4335"
                   />
                 </svg>
-              )}
-              Sign in with Google
-            </Button>
+                Continue with Google
+              </Button>
 
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <Separator className="bg-gray-200" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-white px-2 text-gray-500 font-medium">
+                    Other options
+                  </span>
+                </div>
               </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-muted-foreground">
-                  Secure Authentication
-                </span>
-              </div>
-            </div>
 
-            <div className="text-center text-sm text-muted-foreground">
-              By signing in, you agree to our{" "}
-              <a href="#" className="underline underline-offset-4 hover:text-primary">
+              <div className="grid grid-cols-1 gap-4">
+                <Button 
+                  variant="outline" 
+                  className="h-12 text-base flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-600 hover:text-gray-800 border border-gray-300 shadow-sm opacity-70"
+                  disabled
+                >
+                  <Mail className="h-5 w-5" />
+                  Continue with Email
+                  <span className="text-xs font-normal ml-1 bg-gray-100 px-2 py-0.5 rounded-full">Coming soon</span>
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+          <CardFooter className="flex flex-col space-y-4 pt-6">
+            <div className="text-center text-sm text-gray-500">
+              By continuing, you agree to our{" "}
+              <a
+                href="#"
+                className="font-medium text-violet-600 hover:text-violet-800 transition-colors duration-200"
+              >
                 Terms of Service
               </a>{" "}
               and{" "}
-              <a href="#" className="underline underline-offset-4 hover:text-primary">
+              <a
+                href="#"
+                className="font-medium text-violet-600 hover:text-violet-800 transition-colors duration-200"
+              >
                 Privacy Policy
               </a>
               .
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardFooter>
+        </Card>
+
+      </div>
     </div>
-  )
+  );
 }

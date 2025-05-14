@@ -59,8 +59,9 @@ enum UserRole {
 model User {
   id           String       @id @default(cuid())
   email        String       @unique
-  name         String    @db.VarChar(50) //we will get fname by splitting
+  name         String       @db.VarChar(50)
   password     String?      //google or other provider dont need it
+  accountStatus String      @default("ACTIVE")  // Added default value ACTIVE, INACTIVE, INREVIEW
   preferences  Preference?
   role         UserRole     @default(USER)
   activities   Activity[]
