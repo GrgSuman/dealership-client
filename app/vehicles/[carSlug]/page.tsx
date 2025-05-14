@@ -38,12 +38,12 @@ const VehicleDetail = async ({ params }: { params: Promise<{ carSlug: string }> 
 
   const isSavedByUser = await getSavedVehicleByUserIdAndVehicleId(user?.user.id, vehicle.id)
 
-  if(user) {
-    await trackUserActivity({
-      action: "viewed",
-      carTitles: `${vehicle.year} ${vehicle.make} ${vehicle.model}`
-    })
-  }
+  // if(user) {
+  //   await trackUserActivity({
+  //     action: "viewed",
+  //     carTitles: `${vehicle.year} ${vehicle.make} ${vehicle.model}`
+  //   })
+  // }
 
   // if(user) {
   //   await trackUserActivity({

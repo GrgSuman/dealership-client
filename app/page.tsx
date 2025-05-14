@@ -5,12 +5,33 @@ import prisma from "@/config/db";
 import { ArrowRight, LogIn } from "lucide-react";
 import React from "react";
 import Link from "next/link";
-
+import { prepareUserDataForRecommendations } from "./actions/user/recommendations";
 const Home = async () => {
   const data = await prisma.vehicle.findMany({});
   const user = await auth();
 
-  // console.log(user)
+  if (user) {
+    const userData = await prepareUserDataForRecommendations();
+    console.log(userData);
+    try {
+      const response = await fetch(
+        "http://localhost:8000/get-recommendations",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
+
+      const data = await response.json();
+      console.log("Recommendations:", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
   return (
     <div>
       {user ? (
