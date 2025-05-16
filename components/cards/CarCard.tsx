@@ -27,7 +27,7 @@ const CarCard: React.FC<CarCardProps> = ({ vehicle, viewMode }) => {
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover"
-            priority
+            priority={false}
           />
           <div className="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">
             {vehicle.condition}

@@ -3,19 +3,55 @@ import VehicleGrid from "@/components/sections/VehicleGrid";
 import { Button } from "@/components/ui/button";
 import prisma from "@/config/db";
 import { ArrowRight, LogIn } from "lucide-react";
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
+import { prepareUserDataForRecommendations } from "./actions/user/recommendations";
+import { cache } from 'react';
+
+// Cache the recommendations fetch
+const getRecommendations = cache(async (userData: any) => {
+  try {
+    const response = await fetch(
+      "http://localhost:8000/get-recommendations",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-Key": process.env.PYTHON_API_KEY as string,
+        },
+        body: JSON.stringify(userData),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch recommendations: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching recommendations:", error);
+    return null;
+  }
+});
 
 const Home = async () => {
-  const data = await prisma.vehicle.findMany({});
-  const user = await auth();
+  // Fetch all data in parallel
+  const [data, user] = await Promise.all([
+    prisma.vehicle.findMany({}),
+    auth()
+  ]);
 
-  // console.log(user)
+  let recommendations = null;
+  if (user) {
+    const userData = await prepareUserDataForRecommendations();
+    recommendations = await getRecommendations(userData);
+  }
+
   return (
     <div>
       {user ? (
         <VehicleGrid
-          vehicles={data}
+          vehicles={recommendations?.recommendations}
           title="Recommended for you"
           description="Based on your activities and preferences"
         />

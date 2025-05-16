@@ -36,7 +36,7 @@ const VehicleDetail = async ({ params }: { params: Promise<{ carSlug: string }> 
     )
   }
 
-  const isSavedByUser = await getSavedVehicleByUserIdAndVehicleId(user?.user.id, vehicle.id)
+  const isSavedByUser = user ?  await getSavedVehicleByUserIdAndVehicleId(user?.user.id, vehicle.id) : false
 
   if(user) {
     await trackUserActivity({
@@ -44,20 +44,6 @@ const VehicleDetail = async ({ params }: { params: Promise<{ carSlug: string }> 
       carTitles: `${vehicle.year} ${vehicle.make} ${vehicle.model}`
     })
   }
-
-  // if(user) {
-  //   await trackUserActivity({
-  //     action: "compared",
-  //     carTitles: `${vehicle.year} ${vehicle.make} ${vehicle.model}`
-  //   })
-  // }
-
-  // if(user) {
-  //   await trackUserActivity({
-  //     action: "searched",
-  //     query:"nice car with good price"
-  //   })
-  // }
 
   const formatNumber = (num: number) => {
     return new Intl.NumberFormat("en-AU").format(num)

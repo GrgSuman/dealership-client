@@ -1,24 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Car Recommendation Platform
+
+A modern, AI-powered car recommendation platform built with Next.js 15, featuring personalized vehicle suggestions, user preferences, and an intuitive interface.
+
+## Features
+
+- 🚗 **Personalized Recommendations**: AI-powered car suggestions based on user preferences and behavior
+- 🔍 **Advanced Search**: Explore cars with detailed filtering options
+- 💾 **Save Favorites**: Keep track of your favorite vehicles
+- 🔄 **Compare Cars**: Side-by-side comparison of different vehicles
+- ⚙️ **User Preferences**: Customize your car search experience
+- 📱 **Responsive Design**: Beautiful UI that works on all devices
+- 🎨 **Modern UI**: Built with shadcn/ui and Tailwind CSS
+- 🔐 **Authentication**: Secure user authentication with NextAuth.js(google)
+
+## Tech Stack
+
+- **Framework**: Next.js 15
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui + custom
+- **Database**: Prisma with PostgreSQL
+- **Authentication**: NextAuth.js
+- **Animations**: Framer Motion
+- **Icons**: Lucide Icons
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js (Latest LTS version)
+- PostgreSQL
+- Python (for recommendation engine)
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone [repository-url]
+cd nextclient
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables:
+Create a `.env` file in the root directory with the following variables:
+```env
+DATABASE_URL="postgresql://..."
+NEXTAUTH_SECRET="your-secret"
+PYTHON_API_KEY="your-api-key"
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Authentication Setup
+
+### 1. Generate NextAuth Secret
+
+Generate a secure secret for NextAuth.js:
+
+```bash
+npx create-next-auth-secret
+```
+
+Add the generated secret to your `.env` file:
+```env
+NEXTAUTH_SECRET="your-generated-secret"
+GOOGLE_CLIENT_ID="your-client-id"
+GOOGLE_CLIENT_SECRET="your-client-secret"
+```
+
+
+4. Set up the database:
+```bash
+npx prisma generate
+npx prisma db push
+npx prisma db seed
+```
+
+5. Start the development server:
+```bash
+npm run dev
+```
+
+## Project Structure
 
 ## Learn More
 
