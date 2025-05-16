@@ -1,4 +1,4 @@
-export const vehicles = [
+export const vehicles =[
   {
     make: "Toyota",
     model: "HiLux SR5",
@@ -21,9 +21,9 @@ export const vehicles = [
     vin: "MR0BA3CD601234567",
     stockNumber: "TY24HIL001",
     images: [
-      "https://www.toyota.com.au/images/vehicles/hilux/2024/sr5/hero.jpg",
-      "https://www.toyota.com.au/images/vehicles/hilux/2024/sr5/interior.jpg",
-      "https://www.toyota.com.au/images/vehicles/hilux/2024/sr5/exterior.jpg"
+      "https://www.toyota.com.au/-/media/toyota/main-site/vehicle-hubs/hilux/bep/2024/hilux_range_sr5_v2.jpg?rev=7658406e952f4c178dfaba44fdc67769",
+"https://cdn.yeecar.com.au/uploads/car/spec/S000EIIZ.jpg",
+"https://nextgen-images.cdn.dealersolutions.com.au/modular.multisite.dealer.solutions/wp-content/uploads/2018/02/28105456/White-1.png?format=webp&width=1193" 
     ],
     description: "This 2024 Toyota HiLux SR5 is the ultimate workhorse with premium features. Featuring a powerful 2.8L turbo diesel engine producing 150kW and 500Nm of torque. Perfect for both work and weekend adventures with its comfortable interior and proven reliability.",
     status: "AVAILABLE",
@@ -55,9 +55,10 @@ export const vehicles = [
     vin: "M6GMFC90W6789012",
     stockNumber: "FD24RNG002",
     images: [
-      "https://www.ford.com.au/content/dam/Ford/website-assets/ap/au/nameplate/ranger/2024/hero.jpg",
-      "https://www.ford.com.au/content/dam/Ford/website-assets/ap/au/nameplate/ranger/2024/interior.jpg",
-      "https://www.ford.com.au/content/dam/Ford/website-assets/ap/au/nameplate/ranger/2024/exterior.jpg"
+      "https://www.gpas-cache.ford.com/guid/0db6dd55-ac01-3102-af23-622f14054896.png",
+"https://cdn.images.stock.i-motor.net.au/vehicles/medium/3124083-J22M-52874096-7c46-5d82-bd75-ea4d75056f19.jpg",
+"https://cdn.images.stock.i-motor.net.au/vehicles/medium/3124083-J22M-87bea07d-be35-55b8-bbaa-ab2dd6a82c74.jpg"
+
     ],
     description: "This 2024 Ford Ranger Sport 3.0 features a powerful V6 diesel engine delivering 184kW and 600Nm of torque. Upgraded with the latest tech including a 12-inch touchscreen and advanced driver assistance. Exceptional towing capacity with premium comfort for all passengers.",
     status: "AVAILABLE",
@@ -89,9 +90,11 @@ export const vehicles = [
     vin: "JM0KF4WLA00678912",
     stockNumber: "MZ24CX5003",
     images: [
-      "https://www.mazda.com.au/content/dam/mazda/au/vehicles/cx-5/2024/hero.jpg",
-      "https://www.mazda.com.au/content/dam/mazda/au/vehicles/cx-5/2024/interior.jpg",
-      "https://www.mazda.com.au/content/dam/mazda/au/vehicles/cx-5/2024/exterior.jpg"
+"https://media.drive.com.au/obj/tx_q:70,rs:auto:960:540:1/driveau/upload/vehicles/used/mazda/cx-5/2024/50695502-8420-5f43-8a13-236147050000",
+"https://media.drive.com.au/obj/tx_q:50,rs:auto:1920:1080:1/driveau/upload/cms/uploads/vbx61hnwzkqwewmflsnr",
+"https://media.drive.com.au/obj/tx_q:70,rs:auto:960:540:1/driveau/upload/vehicles/used/mazda/cx-5/2024/9b4cd0bb-6421-55af-bf16-8ce4e4350000"
+
+
     ],
     description: "Top-of-the-range Mazda CX-5 G25 Akera with all the luxury features you desire. This refined SUV offers 140kW of power with sophisticated handling and Mazda's signature driving dynamics. Premium Nappa leather interior with advanced safety features make this the perfect family vehicle.",
     status: "AVAILABLE",
@@ -123,9 +126,9 @@ export const vehicles = [
     vin: "KMHH351CBNU123456",
     stockNumber: "HY24I30004",
     images: [
-      "https://www.hyundai.com/au/en/vehicles/i30-n-line/hero.jpg",
-      "https://www.hyundai.com/au/en/vehicles/i30-n-line/interior.jpg",
-      "https://www.hyundai.com/au/en/vehicles/i30-n-line/exterior.jpg"
+      "https://www.hyundai.com/content/dam/hyundai/au/en/models/i30-n/2025/HeroCarousel_i30_N_MY25_950x415.png",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7F_awBBAVeuB-9UQXc4WP_oAkEyCSdYDbAB78fXXqc9DF7XzzHmsorOHrX_CXwkDRuv0&usqp=CAU",
+      "https://editorial.pxcrush.net/carsales/general/editorial/2024-hyundai-i30-sedan-n-65.jpg?width=1024&height=682"
     ],
     description: "This sporty 2024 Hyundai i30 N Line features a turbocharged 1.5L engine paired with a quick-shifting 7-speed DCT. Designed with performance styling and enhanced handling characteristics for an engaging driving experience. Packed with tech and safety features for daily practicality.",
     status: "AVAILABLE",
@@ -157,9 +160,9 @@ export const vehicles = [
     vin: "JTDBR9HE2NJ567890",
     stockNumber: "TY23COR005",
     images: [
-      "https://www.toyota.com.au/images/vehicles/corolla/2023/zr-hybrid/hero.jpg",
-      "https://www.toyota.com.au/images/vehicles/corolla/2023/zr-hybrid/interior.jpg",
-      "https://www.toyota.com.au/images/vehicles/corolla/2023/zr-hybrid/exterior.jpg"
+      "https://drivingenthusiast.com.au/wp-content/uploads/2023/04/2023-Toyota-Corolla-ZR-Hybrid-doors.jpg",
+      "https://media.drive.com.au/obj/tx_q:70,rs:auto:960:540:1/driveau/upload/vehicles/used/toyota/corolla/2023/13a16d07-15a2-5a19-b1ca-3deff0f50000",
+      "https://nextgen-images.cdn.dealersolutions.com.au/modular.multisite.dealer.solutions/wp-content/uploads/sites/1576/2022/11/09183110/64267_hr-scaled.jpg?format=webp&width=2560"
     ],
     description: "This near-new Toyota Corolla ZR Hybrid combines exceptional fuel economy with premium features. Top-spec model with leather accented interior, JBL premium audio, and head-up display. Toyota's renowned hybrid technology delivers smooth, efficient performance with just 12,450km on the odometer.",
     status: "AVAILABLE",
@@ -191,9 +194,9 @@ export const vehicles = [
     vin: "WBA5R1C09MCF12345",
     stockNumber: "BM22330006",
     images: [
-      "https://www.bmw.com.au/content/dam/bmw/marketAU/bmw_com_au/all-models/3-series/2022/hero.jpg",
-      "https://www.bmw.com.au/content/dam/bmw/marketAU/bmw_com_au/all-models/3-series/2022/interior.jpg",
-      "https://www.bmw.com.au/content/dam/bmw/marketAU/bmw_com_au/all-models/3-series/2022/exterior.jpg"
+      "https://carsales.pxcrush.net/carsales/cars/dealer/1b2f3o9zlubx2532ypbn8elvu.jpg?pxc_method=fitfill&pxc_bgtype=self&pxc_size=720,480",
+      "https://edge.pxcrush.net/cars/dealer/ddtdlh4gee3a6k85p2f6f6nnq.jpg?pxc_expires=20250807121833&pxc_clear=1&pxc_signature=f969631671f23a8f4e78c823427b64dc&pxc_size=1795%2C1347&pxc_method=fit",
+      "https://dealersolutions.b-cdn.net/20241217/80773166a6918eb0e7371ba58909d49c.jpg"
     ],
     description: "This immaculate BMW 330i M Sport showcases German engineering excellence with its 2.0L turbocharged engine. Luxurious interior with premium leather, advanced driver assistance systems, and the latest iDrive infotainment. One owner vehicle with full service history and the balance of factory warranty.",
     status: "AVAILABLE",
@@ -225,9 +228,9 @@ export const vehicles = [
     vin: "KNART813BN5789012",
     stockNumber: "KI23SOR007",
     images: [
-      "https://www.kia.com/au/vehicles/sorento/2023/gt-line/hero.jpg",
-      "https://www.kia.com/au/vehicles/sorento/2023/gt-line/interior.jpg",
-      "https://www.kia.com/au/vehicles/sorento/2023/gt-line/exterior.jpg"
+      "https://voom.com.au/wp-content/uploads/vehicle-images/KIA/SORENTO/2023/5OD-4.JPG",
+      "https://www.chasingcars.com.au/wp-content/uploads/2022/08/ezgif.com-gif-maker-3-copy-2.jpg",
+      "https://editorial.pxcrush.net/carsales/general/editorial/kia-sorento-gt-line-hev-awd-20-ly8f.jpg?width=1024&height=682"
     ],
     description: "This top-of-the-range Kia Sorento GT-Line offers luxury and practicality for the modern family. Seven genuine seats with leather trim and a powerful yet efficient 2.2L turbo diesel engine. Loaded with technology including a 360° camera system and premium Bose audio.",
     status: "AVAILABLE",
@@ -259,9 +262,9 @@ export const vehicles = [
     vin: "WVWZZZCDZNT234567",
     stockNumber: "VW22GTI008",
     images: [
-      "https://www.volkswagen.com.au/content/dam/vw-ngw/vw_pkw/importers/au/models/golf/gti/hero.jpg",
-      "https://www.volkswagen.com.au/content/dam/vw-ngw/vw_pkw/importers/au/models/golf/gti/interior.jpg",
-      "https://www.volkswagen.com.au/content/dam/vw-ngw/vw_pkw/importers/au/models/golf/gti/exterior.jpg"
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHufuThdEnGtL-5c9g1TbnP-fA7gAskG5nTQ&s",
+      "https://images.cars.com/cldstatic/wp-content/uploads/volkswagen-golf-gti-2022-01-exterior--front--red.jpg",
+      "https://images.hgmsites.net/hug/2022-volkswagen-golf-gti_100793886_h.jpg"
     ],
     description: "This Volkswagen Golf GTI delivers the perfect blend of performance and everyday practicality. The 2.0L turbocharged engine produces 180kW with razor-sharp handling through its adaptive chassis control. Premium interior with tartan cloth sports seats and the latest infotainment system.",
     status: "AVAILABLE",
@@ -293,9 +296,9 @@ export const vehicles = [
     vin: "WDDWF4CB0MA345678",
     stockNumber: "MB21C20009",
     images: [
-      "https://www.mercedes-benz.com.au/content/dam/mercedes-benz/au/passengercars/models/c-class/2021/hero.jpg",
-      "https://www.mercedes-benz.com.au/content/dam/mercedes-benz/au/passengercars/models/c-class/2021/interior.jpg",
-      "https://www.mercedes-benz.com.au/content/dam/mercedes-benz/au/passengercars/models/c-class/2021/exterior.jpg"
+      "https://online.mbberwick.com.au/_next/image?url=https%3A%2F%2Fnextgen-cella.cdn.dealersolutions.com.au%2F20241017%2F7c761b9f2ef8be680161cfeb08fba2c4.jpg&w=3840&q=75",
+      "https://i.ytimg.com/vi/P7qBrZ9O2wk/sddefault.jpg",
+      "https://carsguide-res.cloudinary.com/image/upload/c_fit,h_810,w_1215,f_auto,t_cg_base/v1/editorial/2023-Mercedes-benz-C-Class-C200-sedan-blue-Glen-Sullivan-1200x800p-(11).jpg"
     ],
     description: "This Mercedes-Benz C200 AMG Line exemplifies luxury motoring with its sleek design and premium materials. Featuring innovative MBUX infotainment with augmented reality navigation and 64-color ambient lighting. One local owner with full service history through Mercedes-Benz authorized dealerships.",
     status: "AVAILABLE",
@@ -327,9 +330,9 @@ export const vehicles = [
     vin: "JF2SJAWC2NH678901",
     stockNumber: "SB23FOR010",
     images: [
-      "https://www.subaru.com.au/content/dam/subaru/au/vehicles/forester/2023/hero.jpg",
-      "https://www.subaru.com.au/content/dam/subaru/au/vehicles/forester/2023/interior.jpg",
-      "https://www.subaru.com.au/content/dam/subaru/au/vehicles/forester/2023/exterior.jpg"
+      "https://media.whichcar.com.au/uploads/2023/05/61e3aae5-2023-subaru-outback-awd-touring-xt-50-year-edition.jpg",
+      "https://images.carexpert.com.au/resize/800/-/cms/v1/media/2023-subaru-forester-primary-image.jpg",
+      "https://media.drive.com.au/obj/tx_q:50,rs:auto:1920:1080:1/driveau/upload/cms/uploads/cwqejhpn2u6il1xubzug"
     ],
     description: "This Subaru Forester 2.5i-S offers renowned symmetrical all-wheel drive with X-Mode for all-terrain capability. The top-spec model includes leather seats, an electric sunroof, and Subaru's EyeSight driver assist technology. Perfect for adventurous families with its combination of comfort, safety, and capability.",
     status: "AVAILABLE",
@@ -361,9 +364,9 @@ export const vehicles = [
     vin: "JNKRJ15Y3N6789012",
     stockNumber: "NI22XTR011",
     images: [
-      "https://www.nissan.com.au/content/dam/nissan/au/vehicles/x-trail/2022/hero.jpg",
-      "https://www.nissan.com.au/content/dam/nissan/au/vehicles/x-trail/2022/interior.jpg",
-      "https://www.nissan.com.au/content/dam/nissan/au/vehicles/x-trail/2022/exterior.jpg"
+      "https://carsales.pxcrush.net/carsales/car/dealer/9sy55qox81xb08yzxeps0x847.jpg?pxc_method=fitfill&pxc_bgtype=self&pxc_size=720,480",
+      "https://media.drive.com.au/obj/tx_q:70,rs:auto:960:540:1/driveau/upload/vehicles/used/nissan/x-trail/2023/782ee32f-4ec8-54e9-8b1f-fa5850450000",
+      "https://editorial.pxcrush.net/carsales/general/editorial/2022-nissan-x-trail-st-plus-2wd-10.jpg?width=1024&height=682"
     ],
     description: "This versatile Nissan X-Trail ST-L offers seven-seat flexibility with intelligent all-wheel drive capability. Perfect for family adventures with a panoramic sunroof and advanced safety features including ProPILOT assist. Excellent condition with service history and the balance of Nissan's factory warranty.",
     status: "AVAILABLE",
@@ -395,9 +398,9 @@ export const vehicles = [
     vin: "SHHFK4850MU901234",
     stockNumber: "HO21CIV012",
     images: [
-      "https://www.honda.com.au/content/dam/honda/au/vehicles/civic/2021/hero.jpg",
-      "https://www.honda.com.au/content/dam/honda/au/vehicles/civic/2021/interior.jpg",
-      "https://www.honda.com.au/content/dam/honda/au/vehicles/civic/2021/exterior.jpg"
+      "https://vehicle-cdn.autoleague.cloud/_next/image/?url=https://vehicle-cdn.autoleague.cloud/30641_U508412_1.jpg&w=3840&q=90",
+      "https://media.whichcar.com.au/uploads/2025/02/dd32efa2-Honda_Civic_VTi-LX_panning_side_profile_left-scaled.jpg",
+      "https://media.whichcar.com.au/uploads/2025/02/fbb00a85-Honda_Civic_VTi-LX_interior_driver_s_side-scaled.jpg"
     ],
     description: "This premium Honda Civic VTi-LX features a responsive 1.5L turbocharged engine with excellent fuel efficiency. As the top-of-the-range model, it includes leather seats, a power sunroof, and Honda's full suite of Honda Sensing safety technologies. One owner vehicle with complete service history.",
     status: "AVAILABLE",
@@ -429,9 +432,9 @@ export const vehicles = [
     vin: "WAUZZZFY5PA123456",
     stockNumber: "AU23Q45013",
     images: [
-      "https://www.audi.com.au/content/dam/audi/au/models/q5/2023/hero.jpg",
-      "https://www.audi.com.au/content/dam/audi/au/models/q5/2023/interior.jpg",
-      "https://www.audi.com.au/content/dam/audi/au/models/q5/2023/exterior.jpg"
+      "https://media.drive.com.au/obj/tx_q:70,rs:auto:1280:720:1/driveau/upload/vehicles/used/audi/q5/2023/c52b103e-7531-5429-8d47-b07730a50000",
+      "https://images.carexpert.com.au/resize/700/-/vehicles/source-g/2/c/2c40b70e.jpg",
+      "https://cdn.yeecar.com.au/uploads/20230613/aac4e1fd921446a78c185b094d10e7cb.jpg"
     ],
     description: "This Certified Pre-Owned Audi Q5 45 TFSI quattro offers premium luxury with Audi's renowned quattro all-wheel drive system. The powerful 2.0L turbocharged engine delivers 183kW with mild hybrid efficiency. Includes Audi's comprehensive certified pre-owned warranty for peace of mind.",
     status: "AVAILABLE",
@@ -463,9 +466,9 @@ export const vehicles = [
     vin: "5YJ3E1EAXNF234567",
     stockNumber: "TS22ML3014",
     images: [
-      "https://www.tesla.com/assets/img/model3/model-3-hero.jpg",
-      "https://www.tesla.com/assets/img/model3/model-3-interior.jpg",
-      "https://www.tesla.com/assets/img/model3/model-3-exterior.jpg"
+      "https://virtualyard.com.au/photos/OxZwGOAvLj9UvhzofkOTcnK8bHg4GvwOhMktsuTA0K49FtL7qjmB58U2hbUVx13cmjvPBdUJxrOum76U6EL0vgs80N3HA4agQZrScsj5Y64.jpg",
+      "https://storage.googleapis.com/au-assets/zdfzF3G2ym34eLIj6diF7qXgvVwhcAXVndnWiEteDN7uOgeM_i-E3VJEp2SXtakuAcb5yEBTkVMv4mX5S_mavmWYTiVCM3hBsassWWwduSSRKtlW_x4dG68pHtn85JJN.webp",
+      "https://virtualyard.com.au/photos/KnlgiHThCRo4MKCVyzxfv37LZfD3lEAxtGB9ShNGJW6k62IhxtuLRVWtduLsfq6kkk1lOwwhkPRLYC4tXl72yyMnExZIDJP0ly9ylSRQpRg.jpg"
     ],
     description: "This Certified Pre-Owned Tesla Model 3 Long Range offers impressive 614km range with dual motor all-wheel drive. Lightning-fast acceleration with 0-100 km/h in just 4.4 seconds and Tesla's renowned Autopilot capability. Includes Tesla's comprehensive certified pre-owned inspection and warranty.",
     status: "AVAILABLE",
@@ -497,9 +500,9 @@ export const vehicles = [
     vin: "JA4ATCAU7PZ345678",
     stockNumber: "MI23OUT015",
     images: [
-      "https://www.mitsubishi-motors.com.au/content/dam/mitsubishi/au/vehicles/outlander/2023/hero.jpg",
-      "https://www.mitsubishi-motors.com.au/content/dam/mitsubishi/au/vehicles/outlander/2023/interior.jpg",
-      "https://www.mitsubishi-motors.com.au/content/dam/mitsubishi/au/vehicles/outlander/2023/exterior.jpg"
+      "https://resource.digitaldealer.com.au/image/57935342367f475e256a6f513745144_0_0.jpg",
+      "https://carsguide-res.cloudinary.com/image/upload/c_fit,h_810,w_1215,f_auto,t_cg_base/v1/editorial/2023-mitsubishi-outlander-phev-exceed-tourer-suv-white-marcus-craft-1200x800-(2).jpg",
+      "https://media.drive.com.au/obj/tx_q:50,rs:auto:1920:1080:1/driveau/upload/cms/uploads/1b3f4849-b5b9-5482-a4e1-778790850000"
     ],
     description: "This Certified Pre-Owned Mitsubishi Outlander Exceed offers luxury and versatility with genuine 7-seat capacity. The top-spec model includes quilted leather seats, panoramic sunroof, and Mitsubishi's advanced S-AWC all-wheel drive system. Backed by Mitsubishi's Diamond Advantage 10-year warranty program.",
     status: "AVAILABLE",
@@ -531,9 +534,9 @@ export const vehicles = [
     vin: "JTJDARDZ0N2456789",
     stockNumber: "LX22NX3016",
     images: [
-      "https://www.lexus.com.au/content/dam/lexus/au/models/nx/2022/hero.jpg",
-      "https://www.lexus.com.au/content/dam/lexus/au/models/nx/2022/interior.jpg",
-      "https://www.lexus.com.au/content/dam/lexus/au/models/nx/2022/exterior.jpg"
+      "https://carsguide-res.cloudinary.com/image/upload/e_trim:10,f_auto/c_scale,t_cg_base,w_678/v1/editorial/vhs/lexus-nx-350.png",
+      "https://editorial.pxcrush.net/carsales/general/editorial/2022_lexus_nx_350h_sports-luxury_1022.jpg?width=1024&height=682",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoDtUNgW6JwndAVYCI2QtdC-ETI0mdnZabUQ&s"
     ],
     description: "This Certified Pre-Owned Lexus NX 350h F Sport combines luxury with efficiency through its sophisticated hybrid powertrain. Featuring F Sport enhancements including adaptive variable suspension and unique styling elements. Thoroughly inspected with comprehensive Lexus certification and extended warranty coverage.",
     status: "AVAILABLE",
@@ -565,9 +568,9 @@ export const vehicles = [
     vin: "JM1NDAC77M0567890",
     stockNumber: "MZ21MX5017",
     images: [
-      "https://www.mazda.com.au/content/dam/mazda/au/vehicles/mx-5/2021/hero.jpg",
-      "https://www.mazda.com.au/content/dam/mazda/au/vehicles/mx-5/2021/interior.jpg",
-      "https://www.mazda.com.au/content/dam/mazda/au/vehicles/mx-5/2021/exterior.jpg"
+      "https://media.drive.com.au/obj/tx_q:70,rs:auto:960:540:1/driveau/upload/vehicles/used/mazda/mx-5/2021/5a6a5276-67a8-5e38-b37a-8f3cba150000",
+      "https://media.drive.com.au/obj/tx_q:70,rs:auto:960:540:1/driveau/upload/vehicles/used/mazda/mx-5/2021/d3b19c72-292b-52cc-8f9f-6e4f2b950000",
+      "https://carsguide-res.cloudinary.com/image/upload/c_fit,h_841,w_1490,f_auto,t_cg_base/v1/editorial/2024-Mazda-MX-5-RF-GT-Convertible-Red-1200x800-(11).jpg"
     ],
     description: "This rare Mazda MX-5 GT RS is the ultimate expression of the world's best-selling roadster. Enhanced with Brembo brakes, BBS forged wheels, and Recaro sports seats for the driving enthusiast. Pristine condition with full service history and low kilometers for a truly collectible modern classic.",
     status: "AVAILABLE",
@@ -599,9 +602,9 @@ export const vehicles = [
     vin: "JTMWWREV10D678901",
     stockNumber: "TY23RAV018",
     images: [
-      "https://www.toyota.com.au/images/vehicles/rav4/2023/cruiser-hybrid/hero.jpg",
-      "https://www.toyota.com.au/images/vehicles/rav4/2023/cruiser-hybrid/interior.jpg",
-      "https://www.toyota.com.au/images/vehicles/rav4/2023/cruiser-hybrid/exterior.jpg"
+      "https://nextgen-cella.cdn.dealersolutions.com.au/20241223/6007ed2762dae66476c4b4ae209517f7.3.jpg",
+      "https://images.carexpert.com.au/crop/1200/630/cms/v1/media/2023-12-231124toyota-rav4-xse-hybridstill-6.jpg",
+      "https://editorial.pxcrush.net/carsales/general/editorial/2024-toyota-rav4-edge-hybrid-15.jpg?width=1024&height=682"
     ],
     description: "This Toyota RAV4 Cruiser Hybrid offers exceptional efficiency with AWD capability and premium features. The sophisticated hybrid system delivers 163kW with remarkable fuel economy of just 4.7L/100km. Premium features include leather accented interior and panoramic view monitor for easy parking.",
     status: "AVAILABLE",
@@ -633,9 +636,9 @@ export const vehicles = [
     vin: "TMAJ38A67NJ789012",
     stockNumber: "HY22TUC019",
     images: [
-      "https://www.hyundai.com/au/en/vehicles/tucson/2022/elite-n-line/hero.jpg",
-      "https://www.hyundai.com/au/en/vehicles/tucson/2022/elite-n-line/interior.jpg",
-      "https://www.hyundai.com/au/en/vehicles/tucson/2022/elite-n-line/exterior.jpg"
+      "https://carsales.pxcrush.net/carsales/car/cil/4ndlgfsg315u6jxe4n1bctsn2.jpg?pxc_method=gravityfill&pxc_bgtype=self&pxc_size=900,600",
+      "https://d2s8i866417m9.cloudfront.net/photo/7386198/photo/medium-d36acacbda9046b5b44e2c507aeca5be.jpg",
+      "https://media.drive.com.au/obj/tx_q:50,rs:auto:1920:1080:1/driveau/upload/cms/uploads/oswrlehrc6cjuzidopiv"
     ],
     description: "This Hyundai Tucson Elite N Line combines distinctive sporty styling with practical SUV versatility. The turbocharged 1.6L engine delivers 132kW through a responsive 7-speed DCT transmission. Features N Line exterior and interior styling with all-wheel drive capability for all-weather confidence.",
     status: "AVAILABLE",
@@ -667,9 +670,9 @@ export const vehicles = [
     vin: "1FA6P8CF0M5890123",
     stockNumber: "FD21MGT020",
     images: [
-      "https://www.ford.com.au/content/dam/Ford/website-assets/ap/au/nameplate/mustang/2021/hero.jpg",
-      "https://www.ford.com.au/content/dam/Ford/website-assets/ap/au/nameplate/mustang/2021/interior.jpg",
-      "https://www.ford.com.au/content/dam/Ford/website-assets/ap/au/nameplate/mustang/2021/exterior.jpg"
+      "https://editorial.pxcrush.net/carsales/general/editorial/2021_ford_mustang_mach_1_dynamic_v1_current.jpg?width=1024&height=682",
+      "https://media.drive.com.au/obj/tx_q:50,rs:auto:1920:1080:1/driveau/upload/cms/uploads/fab3zkakp8krismdg55u",
+      "https://carsguide-res.cloudinary.com/image/upload/c_fit,h_841,w_1490,f_auto,t_cg_base/v1/editorial/2021-Ford-Mustang-GT-auto=green-coupe-peter-anderson-1200x800-(12).jpg"
     ],
     description: "This Ford Mustang GT delivers exhilarating performance with its 5.0L V8 engine producing 339kW of power. The 10-speed automatic transmission offers lightning-fast shifts with multiple drive modes. Premium features include leather interior, B&O premium sound system, and active valve exhaust.",
     status: "AVAILABLE",
@@ -701,9 +704,9 @@ export const vehicles = [
     vin: "JTMCY7AJ0P4123456",
     stockNumber: "TY24LC30021",
     images: [
-      "https://www.toyota.com.au/images/vehicles/landcruiser/2024/300-series/hero.jpg",
-      "https://www.toyota.com.au/images/vehicles/landcruiser/2024/300-series/interior.jpg",
-      "https://www.toyota.com.au/images/vehicles/landcruiser/2024/300-series/exterior.jpg"
+      "https://cdn.rotorint.com/LandCruiser_300/2021_07_Jul/e/360/png/lo/940x529/SPN_LC3_010070FB205E55200B0_comp_015.png",
+      "https://images.autodaily.com.au/2021/06/New-Toyota-Land-Cruiser-4.jpg",
+      "https://www.merimbulanewsweekly.com.au/images/transform/v1/crop/frm/silverstone-feed-data/125d46ca-0b7f-4b12-8315-fce0fb2c3233.jpg/r0_0_800_533_w800_h533_fmax.jpg"
     ],
     description: "The all-new Toyota LandCruiser 300 Series represents the pinnacle of Toyota's off-road capability. Featuring a powerful 3.3L twin-turbo diesel V6 engine producing 227kW and 700Nm of torque. Premium interior with advanced technology and unmatched off-road capability.",
     status: "AVAILABLE",
@@ -735,9 +738,9 @@ export const vehicles = [
     vin: "MPATFS47JND123456",
     stockNumber: "IS24DMX022",
     images: [
-      "https://www.isuzuute.com.au/content/dam/isuzu/au/vehicles/d-max/2024/x-terrain/hero.jpg",
-      "https://www.isuzuute.com.au/content/dam/isuzu/au/vehicles/d-max/2024/x-terrain/interior.jpg",
-      "https://www.isuzuute.com.au/content/dam/isuzu/au/vehicles/d-max/2024/x-terrain/exterior.jpg"
+      "https://carsales.pxcrush.net/carsales/car/cil/w3qvs8sl5a1wmdegtk1v7zm2d.jpg?pxc_method=gravityfill&pxc_bgtype=self&pxc_size=900,600",
+      "https://cdn.24h.com.vn/upload/4-2024/images/2024-12-01/i--5--1733053236-970-width740height495.jpg",
+      "https://editorial.pxcrush.net/carsales/general/editorial/isuzu-d-max-x-terrain-2024-tow-17.jpeg?width=1024&height=682"
     ],
     description: "The Isuzu D-MAX X-Terrain combines rugged capability with premium features. Powered by a 3.0L turbo diesel engine delivering 140kW and 450Nm. Top-spec model with leather interior, advanced safety systems, and premium audio.",
     status: "AVAILABLE",
@@ -769,9 +772,9 @@ export const vehicles = [
     vin: "LSJA24U62HG123456",
     stockNumber: "MG24ZSE023",
     images: [
-      "https://www.mg.com.au/content/dam/mg/au/vehicles/zs-ev/2024/hero.jpg",
-      "https://www.mg.com.au/content/dam/mg/au/vehicles/zs-ev/2024/interior.jpg",
-      "https://www.mg.com.au/content/dam/mg/au/vehicles/zs-ev/2024/exterior.jpg"
+      "https://resource.digitaldealer.com.au/image/12787125536409572473aa6299348707_0_0.jpg",
+      "https://media.drive.com.au/obj/tx_q:70,rs:auto:960:540:1/driveau/upload/vehicles/used/mg/zs-ev/2024/6f0db767-c7f8-577a-b398-7be31df50000",
+      "https://editorial.pxcrush.net/carsales/general/editorial/mg-zs-hybrid-plus-15-yhq5.jpg?width=1024&height=682"
     ],
     description: "The MG ZS EV offers an affordable entry into electric vehicle ownership. With a 320km range and rapid charging capability, it's perfect for urban commuting. Modern interior with the latest connectivity features and comprehensive safety systems.",
     status: "AVAILABLE",
@@ -803,9 +806,9 @@ export const vehicles = [
     vin: "TMBJJ7NP5P7123456",
     stockNumber: "SK23KOD024",
     images: [
-      "https://www.skoda.com.au/content/dam/skoda/au/models/kodiaq/2023/rs/hero.jpg",
-      "https://www.skoda.com.au/content/dam/skoda/au/models/kodiaq/2023/rs/interior.jpg",
-      "https://www.skoda.com.au/content/dam/skoda/au/models/kodiaq/2023/rs/exterior.jpg"
+      "https://cdn.yeecar.com.au/uploads/car/spec/S000B2K1.jpg",
+      "https://edge.pxcrush.net/dealerweb/car/cil/woh3dnkpjhuc6fhyoa4uac1w4.jpg?width=1000",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKgwSg5kxFfcnX9lU4pULL6Kfrer_jzGtOKw&s"
     ],
     description: "The Skoda Kodiaq RS combines performance with practicality. The 2.0L turbocharged engine produces 180kW, while the seven-seat interior offers family flexibility. RS styling adds sporty touches to this versatile SUV.",
     status: "AVAILABLE",
@@ -837,9 +840,9 @@ export const vehicles = [
     vin: "KM8J3CA46PU123456",
     stockNumber: "GN23GV7025",
     images: [
-      "https://www.genesis.com/au/en/models/gv70/2023/hero.jpg",
-      "https://www.genesis.com/au/en/models/gv70/2023/interior.jpg",
-      "https://www.genesis.com/au/en/models/gv70/2023/exterior.jpg"
+      "https://media.whichcar.com.au/uploads/2025/05/Genesis-GV70-1-scaled.jpeg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLA_7tL-qvNHWRYT0ie-tqhXJC7pBizJOGsQ&s",
+      "https://carsguide-res.cloudinary.com/image/upload/c_fit,h_841,w_1490,f_auto,t_cg_base/v1/editorial/2023-Genesis-Electrified-GV70-SUV-Red-JC-1200x800-(11).jpg"
     ],
     description: "The Genesis GV70 3.5T offers luxury and performance in a compact SUV package. The twin-turbo V6 engine delivers 280kW, while the interior showcases premium materials and cutting-edge technology.",
     status: "AVAILABLE",
@@ -871,9 +874,9 @@ export const vehicles = [
     vin: "JS3TX93V0P4123456",
     stockNumber: "SZ24JIM026",
     images: [
-      "https://www.suzuki.com.au/content/dam/suzuki/au/vehicles/jimny/2024/hero.jpg",
-      "https://www.suzuki.com.au/content/dam/suzuki/au/vehicles/jimny/2024/interior.jpg",
-      "https://www.suzuki.com.au/content/dam/suzuki/au/vehicles/jimny/2024/exterior.jpg"
+      "https://d2s8i866417m9.cloudfront.net/photo/22512419/photo/medium-ac1a303427e0224f01bcf4f457d5b356.jpg",
+      "https://d2s8i866417m9.cloudfront.net/photo/22512437/photo/medium-86281423c35902cde456d5f42a9a1f14.jpg",
+      "https://d2s8i866417m9.cloudfront.net/photo/22512451/photo/medium-873c21c2b03f62618d11449a1133eec4.jpg"
     ],
     description: "The Suzuki Jimny combines classic styling with modern features. Its compact size and true 4WD capability make it perfect for urban adventures. Updated interior with the latest connectivity and safety features.",
     status: "AVAILABLE",
@@ -905,9 +908,9 @@ export const vehicles = [
     vin: "VF3YBRHZ8PS123456",
     stockNumber: "PG23PEU027",
     images: [
-      "https://www.peugeot.com.au/content/dam/peugeot/au/models/3008/2023/gt/hero.jpg",
-      "https://www.peugeot.com.au/content/dam/peugeot/au/models/3008/2023/gt/interior.jpg",
-      "https://www.peugeot.com.au/content/dam/peugeot/au/models/3008/2023/gt/exterior.jpg"
+      "https://cdn.images.stock.i-motor.net.au/vehicles/medium/2840639_P025065_2_384e51590670c41e.jpg",
+      "https://www.peugeot.com.au/content/dam/peugeot/australia/models/3008/2024/3008-hybrid/Peugeot-MY24-3008-MHEV-Sprites-1920x1080-GT-Nera-Black-.png",
+      "https://editorial.pxcrush.net/carsales/general/editorial/180207_peugeot_3008_09-2q4x.jpg?width=1024&height=682"
     ],
     description: "The Peugeot 3008 GT offers French luxury in a practical SUV package. The 1.6L turbo engine delivers 165kW, while the interior features premium materials and innovative technology.",
     status: "AVAILABLE",
@@ -939,9 +942,9 @@ export const vehicles = [
     vin: "VSSZZZKMZPS123456",
     stockNumber: "CP23FOR028",
     images: [
-      "https://www.cupraofficial.com.au/content/dam/cupra/au/models/formentor/2023/vz5/hero.jpg",
-      "https://www.cupraofficial.com.au/content/dam/cupra/au/models/formentor/2023/vz5/interior.jpg",
-      "https://www.cupraofficial.com.au/content/dam/cupra/au/models/formentor/2023/vz5/exterior.jpg"
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGFuQGFQjARYKedSCLyJ0K5l7s83t2o5G8uw&s",
+      "https://images.carexpert.com.au/resize/800/-/cms/v1/media/2023-cupra-formentor-primary-image.jpg",
+      "https://media.drive.com.au/obj/tx_q:50,rs:auto:1920:1080:1/driveau/upload/cms/uploads/cokcwrobiyazjeomucau"
     ],
     description: "The Cupra Formentor VZ5 is a high-performance SUV with a 2.5L turbocharged engine producing 290kW. Its aggressive styling and premium interior make it stand out in the segment.",
     status: "AVAILABLE",
@@ -973,9 +976,9 @@ export const vehicles = [
     vin: "LSJA24U62HG123456",
     stockNumber: "LD24T60029",
     images: [
-      "https://www.ldv.com.au/content/dam/ldv/au/vehicles/t60/2024/max/hero.jpg",
-      "https://www.ldv.com.au/content/dam/ldv/au/vehicles/t60/2024/max/interior.jpg",
-      "https://www.ldv.com.au/content/dam/ldv/au/vehicles/t60/2024/max/exterior.jpg"
+      "https://resource.digitaldealer.com.au/image/7092859067da6a96129a6167121987_0_0.jpg",
+      "https://cdn.images.stock.i-motor.net.au/vehicles/large/2966900-D94229-f1e2589a-5a3e-576c-a411-edcb08dcde57.jpg",
+      "https://editorial.pxcrush.net/carsales/general/editorial/2024-ldv-t60-040.jpg?width=1024&height=682"
     ],
     description: "The LDV T60 Max offers exceptional value in the dual-cab ute segment. With a 2.0L turbo diesel engine and comprehensive features, it's perfect for both work and family use.",
     status: "AVAILABLE",
@@ -1007,9 +1010,9 @@ export const vehicles = [
     vin: "LGWEF4A53PH123456",
     stockNumber: "GW24H6U030",
     images: [
-      "https://www.gwm.com.au/content/dam/gwm/au/vehicles/haval/h6/2024/ultra/hero.jpg",
-      "https://www.gwm.com.au/content/dam/gwm/au/vehicles/haval/h6/2024/ultra/interior.jpg",
-      "https://www.gwm.com.au/content/dam/gwm/au/vehicles/haval/h6/2024/ultra/exterior.jpg"
+      "https://resource.digitaldealer.com.au/image/45637030265d6b59c14e26657168674_0_0.jpg",
+      "https://d2s8i866417m9.cloudfront.net/photo/20306291/photo/medium-73cf9c0dc5043842c55ea812bea8139d.jpg",
+      "https://cdn.images.stock.i-motor.net.au/vehicles/large/3278919-H2502-015-7d21bc8a-f899-5088-9cbe-0d1ffe03e7ed.jpg"
     ],
     description: "The GWM Haval H6 Ultra offers premium features at an affordable price. The 2.0L turbo engine delivers 150kW, while the interior features premium materials and advanced technology.",
     status: "AVAILABLE",
@@ -1041,9 +1044,9 @@ export const vehicles = [
     vin: "YV1LFA0ACR1234567",
     stockNumber: "VO24XC6031",
     images: [
-      "https://www.volvocars.com/au/cars/xc60/2024/recharge/hero.jpg",
-      "https://www.volvocars.com/au/cars/xc60/2024/recharge/interior.jpg",
-      "https://www.volvocars.com/au/cars/xc60/2024/recharge/exterior.jpg"
+      "https://vehicle-images.dealerinspire.com/8748-110009017/YV4H60DM4R1755428/02b606b25dbb4365252c5f2b6f21ef1c.jpg",
+      "https://www.begadistrictnews.com.au/images/transform/v1/crop/frm/silverstone-feed-data/0d5d528f-be4a-4444-a3d3-a51e0f95bb90.jpg/r0_0_800_533_w800_h533_fmax.jpg",
+      "https://www.volvocars.com/images/cs/v3/assets/blt0feaa88e629251fc/blt8a150026c2d8be09/669014e0b71f97b6c0a7c5ce/xc60-fuel-single-media-callout-4x3.jpg?branch=prod_alias&auto=avif&quality=85&format=webp&iar=0&w=3840&imdensity=1"
     ],
     description: "The Volvo XC60 Recharge combines luxury with sustainability. This plug-in hybrid offers 455kW combined power with an electric range of 77km. Premium interior with sustainable materials and advanced safety features.",
     status: "AVAILABLE",
@@ -1075,9 +1078,9 @@ export const vehicles = [
     vin: "WP0AA2Y1XPS123456",
     stockNumber: "PO23TAY032",
     images: [
-      "https://www.porsche.com/australia/models/taycan/2023/4s/hero.jpg",
-      "https://www.porsche.com/australia/models/taycan/2023/4s/interior.jpg",
-      "https://www.porsche.com/australia/models/taycan/2023/4s/exterior.jpg"
+      "https://static0.carbuzzimages.com/wordpress/wp-content/uploads/2024/02/14202-14.jpg",
+      "https://vehicle-images.dealerinspire.com/57f5-110010808/thumbnails/large/WP0AB2Y14SSA42088/c3ccd6a8338e4705d956d9decf729573.jpg",
+      "https://newsroom.porsche.com/.imaging/mte/porsche-templating-theme/image_690x388/dam/pnr/2024/Products/The-new-Taycan/Taycan_Turbo_Cross_Turismo_interior_6.jpg/jcr:content/Taycan_Turbo_Cross_Turismo_interior_6.jpg"
     ],
     description: "The Porsche Taycan 4S delivers sports car performance with zero emissions. Dual electric motors produce 360kW, enabling 0-100km/h in 4.0 seconds. Premium interior with Porsche's latest technology and charging capabilities.",
     status: "AVAILABLE",
@@ -1109,9 +1112,9 @@ export const vehicles = [
     vin: "JF1BS6A67RH123456",
     stockNumber: "SB24OUT033",
     images: [
-      "https://www.subaru.com.au/content/dam/subaru/au/vehicles/outback/2024/touring/hero.jpg",
-      "https://www.subaru.com.au/content/dam/subaru/au/vehicles/outback/2024/touring/interior.jpg",
-      "https://www.subaru.com.au/content/dam/subaru/au/vehicles/outback/2024/touring/exterior.jpg"
+      "https://pictures.dealer.com/s/soa/1380/892c2c8efb682cba98075d4cd375763ex.jpg?impolicy=downsize&h=674",
+      "https://cdn.images.stock.i-motor.net.au/vehicles/medium/3241525-SU067814A-d0b286b3-22df-5822-a72a-6f687a70f84d.jpg",
+      "https://editorial.pxcrush.net/carsales/general/editorial/2024-subaru-outback-14.jpg?width=1024&height=682"
     ],
     description: "The Subaru Outback Touring combines wagon practicality with SUV capability. Symmetrical AWD and X-Mode provide all-terrain confidence, while the premium interior offers comfort and technology for long journeys.",
     status: "AVAILABLE",
@@ -1143,9 +1146,9 @@ export const vehicles = [
     vin: "ZAREA4BB0P7123456",
     stockNumber: "AR23GIU034",
     images: [
-      "https://www.alfaromeo.com.au/content/dam/alfaromeo/au/models/giulia/2023/quadrifoglio/hero.jpg",
-      "https://www.alfaromeo.com.au/content/dam/alfaromeo/au/models/giulia/2023/quadrifoglio/interior.jpg",
-      "https://www.alfaromeo.com.au/content/dam/alfaromeo/au/models/giulia/2023/quadrifoglio/exterior.jpg"
+      "https://di-uploads-pod5.dealerinspire.com/arrigoalfaromeoofwestpalm/uploads/2023/07/Rosso-Red-Etna.png",
+      "https://media.drive.com.au/obj/tx_q:70,rs:auto:960:540:1/driveau/upload/vehicles/used/alfa-romeo/giulia/2023/5a6a5276-67a8-5e38-b37a-8f3cba150000",
+      "https://carsguide-res.cloudinary.com/image/upload/c_fit,h_841,w_1490,f_auto,t_cg_base/v1/editorial/2023-Alfa-Romeo-Giulia-Quadrifoglio-Red-1200x800-(11).jpg"
     ],
     description: "The Alfa Romeo Giulia Quadrifoglio is a high-performance sedan with a Ferrari-derived 2.9L twin-turbo V6 producing 375kW. Carbon fiber components and race-inspired interior create an authentic Italian sports car experience.",
     status: "AVAILABLE",
@@ -1177,9 +1180,9 @@ export const vehicles = [
     vin: "KNAJZ4AC8P5123456",
     stockNumber: "KI24EV6035",
     images: [
-      "https://www.kia.com/au/vehicles/ev6/2024/gt/hero.jpg",
-      "https://www.kia.com/au/vehicles/ev6/2024/gt/interior.jpg",
-      "https://www.kia.com/au/vehicles/ev6/2024/gt/exterior.jpg"
+      "https://www.motortrend.com/uploads/2023/10/2024-Kia-EV6-GT-2-front-view.jpg?w=768&width=768&q=75&format=webp",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkFEON6WGNmtSatpWDNDtvn_VXXd62lsGEUQ&s",
+      "https://editorial.pxcrush.net/carsales/general/editorial/kia-ev6-gt-line-awd-23-d3pb.jpg?width=1024&height=682"
     ],
     description: "The Kia EV6 GT is a high-performance electric SUV with 430kW of power. 0-100km/h in 3.5 seconds with a range of 424km. Premium interior with advanced technology and rapid charging capability.",
     status: "AVAILABLE",
@@ -1211,9 +1214,9 @@ export const vehicles = [
     vin: "W213S4EB3PX123456",
     stockNumber: "MB23ECW036",
     images: [
-      "https://www.mercedes-benz.com.au/content/dam/mercedes-benz/au/passengercars/models/e-class/2023/wagon/hero.jpg",
-      "https://www.mercedes-benz.com.au/content/dam/mercedes-benz/au/passengercars/models/e-class/2023/wagon/interior.jpg",
-      "https://www.mercedes-benz.com.au/content/dam/mercedes-benz/au/passengercars/models/e-class/2023/wagon/exterior.jpg"
+      "https://alcf.s3.us-west-1.amazonaws.com/_custom/2023/mercedes-benz/e-class-wagon/2023%20Mercedes-Benz%20AMG%C2%AE%20E%2063%20S%20Wagon.png",
+      "https://hips.hearstapps.com/hmg-prod/images/2021-genesis-g80-3p5t-prestige-v-2021-mercedes-benz-e450-sedan-1768-edit-1621887031.jpg?crop=0.454xw:0.378xh;0.171xw,0.540xh&resize=1200:*",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCVPdqALzeHAdqYknMv5MMjZVs2Og3IK5W_Q&s"
     ],
     description: "The Mercedes-Benz E-Class Wagon combines luxury with practicality. The 3.0L inline-6 engine delivers 270kW, while the interior offers premium comfort and advanced technology. Perfect for long-distance travel with ample cargo space.",
     status: "AVAILABLE",
@@ -1245,9 +1248,9 @@ export const vehicles = [
     vin: "LVVDB40B8P5123456",
     stockNumber: "PS24POL037",
     images: [
-      "https://www.polestar.com/au/polestar-2/2024/long-range/hero.jpg",
-      "https://www.polestar.com/au/polestar-2/2024/long-range/interior.jpg",
-      "https://www.polestar.com/au/polestar-2/2024/long-range/exterior.jpg"
+      "https://ik.imagekit.io/vyro/public/autofox-api-mapped-to-vehicles/482b9073cbb3dd5c7a23d33745662b10f3514fc44ac1dfe4e61b913439e8dfcc.jpg?tr=f-auto%2Cw-760",
+      "https://media.drive.com.au/obj/tx_q:50,rs:auto:1920:1080:1/driveau/upload/cms/uploads/f79e223d-8a38-5faa-9558-27bfae850000",
+      "https://media.drive.com.au/obj/tx_q:50,rs:auto:1920:1080:1/driveau/upload/cms/uploads/dyrxdmciytclsfxnscrr"
     ],
     description: "The Polestar 2 Long Range offers premium electric mobility with a range of 540km. Dual electric motors produce 300kW, while the minimalist interior showcases sustainable materials and Google's Android Automotive OS.",
     status: "AVAILABLE",
@@ -1279,9 +1282,9 @@ export const vehicles = [
     vin: "WAUZZZF49MN123456",
     stockNumber: "AU23RS6038",
     images: [
-      "https://www.audi.com.au/content/dam/audi/au/models/rs6/2023/avant/hero.jpg",
-      "https://www.audi.com.au/content/dam/audi/au/models/rs6/2023/avant/interior.jpg",
-      "https://www.audi.com.au/content/dam/audi/au/models/rs6/2023/avant/exterior.jpg"
+      "https://i.ytimg.com/vi/5s1LvKGNdw8/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAm6Oph2fXDp9Ru_ltOG__dzvchBQ",
+      "https://www.saxton4x4.co.uk/uploads/images/vehicles/large/1742661847HR-WUAZZZF25PN904419-RE23FOA-02.jpg",
+      "https://hips.hearstapps.com/hmg-prod/images/2021-audi-rs6-avant-119-1605052190.jpg?crop=1xw:0.9166666666666666xh;center,top&resize=980:*"
     ],
     description: "The Audi RS6 Avant is the ultimate performance wagon. The 4.0L twin-turbo V8 produces 441kW, while the interior combines luxury with practicality. Perfect for those who want supercar performance with family versatility.",
     status: "AVAILABLE",
@@ -1313,9 +1316,9 @@ export const vehicles = [
     vin: "LSJA24U62HG123456",
     stockNumber: "BY24ATT039",
     images: [
-      "https://www.byd.com/au/atto3/2024/hero.jpg",
-      "https://www.byd.com/au/atto3/2024/interior.jpg",
-      "https://www.byd.com/au/atto3/2024/exterior.jpg"
+      "https://www.topgear.com/sites/default/files/2023/03/25-BYD-Atto-3.jpg",
+      "https://carsguide-res.cloudinary.com/image/upload/e_trim:10,f_auto/c_scale,t_cg_base,w_678/v1/editorial/2022-BYD-Atto-3.png",
+      "https://editorial.pxcrush.net/carsales/general/editorial/byd-atto-3-09-7uo2.jpg?width=1024&height=682"
     ],
     description: "The BYD Atto 3 offers an affordable entry into electric vehicle ownership. With a 420km range and rapid charging capability, it's perfect for urban commuting. Modern interior with rotating touchscreen and comprehensive safety features.",
     status: "AVAILABLE",
@@ -1347,9 +1350,9 @@ export const vehicles = [
     vin: "SALWA2VF8PA123456",
     stockNumber: "JG23FPS040",
     images: [
-      "https://www.jaguar.com/f-pace/2023/svr/hero.jpg",
-      "https://www.jaguar.com/f-pace/2023/svr/interior.jpg",
-      "https://www.jaguar.com/f-pace/2023/svr/exterior.jpg"
+      "https://www.exoticcarhacks.com/wp-content/uploads/2025/01/Used-2020-Jaguar-F-PACE-SVR-in-Firenze-Red-w-Drive-Pack-Lux-Pack-Meridian-Sound-1722892010.jpg",
+      "https://www.topgear.com/sites/default/files/2022/07/DSC08792.jpg",
+      "https://carsguide-res.cloudinary.com/image/upload/c_fit,h_841,w_1490,f_auto,t_cg_base/v1/editorial/2021-Jaguar-F-PACE-R-Dynamic-SE-P400%20-Eiger-Grey-press-image-1200x800p-(22).jpg"
     ],
     description: "The Jaguar F-Pace SVR is a high-performance SUV with a 5.0L supercharged V8 producing 405kW. Dynamic handling with adaptive suspension and quad exhaust system. Premium interior with performance seats and advanced technology.",
     status: "AVAILABLE",
@@ -1381,9 +1384,9 @@ export const vehicles = [
     vin: "JTHHZ1BA8P5123456",
     stockNumber: "LX23LC5041",
     images: [
-      "https://www.lexus.com.au/content/dam/lexus/au/models/lc/2023/500/hero.jpg",
-      "https://www.lexus.com.au/content/dam/lexus/au/models/lc/2023/500/interior.jpg",
-      "https://www.lexus.com.au/content/dam/lexus/au/models/lc/2023/500/exterior.jpg"
+      "https://media.drive.com.au/obj/tx_rs:auto:2000:1125:1/caradvice/private/4954a7d94130ae22ca0627e536689c13",
+      "https://images.carexpert.com.au/resize/800/-/cms/v1/media/2024-lexus-lc-primary-image.jpg",
+      "https://2684054.fs1.hubspotusercontent-na1.net/hub/2684054/hubfs/2024-Lexus-LC500-convertible-interior-2-carpro.jpg?width=1200&length=1200&name=2024-Lexus-LC500-convertible-interior-2-carpro.jpg"
     ],
     description: "The Lexus LC 500 is a grand tourer with a naturally aspirated 5.0L V8 producing 351kW. Stunning design with premium materials and advanced technology. Perfect for those seeking a unique luxury sports car experience.",
     status: "AVAILABLE",
@@ -1415,9 +1418,9 @@ export const vehicles = [
     vin: "VF1RFE0B0PS123456",
     stockNumber: "RN24MEG042",
     images: [
-      "https://www.renault.com.au/content/dam/renault/au/models/megane/2024/e-tech/hero.jpg",
-      "https://www.renault.com.au/content/dam/renault/au/models/megane/2024/e-tech/interior.jpg",
-      "https://www.renault.com.au/content/dam/renault/au/models/megane/2024/e-tech/exterior.jpg"
+      "https://media.drive.com.au/obj/tx_q:50,rs:auto:1920:1080:1/driveau/upload/cms/uploads/skdiprulertinmrus3n1",
+      "https://media.drive.com.au/obj/tx_rs:auto:3483:1959:1/driveau/upload/cms/uploads/apqm91vt235juhoo6kkl",
+      "https://media.drive.com.au/obj/tx_q:50,rs:auto:1920:1080:1/driveau/upload/cms/uploads/exxug4fiivf5xny9obxa"
     ],
     description: "The Renault Megane E-Tech offers French design with electric performance. 160kW electric motor with a 450km range. Modern interior with Google built-in and comprehensive safety features.",
     status: "AVAILABLE",
@@ -1449,9 +1452,9 @@ export const vehicles = [
     vin: "ZAM57BLA0P7123456",
     stockNumber: "MS23GRE043",
     images: [
-      "https://www.maserati.com/au/en/models/grecale/2023/trofeo/hero.jpg",
-      "https://www.maserati.com/au/en/models/grecale/2023/trofeo/interior.jpg",
-      "https://www.maserati.com/au/en/models/grecale/2023/trofeo/exterior.jpg"
+      "https://media.drive.com.au/obj/tx_q:70,rs:auto:960:540:1/driveau/upload/vehicles/used/maserati/grecale/2023/cfca0f70-4627-5627-986d-42fb37b50000",
+      "https://cdn.images.stock.i-motor.net.au/vehicles/medium/42b77e45-f830-4fdd-bd23-e23849df7b00-0-carsales097.jpg",
+      "https://images.carexpert.com.au/resize/3000/-/app/uploads/2023/06/2023-Maserati-Grecale-GT-32.jpg"
     ],
     description: "The Maserati Grecale Trofeo is a high-performance SUV with a 3.0L twin-turbo V6 producing 390kW. Italian luxury with advanced technology and dynamic handling. Perfect for those seeking exclusivity and performance.",
     status: "AVAILABLE",
@@ -1483,9 +1486,9 @@ export const vehicles = [
     vin: "WMWZY7C05P5123456",
     stockNumber: "MN24JCW044",
     images: [
-      "https://www.mini.com.au/content/dam/mini/au/models/jcw/2024/hero.jpg",
-      "https://www.mini.com.au/content/dam/mini/au/models/jcw/2024/interior.jpg",
-      "https://www.mini.com.au/content/dam/mini/au/models/jcw/2024/exterior.jpg"
+      "https://carsales.pxcrush.net/general/car/spec/S0008IFB.jpg?width=618&height=412&watermark=502663494",
+      "https://cdn.yeecar.com.au/uploads/car/spec/S000CRHI.jpg",
+      "https://hips.hearstapps.com/hmg-prod/images/2022-mini-jcw-convertible-871-1635861250.jpg"
     ],
     description: "The Mini John Cooper Works is a high-performance hot hatch with a 2.0L turbo engine producing 225kW. Go-kart handling with premium interior and advanced technology. Perfect for those seeking fun and practicality.",
     status: "AVAILABLE",
@@ -1517,9 +1520,9 @@ export const vehicles = [
     vin: "SALWA2VF8PA123456",
     stockNumber: "LR24DEF045",
     images: [
-      "https://www.landrover.com.au/defender/2024/110/hero.jpg",
-      "https://www.landrover.com.au/defender/2024/110/interior.jpg",
-      "https://www.landrover.com.au/defender/2024/110/exterior.jpg"
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTozCmFL1TCAnhnkCRW2zkBzq62n75JdtIPkg&s",
+      "https://robbreport.com.au/application/assets/2022/09/03_DEF_23-5MY_75TH_EDITION_110_140922.jpg",
+      "https://di-uploads-pod12.dealerinspire.com/landroverlouisville/uploads/2022/09/Land-Rover-Defender-110-Technology-2209.jpg"
     ],
     description: "The Land Rover Defender 110 combines legendary off-road capability with modern luxury. The 3.0L diesel engine delivers 221kW, while the interior offers premium comfort and advanced technology. Perfect for adventure and daily use.",
     status: "AVAILABLE",
@@ -1551,9 +1554,9 @@ export const vehicles = [
     vin: "SCBLC37F8PC123456",
     stockNumber: "BN23CON046",
     images: [
-      "https://www.bentleymotors.com/en/models/continental-gt/2023/hero.jpg",
-      "https://www.bentleymotors.com/en/models/continental-gt/2023/interior.jpg",
-      "https://www.bentleymotors.com/en/models/continental-gt/2023/exterior.jpg"
+      "https://nextgen-cella.cdn.dealersolutions.com.au/20241205/a1c137c41c592f6c59698db2e99f8378.jpg",
+      "https://edge.pxcrush.net/cars/dealer/bmefw53jtjiomfcouytzosye6.jpg?pxc_expires=20250722161721&pxc_clear=1&pxc_signature=b2bd2a04daa814a75f7a87ef5d555c9d&pxc_size=1795%2C1197&pxc_method=fit",
+      "https://media.drive.com.au/obj/tx_q:50,rs:auto:1920:1080:1/driveau/upload/cms/uploads/t7xkapqz28ymmmqogaug"
     ],
     description: "The Bentley Continental GT is the ultimate grand tourer. The 4.0L twin-turbo V8 produces 404kW, while the interior showcases handcrafted luxury and cutting-edge technology. Perfect for those seeking the pinnacle of automotive luxury.",
     status: "AVAILABLE",
@@ -1585,9 +1588,9 @@ export const vehicles = [
     vin: "ZFF98NLA0P0123456",
     stockNumber: "FR23GTB047",
     images: [
-      "https://www.ferrari.com/en-AU/auto/296-gtb/2023/hero.jpg",
-      "https://www.ferrari.com/en-AU/auto/296-gtb/2023/interior.jpg",
-      "https://www.ferrari.com/en-AU/auto/296-gtb/2023/exterior.jpg"
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvaMxfSOTyoRa38sDpWB9IG6kU8iK_7S1e1A&s",
+      "https://carsales.pxcrush.net/carsales/cars/dealer/60qgo15fg8pvwfiu4vgssvo1r.jpg?pxc_method=gravityfill&pxc_bgtype=self&pxc_size=900,600",
+      "https://dealersolutions.b-cdn.net/20241217/8ac409b91f9654cfa7f38ab9bb1011c7.jpg"
     ],
     description: "The Ferrari 296 GTB is a revolutionary hybrid supercar. The 3.0L V6 with electric motor produces 610kW, while the design showcases Ferrari's latest aerodynamic technology. Perfect for those seeking the ultimate driving experience.",
     status: "AVAILABLE",
@@ -1619,9 +1622,9 @@ export const vehicles = [
     vin: "ZHWUF4ZD8PLA12345",
     stockNumber: "LB23HUR048",
     images: [
-      "https://www.lamborghini.com/en-en/models/huracan/2023/evo/hero.jpg",
-      "https://www.lamborghini.com/en-en/models/huracan/2023/evo/interior.jpg",
-      "https://www.lamborghini.com/en-en/models/huracan/2023/evo/exterior.jpg"
+      "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/c51905b0000b639a185eeb080dd879bf007f5604/photos/3yX52g5M-SGUi4PJSTM-(edit).jpg?t=172674684446",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShf3TIxyYrjKmJJ7KIdhFuV0Vvk9bDkh4LxQ&s",
+      "https://www.lamborghinigoldcoast.com/imagetag/10443/10/l/New-2023-Lamborghini-huracan-Evo-1668808574.jpg"
     ],
     description: "The Lamborghini Huracan EVO is a mid-engine supercar with a 5.2L V10 producing 470kW. Advanced aerodynamics and dynamic handling make it a track-focused machine. Perfect for those seeking raw performance and Italian passion.",
     status: "AVAILABLE",
@@ -1653,9 +1656,9 @@ export const vehicles = [
     vin: "SBM12DAA8MW123456",
     stockNumber: "MC24ART049",
     images: [
-      "https://www.mclaren.com/artura/2024/hero.jpg",
-      "https://www.mclaren.com/artura/2024/interior.jpg",
-      "https://www.mclaren.com/artura/2024/exterior.jpg"
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6vKTUhXn0eMegN_Xx4LUQfttsvG67nem_zg&s",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQxJLzKhXM4n-LpaqLjX7xfmJlxcz9qP7EXQ&s",
+      "https://evcentral.com.au/wp-content/uploads/2024/06/McLaren-interior.webp"
     ],
     description: "The McLaren Artura is a revolutionary hybrid supercar. The 3.0L V6 with electric motor produces 500kW, while the carbon fiber architecture ensures lightweight performance. Perfect for those seeking cutting-edge technology and track capability.",
     status: "AVAILABLE",
@@ -1687,9 +1690,9 @@ export const vehicles = [
     vin: "SCA681S51PUX12345",
     stockNumber: "RR23GHO050",
     images: [
-      "https://www.rolls-roycemotorcars.com/en_GB/ghost/2023/hero.jpg",
-      "https://www.rolls-roycemotorcars.com/en_GB/ghost/2023/interior.jpg",
-      "https://www.rolls-roycemotorcars.com/en_GB/ghost/2023/exterior.jpg"
+      "https://www.motortrend.com/uploads/2023/04/2023-Rolls-Royce-Ghost-Black-Badge-exterior-2.jpg",
+      "https://i.ytimg.com/vi/H8bMdbX8jss/maxresdefault.jpg",
+      "https://hips.hearstapps.com/hmg-prod/images/2023-rolls-royce-black-badge-103-1673365007.jpeg?crop=1xw:0.8441807044410413xh;center,top&resize=1200:*"
     ],
     description: "The Rolls-Royce Ghost is the ultimate luxury sedan. The 6.75L V12 produces 420kW, while the interior showcases handcrafted luxury and cutting-edge technology. Perfect for those seeking the pinnacle of automotive luxury.",
     status: "AVAILABLE",
@@ -1700,3 +1703,5 @@ export const vehicles = [
     updatedAt: new Date("2024-05-30T14:55:00Z")
   }
 ]
+
+

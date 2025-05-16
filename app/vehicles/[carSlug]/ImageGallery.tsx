@@ -47,7 +47,7 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover"
-          priority
+          priority={false}
         />
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 hover:opacity-100 transition-opacity">
