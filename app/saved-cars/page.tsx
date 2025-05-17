@@ -1,51 +1,60 @@
 import { auth } from '@/auth'
-import AuthGuard from '@/components/sections/AuthGuard'
 import VehicleGrid from '@/components/sections/VehicleGrid'
+import prisma from '@/config/db'
 import React from 'react'
-import prisma from "@/config/db";
 
 const SavedCarsPage = async () => {
-  const user = await auth();
-  
-  const data = await prisma.vehicle.findMany({
+  const session = await auth()
+  if (!session?.user) {
+    return (
+      <main className="container mx-auto px-4 py-8">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Saved Vehicles</h1>
+            <p className="text-gray-600">Sign in to view your saved vehicles</p>
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  const savedVehicles = await prisma.vehicle.findMany({
     where: {
       savedBy: {
         some: {
-          userId: user?.user?.id
+          userId: session.user.id
         }
       }
     },
     include: {
       savedBy: {
         where: {
-          userId: user?.user?.id
+          userId: session.user.id
         }
       }
     }
-  });
+  })
 
-  if(!user) {
-    return <AuthGuard />
-  }
+  const vehiclesWithSavedStatus = savedVehicles.map(vehicle => ({
+    ...vehicle,
+    isSaved: true
+  }))
 
   return (
-<div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Saved Vehicles</h1>
-      {data.length > 0 ? (
-        <VehicleGrid
-          vehicles={data}
-          title="Your Saved Vehicles"
-          description="Vehicles you've saved for later"
-        />
-      ) : (
-        <div className="text-center py-12">
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">No saved vehicles yet</h2>
-          <p className="text-gray-600">
-            Save vehicles you're interested in to view them here later
-          </p>
+    <main className="container mx-auto px-4 py-8">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Saved Vehicles</h1>
+          <p className="text-gray-600">Your collection of favorite vehicles</p>
         </div>
-      )}
-    </div>
+      </div>
+
+      <VehicleGrid
+        vehicles={vehiclesWithSavedStatus}
+        title="Saved Vehicles"
+        description={`You have ${vehiclesWithSavedStatus.length} saved vehicles`}
+      />
+    </main>
   )
 }
 

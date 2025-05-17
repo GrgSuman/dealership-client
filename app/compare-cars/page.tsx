@@ -1,6 +1,6 @@
 import { auth } from '@/auth'
-import AuthGuard from '@/components/sections/AuthGuard'
 import prisma from '@/config/db'
+import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import React from 'react'
 
@@ -9,11 +9,18 @@ const CompareCarsPage = async ({
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) => {
-
-  
   const session = await auth()
   if (!session?.user) {
-    return <AuthGuard />
+    return (
+      <main className="container mx-auto px-4 py-8">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Compare Vehicles</h1>
+            <p className="text-gray-600">Sign in to compare vehicles</p>
+          </div>
+        </div>
+      </main>
+    )
   }
 
   // Get vehicle IDs from search params
@@ -36,8 +43,13 @@ const CompareCarsPage = async ({
   )
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Compare Vehicles</h1>
+    <main className="container mx-auto px-4 py-8">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Compare Vehicles</h1>
+          <p className="text-gray-600">Compare up to 3 vehicles side by side</p>
+        </div>
+      </div>
 
       {/* Vehicle Selection */}
       <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
@@ -65,12 +77,12 @@ const CompareCarsPage = async ({
               </div>
             ))}
           </div>
-          <button
+          <Button
             type="submit"
-            className="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-lg transition-colors"
+            className="bg-green-600 hover:bg-green-700 text-white"
           >
             Compare Selected Vehicles
-          </button>
+          </Button>
         </form>
       </div>
 
@@ -117,7 +129,7 @@ const CompareCarsPage = async ({
           Select vehicles to compare from the dropdowns above
         </div>
       )}
-    </div>
+    </main>
   )
 }
 

@@ -89,9 +89,13 @@ const ExploreCarsPage = async ({
   const activeFilters = Object.keys(searchParams).filter(key => searchParams[key]);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Explore Cars</h1>
+    <main className="container mx-auto px-4 py-8">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Explore Cars</h1>
+          <p className="text-gray-600">Find your perfect vehicle</p>
+        </div>
+
         <div className="flex items-center gap-4">
           {activeFilters.length > 0 && (
             <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -294,7 +298,7 @@ const ExploreCarsPage = async ({
           />
         </div>
       </div>
-    </div>
+    </main>
   )
 }
 
