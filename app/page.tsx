@@ -8,31 +8,7 @@ import Link from "next/link";
 import { prepareUserDataForRecommendations } from "./actions/user/recommendations";
 import { cache } from 'react';
 
-// Cache the recommendations fetch
-const getRecommendations = cache(async (userData: any) => {
-  try {
-    const response = await fetch(
-      "http://localhost:8000/get-recommendations",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-Key": process.env.PYTHON_API_KEY as string,
-        },
-        body: JSON.stringify(userData),
-      }
-    );
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch recommendations: ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching recommendations:", error);
-    return null;
-  }
-});
 
 const Home = async () => {
   // Fetch all data in parallel
@@ -41,23 +17,12 @@ const Home = async () => {
     auth()
   ]);
 
-  let recommendations = null;
-  if (user) {
-    const userData = await prepareUserDataForRecommendations();
-    recommendations = await getRecommendations(userData);
-  }
+
+
 
   return (
     <div>
-      {user ? (
-        <VehicleGrid
-          vehicles={recommendations?.recommendations}
-          title="Recommended for you"
-          description="Based on your activities and preferences"
-        />
-      ) : (
-        <RecommendedSection />
-      )}
+
 
       <VehicleGrid
         vehicles={data}
