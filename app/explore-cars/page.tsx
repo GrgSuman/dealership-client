@@ -5,6 +5,24 @@ import prisma from "@/config/db"
 import { BodyType, FuelType, Transmission, VehicleCondition } from '@prisma/client'
 import { Filter, X } from 'lucide-react'
 import React from 'react'
+import Link from 'next/link'
+
+// Client component for clear filters button
+const ClearFiltersButton = () => {
+  return (
+    <Button
+      variant="ghost"
+      size="sm"
+      className="h-8 px-2"
+      asChild
+    >
+      <Link href="/explore-cars">
+        <X className="h-4 w-4 mr-1" />
+        Clear all
+      </Link>
+    </Button>
+  )
+}
 
 const ExploreCarsPage = async ({
   searchParams,
@@ -100,15 +118,7 @@ const ExploreCarsPage = async ({
           {activeFilters.length > 0 && (
             <div className="flex items-center gap-2 text-sm text-gray-600">
               <span>{activeFilters.length} active filters</span>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-8 px-2"
-                onClick={() => window.location.href = '/explore-cars'}
-              >
-                <X className="h-4 w-4 mr-1" />
-                Clear all
-              </Button>
+              <ClearFiltersButton />
             </div>
           )}
           <Button variant="outline" className="flex items-center gap-2">
