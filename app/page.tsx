@@ -12,7 +12,7 @@ import { cache } from 'react';
 const getRecommendations = cache(async (userData: any) => {
   try {
     const response = await fetch(
-      "http://localhost:8000/get-recommendations",
+      "https://rag-car-recommender-fastapi.onrender.com/get-recommendations",
       {
         method: "POST",
         headers: {
@@ -34,36 +34,40 @@ const getRecommendations = cache(async (userData: any) => {
   }
 });
 
+// Loading component for recommendations
+const RecommendationsLoading = () => (
+  <div className="animate-pulse">
+    <div className="h-8 w-64 bg-gray-200 rounded mb-4"></div>
+    <div className="h-4 w-96 bg-gray-200 rounded mb-8"></div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {[...Array(3)].map((_, i) => (
+        <div key={i} className="bg-gray-200 rounded-lg h-80"></div>
+      ))}
+    </div>
+  </div>
+);
+
 const Home = async () => {
   // Fetch all data in parallel
   const [data, user] = await Promise.all([
-    prisma.vehicle.findMany({}),
+    prisma.vehicle.findMany({
+      take: 10,
+      orderBy: {
+        createdAt: "desc",
+      },
+    }),
     auth()
   ]);
-
-  let recommendations = null;
-  if (user) {
-    const userData = await prepareUserDataForRecommendations();
-    recommendations = await getRecommendations(userData);
-  }
 
   return (
     <div>
       {user ? (
-        <VehicleGrid
-          vehicles={recommendations?.recommendations}
-          title="Recommended for you"
-          description="Based on your activities and preferences"
-        />
+        <Suspense fallback={<RecommendationsLoading />}>
+          <RecommendationsSection />
+        </Suspense>
       ) : (
         <RecommendedSection />
       )}
-
-      <VehicleGrid
-        vehicles={data}
-        title="Featured Vehicles"
-        description="Browse our selection of premium vehicles"
-      />
 
       <VehicleGrid
         vehicles={data}
@@ -83,6 +87,20 @@ const Home = async () => {
         </Button>
       </div>
     </div>
+  );
+};
+
+// Separate component for recommendations
+const RecommendationsSection = async () => {
+  const userData = await prepareUserDataForRecommendations();
+  const recommendations = await getRecommendations(userData);
+
+  return (
+    <VehicleGrid
+      vehicles={recommendations?.recommendations}
+      title="Recommended for you"
+      description="Based on your activities and preferences"
+    />
   );
 };
 
