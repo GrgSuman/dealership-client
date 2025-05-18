@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -19,11 +19,11 @@ import {
   CardDescription,
 } from "@/components/ui/card"
 import { toast } from "sonner"
-import { createVehicle } from "@/app/actions/vehicle/vehicle"
+import { updateVehicle, getVehicleById } from "@/app/actions/vehicle/vehicle"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { X } from "lucide-react"
-import { BodyType, Transmission, FuelType, VehicleCondition, VehicleStatus } from "@prisma/client"
+import { BodyType, Transmission, FuelType, VehicleCondition, VehicleStatus, Vehicle } from "@prisma/client"
 
 const bodyTypes = Object.values(BodyType)
 const transmissionTypes = Object.values(Transmission)
@@ -31,40 +31,61 @@ const fuelTypes = Object.values(FuelType)
 const conditions = Object.values(VehicleCondition)
 const statuses = Object.values(VehicleStatus)
 
-export default function AddVehicle() {
+export default function EditVehicle({ params }: { params: { id: string } }) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [formData, setFormData] = useState({
+  const [loading, setLoading] = useState(true)
+  const [formData, setFormData] = useState<Partial<Vehicle>>({
     make: '',
     model: '',
     year: new Date().getFullYear(),
-    price: '',
-    bodyType: '' as BodyType,
-    transmission: '' as Transmission,
-    fuelType: '' as FuelType,
-    fuelConsumptionUrban: '',
-    fuelConsumptionExtraUrban: '',
-    fuelConsumptionCombined: '',
-    engineCapacity: '',
-    cylinders: '',
-    odometer: '',
+    price: 0,
+    bodyType: BodyType.SEDAN,
+    transmission: Transmission.AUTOMATIC,
+    fuelType: FuelType.PETROL,
+    fuelConsumptionUrban: null,
+    fuelConsumptionExtraUrban: null,
+    fuelConsumptionCombined: null,
+    engineCapacity: null,
+    cylinders: null,
+    odometer: 0,
     driveType: '',
-    doors: '',
-    seats: '',
+    doors: null,
+    seats: null,
     color: '',
     rego: '',
     vin: '',
     stockNumber: '',
     description: '',
-    images: [] as string[],
+    images: [],
     status: VehicleStatus.AVAILABLE,
     condition: VehicleCondition.USED,
-    features: [] as string[]
+    features: []
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [uploadingImages, setUploadingImages] = useState(false)
   const [newFeature, setNewFeature] = useState('')
+
+  useEffect(() => {
+    loadVehicle()
+  }, [params.id])
+
+  const loadVehicle = async () => {
+    try {
+      const result = await getVehicleById(params.id)
+      if (result.success && result.data) {
+        setFormData(result.data)
+      } else {
+        throw new Error(result.error)
+      }
+    } catch (error) {
+      toast.error("Failed to load vehicle")
+      router.push("/admin/vehicles")
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handleChange = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -77,7 +98,7 @@ export default function AddVehicle() {
     if (newFeature.trim()) {
       setFormData(prev => ({
         ...prev,
-        features: [...prev.features, newFeature.trim()]
+        features: [...(prev.features || []), newFeature.trim()]
       }))
       setNewFeature('')
     }
@@ -86,7 +107,7 @@ export default function AddVehicle() {
   const handleRemoveFeature = (index: number) => {
     setFormData(prev => ({
       ...prev,
-      features: prev.features.filter((_, i) => i !== index)
+      features: prev.features?.filter((_, i) => i !== index)
     }))
   }
 
@@ -115,7 +136,7 @@ export default function AddVehicle() {
       const uploadedUrls = await Promise.all(uploadPromises)
       setFormData(prev => ({
         ...prev,
-        images: [...prev.images, ...uploadedUrls]
+        images: [...(prev.images || []), ...uploadedUrls]
       }))
     } catch (error) {
       toast.error("Failed to upload images")
@@ -127,7 +148,7 @@ export default function AddVehicle() {
   const removeImage = (index: number) => {
     setFormData(prev => ({
       ...prev,
-      images: prev.images.filter((_, i) => i !== index)
+      images: prev.images?.filter((_, i) => i !== index)
     }))
   }
 
@@ -141,7 +162,7 @@ export default function AddVehicle() {
     if (!formData.transmission) newErrors.transmission = "Transmission is required"
     if (!formData.fuelType) newErrors.fuelType = "Fuel type is required"
     if (!formData.odometer) newErrors.odometer = "Odometer is required"
-    if (formData.images.length === 0) newErrors.images = "At least one image is required"
+    if (!formData.images?.length) newErrors.images = "At least one image is required"
     if (!formData.description) newErrors.description = "Description is required"
 
     setErrors(newErrors)
@@ -156,7 +177,7 @@ export default function AddVehicle() {
 
     setIsSubmitting(true)
     try {
-      const result = await createVehicle({
+      const result = await updateVehicle(params.id, {
         ...formData,
         price: Number(formData.price),
         year: Number(formData.year),
@@ -171,27 +192,36 @@ export default function AddVehicle() {
       })
 
       if (result.success) {
-        toast.success("Vehicle added successfully!")
+        toast.success("Vehicle updated successfully!")
         router.push("/admin/vehicles")
       } else {
         throw new Error(result.error)
       }
     } catch (error) {
-      toast.error("Failed to add vehicle")
+      toast.error("Failed to update vehicle")
     } finally {
       setIsSubmitting(false)
     }
   }
 
+  if (loading) {
+    return (
+      <div className="container mx-auto py-6">
+        <div className="text-center">Loading vehicle data...</div>
+      </div>
+    )
+  }
+
   return (
     <div className="container mx-auto py-6 space-y-6 max-w-5xl">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Add New Vehicle</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Edit Vehicle</h1>
         <p className="text-muted-foreground mt-2">
-          Enter the vehicle details below. Required fields are marked with an asterisk (*).
+          Update the vehicle details below. Required fields are marked with an asterisk (*).
         </p>
       </div>
 
+      {/* Image Upload Section */}
       <Card>
         <CardHeader>
           <CardTitle>Vehicle Images</CardTitle>
@@ -200,7 +230,7 @@ export default function AddVehicle() {
         <CardContent>
           <div className="space-y-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {formData.images.map((image, index) => (
+              {formData.images?.map((image, index) => (
                 <div key={index} className="relative aspect-square">
                   <Image
                     src={image}
@@ -240,6 +270,7 @@ export default function AddVehicle() {
         </CardContent>
       </Card>
 
+      {/* Basic Information */}
       <Card>
         <CardHeader>
           <CardTitle>Basic Information</CardTitle>
@@ -362,6 +393,7 @@ export default function AddVehicle() {
         </CardContent>
       </Card>
 
+      {/* Technical Details */}
       <Card>
         <CardHeader>
           <CardTitle>Technical Details</CardTitle>
@@ -439,7 +471,7 @@ export default function AddVehicle() {
                 type="number"
                 step="0.1"
                 placeholder="Enter engine capacity"
-                value={formData.engineCapacity}
+                value={formData.engineCapacity || ''}
                 onChange={(e) => handleChange('engineCapacity', e.target.value)}
               />
             </div>
@@ -449,7 +481,7 @@ export default function AddVehicle() {
               <Input
                 type="number"
                 placeholder="Enter number of cylinders"
-                value={formData.cylinders}
+                value={formData.cylinders || ''}
                 onChange={(e) => handleChange('cylinders', e.target.value)}
               />
             </div>
@@ -458,7 +490,7 @@ export default function AddVehicle() {
               <label className="text-sm font-medium">Drive Type</label>
               <Input
                 placeholder="e.g., AWD, FWD, RWD"
-                value={formData.driveType}
+                value={formData.driveType || ''}
                 onChange={(e) => handleChange('driveType', e.target.value)}
               />
             </div>
@@ -468,7 +500,7 @@ export default function AddVehicle() {
               <Input
                 type="number"
                 placeholder="Enter number of doors"
-                value={formData.doors}
+                value={formData.doors || ''}
                 onChange={(e) => handleChange('doors', e.target.value)}
               />
             </div>
@@ -478,7 +510,7 @@ export default function AddVehicle() {
               <Input
                 type="number"
                 placeholder="Enter number of seats"
-                value={formData.seats}
+                value={formData.seats || ''}
                 onChange={(e) => handleChange('seats', e.target.value)}
               />
             </div>
@@ -487,7 +519,7 @@ export default function AddVehicle() {
               <label className="text-sm font-medium">Color</label>
               <Input
                 placeholder="Enter vehicle color"
-                value={formData.color}
+                value={formData.color || ''}
                 onChange={(e) => handleChange('color', e.target.value)}
               />
             </div>
@@ -500,7 +532,7 @@ export default function AddVehicle() {
                 type="number"
                 step="0.1"
                 placeholder="L/100km"
-                value={formData.fuelConsumptionUrban}
+                value={formData.fuelConsumptionUrban || ''}
                 onChange={(e) => handleChange('fuelConsumptionUrban', e.target.value)}
               />
             </div>
@@ -511,7 +543,7 @@ export default function AddVehicle() {
                 type="number"
                 step="0.1"
                 placeholder="L/100km"
-                value={formData.fuelConsumptionExtraUrban}
+                value={formData.fuelConsumptionExtraUrban || ''}
                 onChange={(e) => handleChange('fuelConsumptionExtraUrban', e.target.value)}
               />
             </div>
@@ -522,7 +554,7 @@ export default function AddVehicle() {
                 type="number"
                 step="0.1"
                 placeholder="L/100km"
-                value={formData.fuelConsumptionCombined}
+                value={formData.fuelConsumptionCombined || ''}
                 onChange={(e) => handleChange('fuelConsumptionCombined', e.target.value)}
               />
             </div>
@@ -530,6 +562,7 @@ export default function AddVehicle() {
         </CardContent>
       </Card>
 
+      {/* Additional Details */}
       <Card>
         <CardHeader>
           <CardTitle>Additional Details</CardTitle>
@@ -541,7 +574,7 @@ export default function AddVehicle() {
               <label className="text-sm font-medium">Registration Number</label>
               <Input
                 placeholder="Enter registration number"
-                value={formData.rego}
+                value={formData.rego || ''}
                 onChange={(e) => handleChange('rego', e.target.value)}
               />
             </div>
@@ -550,7 +583,7 @@ export default function AddVehicle() {
               <label className="text-sm font-medium">VIN</label>
               <Input
                 placeholder="Enter VIN"
-                value={formData.vin}
+                value={formData.vin || ''}
                 onChange={(e) => handleChange('vin', e.target.value)}
               />
             </div>
@@ -559,7 +592,7 @@ export default function AddVehicle() {
               <label className="text-sm font-medium">Stock Number</label>
               <Input
                 placeholder="Enter stock number"
-                value={formData.stockNumber}
+                value={formData.stockNumber || ''}
                 onChange={(e) => handleChange('stockNumber', e.target.value)}
               />
             </div>
@@ -571,7 +604,7 @@ export default function AddVehicle() {
             </label>
             <Textarea
               placeholder="Enter vehicle description"
-              value={formData.description}
+              value={formData.description || ''}
               onChange={(e) => handleChange('description', e.target.value)}
               className={errors.description ? 'border-red-500' : ''}
             />
@@ -597,7 +630,7 @@ export default function AddVehicle() {
               <Button onClick={handleAddFeature}>Add</Button>
             </div>
             <div className="flex flex-wrap gap-2 mt-2">
-              {formData.features.map((feature, index) => (
+              {formData.features?.map((feature, index) => (
                 <div
                   key={index}
                   className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded"
@@ -628,9 +661,9 @@ export default function AddVehicle() {
           onClick={handleSubmit}
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Adding..." : "Add Vehicle"}
+          {isSubmitting ? "Saving..." : "Save Changes"}
         </Button>
       </div>
     </div>
   )
-}
+} 
