@@ -4,8 +4,9 @@ import { Button } from '@/components/ui/button'
 import prisma from "@/config/db"
 import { BodyType, FuelType, Transmission, VehicleCondition } from '@prisma/client'
 import { Filter, X } from 'lucide-react'
-import React from 'react'
+import React, { Suspense } from 'react'
 import Link from 'next/link'
+import ExploreCarsSkeleton from '@/components/explore-cars/ExploreCarsSkeleton'
 
 // Client component for clear filters button
 const ClearFiltersButton = () => {
@@ -27,119 +28,131 @@ const ClearFiltersButton = () => {
 const ExploreCarsPage = async ({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
-  const user = await auth();
+  return (
+    <Suspense fallback={<ExploreCarsSkeleton />}>
+      <ExploreCarsContent searchParams={searchParams} />
+    </Suspense>
+  )
+}
 
-  // Fetch unique values for dropdowns
-  const [makes, models, years] = await Promise.all([
-    prisma.vehicle.findMany({
-      select: { make: true },
-      distinct: ['make'],
-      orderBy: { make: 'asc' },
-    }),
-    prisma.vehicle.findMany({
-      select: { model: true },
-      distinct: ['model'],
-      orderBy: { model: 'asc' },
-    }),
-    prisma.vehicle.findMany({
-      select: { year: true },
-      distinct: ['year'],
-      orderBy: { year: 'desc' },
-    }),
-  ]);
+const ExploreCarsContent = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) => {
+  const params = await searchParams;
+  const user = await auth();
 
   // Build the where clause based on search params
   const whereClause: any = {
     status: 'AVAILABLE',
   };
 
-  if (searchParams.make) {
-    whereClause.make = { contains: searchParams.make, mode: 'insensitive' };
+  if (params.make) {
+    whereClause.make = { contains: params.make, mode: 'insensitive' };
   }
-  if (searchParams.model) {
-    whereClause.model = { contains: searchParams.model, mode: 'insensitive' };
+  if (params.model) {
+    whereClause.model = { contains: params.model, mode: 'insensitive' };
   }
-  if (searchParams.minPrice) {
-    whereClause.price = { ...whereClause.price, gte: parseFloat(searchParams.minPrice as string) };
+  if (params.minPrice) {
+    whereClause.price = { ...whereClause.price, gte: parseFloat(params.minPrice as string) };
   }
-  if (searchParams.maxPrice) {
-    whereClause.price = { ...whereClause.price, lte: parseFloat(searchParams.maxPrice as string) };
+  if (params.maxPrice) {
+    whereClause.price = { ...whereClause.price, lte: parseFloat(params.maxPrice as string) };
   }
-  if (searchParams.bodyType) {
-    whereClause.bodyType = searchParams.bodyType;
+  if (params.bodyType) {
+    whereClause.bodyType = params.bodyType;
   }
-  if (searchParams.transmission) {
-    whereClause.transmission = searchParams.transmission;
+  if (params.transmission) {
+    whereClause.transmission = params.transmission;
   }
-  if (searchParams.fuelType) {
-    whereClause.fuelType = searchParams.fuelType;
+  if (params.fuelType) {
+    whereClause.fuelType = params.fuelType;
   }
-  if (searchParams.condition) {
-    whereClause.condition = searchParams.condition;
+  if (params.condition) {
+    whereClause.condition = params.condition;
   }
-  if (searchParams.minYear) {
-    whereClause.year = { ...whereClause.year, gte: parseInt(searchParams.minYear as string) };
+  if (params.minYear) {
+    whereClause.year = { ...whereClause.year, gte: parseInt(params.minYear as string) };
   }
-  if (searchParams.maxYear) {
-    whereClause.year = { ...whereClause.year, lte: parseInt(searchParams.maxYear as string) };
+  if (params.maxYear) {
+    whereClause.year = { ...whereClause.year, lte: parseInt(params.maxYear as string) };
   }
 
-  const data = await prisma.vehicle.findMany({
-    where: whereClause,
-    include: {
-      savedBy: {
-        where: {
-          userId: user?.user?.id
+  // Fetch all data in parallel
+  const [makes, models, years, vehicles] = await Promise.all([
+    // Get unique makes
+    prisma.vehicle.findMany({
+      select: { make: true },
+      distinct: ['make'],
+      orderBy: { make: 'asc' },
+    }),
+    // Get unique models
+    prisma.vehicle.findMany({
+      select: { model: true },
+      distinct: ['model'],
+      orderBy: { model: 'asc' },
+    }),
+    // Get unique years
+    prisma.vehicle.findMany({
+      select: { year: true },
+      distinct: ['year'],
+      orderBy: { year: 'desc' },
+    }),
+    // Get filtered vehicles
+    prisma.vehicle.findMany({
+      where: whereClause,
+      include: {
+        savedBy: {
+          where: {
+            userId: user?.user?.id
+          }
         }
       }
-    }
-  });
+    })
+  ]);
 
   // Transform the data to include isSaved flag
-  const vehiclesWithSavedStatus = data.map(vehicle => ({
+  const vehiclesWithSavedStatus = vehicles.map(vehicle => ({
     ...vehicle,
     isSaved: vehicle.savedBy.length > 0
   }));
 
   // Count active filters
-  const activeFilters = Object.keys(searchParams).filter(key => searchParams[key]);
+  const activeFilters = Object.keys(params).filter(key => params[key]);
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Explore Cars</h1>
-          <p className="text-gray-600">Find your perfect vehicle</p>
+      <div className="flex flex-col gap-6">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Explore Cars</h1>
+            <p className="text-gray-600">Find your perfect vehicle</p>
+          </div>
+
+          <div className="flex items-center gap-4">
+            {activeFilters.length > 0 && (
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <span>{activeFilters.length} active filters</span>
+                <ClearFiltersButton />
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="flex items-center gap-4">
-          {activeFilters.length > 0 && (
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <span>{activeFilters.length} active filters</span>
-              <ClearFiltersButton />
-            </div>
-          )}
-          <Button variant="outline" className="flex items-center gap-2">
-            <Filter className="h-4 w-4" />
-            Filters
-          </Button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Filters Sidebar */}
-        <div className="md:col-span-1 bg-white p-6 rounded-lg shadow-sm">
-          <h2 className="text-xl font-semibold mb-4">Filters</h2>
-          <form className="space-y-6">
+        {/* Filters */}
+        <div className="bg-white p-6 rounded-lg shadow-sm">
+          <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Make */}
             <div>
               <label className="block text-sm font-medium mb-2">Make</label>
               <select
                 className="w-full p-2 border rounded bg-white"
                 name="make"
-                defaultValue={searchParams.make as string}
+                defaultValue={params.make as string}
               >
                 <option value="">All Makes</option>
                 {makes.map(({ make }) => (
@@ -156,7 +169,7 @@ const ExploreCarsPage = async ({
               <select
                 className="w-full p-2 border rounded bg-white"
                 name="model"
-                defaultValue={searchParams.model as string}
+                defaultValue={params.model as string}
               >
                 <option value="">All Models</option>
                 {models.map(({ model }) => (
@@ -178,7 +191,7 @@ const ExploreCarsPage = async ({
                     placeholder="Min"
                     className="w-full p-2 pl-7 border rounded"
                     name="minPrice"
-                    defaultValue={searchParams.minPrice as string}
+                    defaultValue={params.minPrice as string}
                   />
                 </div>
                 <div className="relative">
@@ -188,7 +201,7 @@ const ExploreCarsPage = async ({
                     placeholder="Max"
                     className="w-full p-2 pl-7 border rounded"
                     name="maxPrice"
-                    defaultValue={searchParams.maxPrice as string}
+                    defaultValue={params.maxPrice as string}
                   />
                 </div>
               </div>
@@ -201,7 +214,7 @@ const ExploreCarsPage = async ({
                 <select
                   className="w-full p-2 border rounded bg-white"
                   name="minYear"
-                  defaultValue={searchParams.minYear as string}
+                  defaultValue={params.minYear as string}
                 >
                   <option value="">From</option>
                   {years.map(({ year }) => (
@@ -213,7 +226,7 @@ const ExploreCarsPage = async ({
                 <select
                   className="w-full p-2 border rounded bg-white"
                   name="maxYear"
-                  defaultValue={searchParams.maxYear as string}
+                  defaultValue={params.maxYear as string}
                 >
                   <option value="">To</option>
                   {years.map(({ year }) => (
@@ -231,7 +244,7 @@ const ExploreCarsPage = async ({
               <select
                 className="w-full p-2 border rounded bg-white"
                 name="bodyType"
-                defaultValue={searchParams.bodyType as string}
+                defaultValue={params.bodyType as string}
               >
                 <option value="">All Body Types</option>
                 {Object.values(BodyType).map((type) => (
@@ -248,7 +261,7 @@ const ExploreCarsPage = async ({
               <select
                 className="w-full p-2 border rounded bg-white"
                 name="transmission"
-                defaultValue={searchParams.transmission as string}
+                defaultValue={params.transmission as string}
               >
                 <option value="">All Transmissions</option>
                 {Object.values(Transmission).map((type) => (
@@ -265,7 +278,7 @@ const ExploreCarsPage = async ({
               <select
                 className="w-full p-2 border rounded bg-white"
                 name="fuelType"
-                defaultValue={searchParams.fuelType as string}
+                defaultValue={params.fuelType as string}
               >
                 <option value="">All Fuel Types</option>
                 {Object.values(FuelType).map((type) => (
@@ -282,7 +295,7 @@ const ExploreCarsPage = async ({
               <select
                 className="w-full p-2 border rounded bg-white"
                 name="condition"
-                defaultValue={searchParams.condition as string}
+                defaultValue={params.condition as string}
               >
                 <option value="">All Conditions</option>
                 {Object.values(VehicleCondition).map((type) => (
@@ -293,14 +306,17 @@ const ExploreCarsPage = async ({
               </select>
             </div>
 
-            <Button type="submit" className="w-full">
-              Apply Filters
-            </Button>
+            {/* Apply Button */}
+            <div className="md:col-span-2 lg:col-span-4 flex justify-end">
+              <Button type="submit" className="w-full md:w-auto">
+                Apply Filters
+              </Button>
+            </div>
           </form>
         </div>
 
         {/* Results Grid */}
-        <div className="md:col-span-3">
+        <div>
           <VehicleGrid
             vehicles={vehiclesWithSavedStatus}
             title="Available Vehicles"
