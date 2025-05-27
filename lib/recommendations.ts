@@ -4,8 +4,8 @@ import { cache } from 'react';
 export const getRecommendations = cache(async (userData: any) => {
   try {
     const response = await fetch(
-      // "https://rag-car-recommender-fastapi.onrender.com/get-recommendations",
-      "http://localhost:8000/get-recommendations",
+      "https://rag-car-recommender-fastapi.onrender.com/get-recommendations",
+      // "http://localhost:8000/get-recommendations",
       {
         method: "POST",
         headers: {
