@@ -18,13 +18,13 @@ export default async function AuthPage() {
     if(authenticated.user.role === "ADMIN") {
       redirect("/admin");
     } else {
-      redirect("/user");
+      redirect("/");
     }
   }
 
   async function signInWithGoogle() {
     "use server";
-    await signIn("google", { callbackUrl: "/user" });
+    await signIn("google", { callbackUrl: "/" });
   }
 
   return (

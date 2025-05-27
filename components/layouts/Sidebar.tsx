@@ -89,7 +89,7 @@ export default function Sidebar({ user }: { user: UserType }) {
               <SidebarItem path="/explore-cars" icon={<Search size={18} />} label="Explore Cars" />
               <SidebarItem path="/compare-cars" icon={<GitCompare size={18} />} label="Compare Cars" />
               <SidebarItem path="/finance" icon={<CreditCard size={18} />} label="Financing Options" />
-              <SidebarItem path="/help" icon={<HelpCircle size={18} />} label="Help & Support" />
+              {/* <SidebarItem path="/help" icon={<HelpCircle size={18} />} label="Help & Support" /> */}
               <SidebarItem path="/preferences" icon={<Settings size={18} />} label="Preferences" />
             </nav>
 

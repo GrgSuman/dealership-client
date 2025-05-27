@@ -69,10 +69,10 @@ const ClientHeader = ({ user }: { user: UserType }) => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuItem asChild>
-                  <Link href="/user" className="flex items-center cursor-pointer">
+                  {/* <Link href="/user" className="flex items-center cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
                     <span>Profile</span>
-                  </Link>
+                  </Link> */}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={async () => await signOutUser()}

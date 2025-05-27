@@ -1,101 +1,133 @@
 # Car Recommendation Platform
 
-A modern, AI-powered car recommendation platform built with Next.js 15, featuring personalized vehicle suggestions, user preferences, and an intuitive interface.
+A modern car recommendation platform built with Next.js 15 and FastAPI, featuring AI-powered vehicle suggestions using Google's Generative AI.
 
-## Features
+## Core Features
 
-- 🚗 **Personalized Recommendations**: AI-powered car suggestions based on user preferences and behavior
-- 🔍 **Advanced Search**: Explore cars with detailed filtering options
-- 💾 **Save Favorites**: Keep track of your favorite vehicles
-- 🔄 **Compare Cars**: Side-by-side comparison of different vehicles
-- ⚙️ **User Preferences**: Customize your car search experience
-- 📱 **Responsive Design**: Beautiful UI that works on all devices
-- 🎨 **Modern UI**: Built with shadcn/ui and Tailwind CSS
-- 🔐 **Authentication**: Secure user authentication with NextAuth.js(google)
+- 🤖 **AI Recommendations**: Personalized car suggestions using Google's Generative AI and vector embeddings
+- 🔍 **Smart Search**: Advanced filtering with price range, car types, brands, and features
+- 💾 **User Features**: Save favorites, compare cars, and manage preferences
+- 📱 **Responsive UI**: Modern interface built with shadcn/ui and Tailwind CSS
+- 🔐 **Auth**: Google authentication via NextAuth.js
+- 🛠️ **Admin**: Vehicle and user management dashboard
 
 ## Tech Stack
 
-- **Framework**: Next.js 15
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui + custom
-- **Database**: Prisma with PostgreSQL
-- **Authentication**: NextAuth.js
-- **Animations**: Framer Motion
-- **Icons**: Lucide Icons
+- **Frontend**: Next.js 15, TypeScript, Tailwind CSS, shadcn/ui
+- **Backend**: FastAPI, PostgreSQL, Prisma
+- **AI/ML**: Google Generative AI, FAISS vector database
+- **Auth**: NextAuth.js
+- **Deployment**: Vercel
 
-## Getting Started
+## Quick Start
 
-### Prerequisites
-
-- Node.js (Latest LTS version)
-- PostgreSQL
-- Python (for recommendation engine)
-
-### Installation
-
-1. Clone the repository:
+1. **Setup Environment**
 ```bash
 git clone [repository-url]
 cd nextclient
-```
-
-2. Install dependencies:
-```bash
 npm install
 ```
 
-3. Set up environment variables:
-Create a `.env` file in the root directory with the following variables:
+2. **Configure Environment**
 ```env
 DATABASE_URL="postgresql://..."
 NEXTAUTH_SECRET="your-secret"
+GOOGLE_CLIENT_ID="your-client-id"
+GOOGLE_CLIENT_SECRET="your-client-secret"
 PYTHON_API_KEY="your-api-key"
 ```
 
-## Authentication Setup
-
-### 1. Generate NextAuth Secret
-
-Generate a secure secret for NextAuth.js:
-
-```bash
-npx create-next-auth-secret
-```
-
-Add the generated secret to your `.env` file:
-```env
-NEXTAUTH_SECRET="your-generated-secret"
-GOOGLE_CLIENT_ID="your-client-id"
-GOOGLE_CLIENT_SECRET="your-client-secret"
-```
-
-
-4. Set up the database:
+3. **Initialize Database**
 ```bash
 npx prisma generate
 npx prisma db push
 npx prisma db seed
 ```
 
-5. Start the development server:
+4. **Start Development**
 ```bash
 npm run dev
 ```
 
+## Recommendation System
+
+### How It Works
+
+1. **Query Processing**
+   - Takes user preferences (budget, type, brand, features)
+   - Considers user activity and saved vehicles
+   - Generates natural language query
+
+2. **Vector Search**
+   - Converts query to embeddings using Google AI
+   - Searches FAISS vector database
+   - Returns 15 initial matches
+
+3. **Smart Filtering**
+   - Price range: (min-2000) to (max+5000)
+   - Scoring system:
+     - Base: 1.0
+     - Type match: +0.3
+     - Brand match: +0.3
+     - Features: +0.1 each
+     - Fuel type: +0.2
+     - Use case: +0.15 each
+
+4. **Final Results**
+   - Sorts by relevance score
+   - Returns top 6 recommendations
+
+### API Endpoints
+
+```typescript
+// POST /get-recommendations
+interface RecommendationRequest {
+  preferences: {
+    budgetMin: number;
+    budgetMax: number;
+    carTypes: string[];
+    fuelTypes: string[];
+    brand: string[];
+    features: string[];
+    primarilyUse: string[];
+  };
+  activities: Array<{
+    action: string;
+    query: string;
+    carTitles: string[];
+  }>;
+  savedVehicles: string[];
+}
+```
+
 ## Project Structure
 
-## Learn More
+```
+├── app/                    # Next.js app directory
+│   ├── admin/             # Admin routes
+│   ├── api/               # API endpoints
+│   ├── actions/           # Server actions
+│   └── [features]/        # Feature routes
+├── components/            # UI components
+├── lib/                   # Utilities
+└── prisma/               # Database schema
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Performance & Security
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Vector similarity search for fast matching
+- Results caching for similar queries
+- API key authentication
+- CORS middleware
+- Input validation with Pydantic
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+1. Push to GitHub
+2. Connect to Vercel
+3. Configure environment variables
+4. Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Support
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For support, open an issue in the GitHub repository or contact the development team.

@@ -3,8 +3,7 @@ import prisma from '@/config/db'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import React from 'react'
-import { X } from 'lucide-react'
-import Link from 'next/link'
+import { trackUserActivity } from '@/app/actions/user/user'
 
 const CompareCarsPage = async ({
   searchParams,
@@ -81,6 +80,14 @@ const CompareCarsPage = async ({
     if (selectedVehicles.length < 2) return false;
     const first = (selectedVehicles[0] as any)[key];
     return selectedVehicles.some(v => (v as any)[key] !== first);
+  }
+
+  if (session?.user && selectedVehicles.length > 0) {
+    const comparedTitles = selectedVehicles.map(v => `${v.year} ${v.make} ${v.model}`).join(', ');
+    await trackUserActivity({
+      action: 'compared',
+      carTitles: comparedTitles
+    });
   }
 
   return (

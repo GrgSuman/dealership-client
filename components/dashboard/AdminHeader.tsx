@@ -86,13 +86,13 @@ export default function AdminHeader() {
     fetchUser()
   }, [])
 
-  // const handleLogout = async () => {
-  //   try {
-  //     await signOutUser()
-  //   } catch (error) {
-  //     console.error('Failed to logout:', error)
-  //   }
-  // }
+  const handleLogout = async () => {
+    try {
+      await signOutUser()
+    } catch (error) {
+      console.error('Failed to logout:', error)
+    }
+  }
 
   if (loading) {
     return (
@@ -194,7 +194,7 @@ export default function AdminHeader() {
             </DropdownMenuItem>
             <DropdownMenuItem 
               className="text-red-600"
-              // onClick={handleLogout}
+              onClick={handleLogout}
             >
               <LogOut className="mr-2 h-4 w-4" />
               <span>Log out</span>
