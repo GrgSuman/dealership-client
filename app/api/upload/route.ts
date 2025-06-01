@@ -23,9 +23,18 @@ export async function POST(request: Request) {
       url: blob.url
     })
   } catch (error) {
-    console.error("Error uploading file:", error)
+    // Enhanced error logging
+    console.error("Detailed upload error:", {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      error
+    })
+    
     return NextResponse.json(
-      { error: "Error uploading file" },
+      { 
+        error: "Error uploading file",
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
       { status: 500 }
     )
   }
